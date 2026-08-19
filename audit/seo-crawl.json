@@ -1,0 +1,194 @@
+{
+  "home": {
+    "title": "ProDani Miami",
+    "titleLen": 13,
+    "metaDescription": null,
+    "descLen": 0,
+    "canonical": "https://prodanimiami.com/",
+    "robotsMeta": null,
+    "viewport": true,
+    "lang": "en",
+    "headings": {
+      "h1": 2,
+      "h2": 7,
+      "h3": 10,
+      "h4": 0,
+      "h5": 0,
+      "h6": 0
+    },
+    "h1s": [
+      "",
+      "The power of protein. The joy of cake."
+    ],
+    "images": {
+      "total": 24,
+      "withAltAttr": 21,
+      "nonEmptyAlt": 7,
+      "missingOrEmptyAlt": 17,
+      "lazy": 17,
+      "withDims": 22
+    },
+    "jsonLdBlocks": 2,
+    "jsonLdTypes": [
+      "Organization",
+      "WebSite",
+      "SearchAction"
+    ],
+    "og": {
+      "og:site_name": "ProDani Miami",
+      "og:url": "https://prodanimiami.com/",
+      "og:title": "ProDani Miami",
+      "og:type": "website",
+      "og:description": "ProDani Miami",
+      "og:image": "http://prodanimiami.com/cdn/shop/files/prodani-logo_61dd57c5-b262-486a-b290-4e1df2db024a.svg?height=628&pad_color=fff&v=1693931693&width=1200",
+      "og:image:secure_url": "https://prodanimiami.com/cdn/shop/files/prodani-logo_61dd57c5-b262-486a-b290-4e1df2db024a.svg?height=628&pad_color=fff&v=1693931693&width=1200",
+      "og:image:width": "1200",
+      "og:image:height": "628"
+    },
+    "twitterTags": [
+      "twitter:card",
+      "twitter:title",
+      "twitter:description"
+    ],
+    "hreflang": [],
+    "preconnect": [
+      "https://fonts.googleapis.com",
+      "https://fonts.gstatic.com",
+      "https://prodanimiami.com/",
+      "https://cdn.shopify.com",
+      "https://shop.app"
+    ],
+    "stylesheets": 14,
+    "scriptsTotal": 20,
+    "scriptsBlocking": 1,
+    "inlineStyleBlocks": 18,
+    "htmlBytes": 201497
+  },
+  "collection": {
+    "title": "All Products",
+    "titleLen": 12,
+    "metaDescription": null,
+    "descLen": 0,
+    "canonical": "https://prodanimiami.com/collections/all-products",
+    "robotsMeta": null,
+    "viewport": true,
+    "lang": "en",
+    "headings": {
+      "h1": 0,
+      "h2": 2,
+      "h3": 30,
+      "h4": 0,
+      "h5": 0,
+      "h6": 0
+    },
+    "h1s": [],
+    "images": {
+      "total": 59,
+      "withAltAttr": 59,
+      "nonEmptyAlt": 30,
+      "missingOrEmptyAlt": 29,
+      "lazy": 56,
+      "withDims": 59
+    },
+    "jsonLdBlocks": 1,
+    "jsonLdTypes": [
+      "Organization"
+    ],
+    "og": {
+      "og:site_name": "ProDani Miami",
+      "og:url": "https://prodanimiami.com/collections/all-products",
+      "og:title": "All Products",
+      "og:type": "product.group",
+      "og:description": "ProDani Miami",
+      "og:image": "http://prodanimiami.com/cdn/shop/files/prodani-logo_61dd57c5-b262-486a-b290-4e1df2db024a.svg?height=628&pad_color=fff&v=1693931693&width=1200",
+      "og:image:secure_url": "https://prodanimiami.com/cdn/shop/files/prodani-logo_61dd57c5-b262-486a-b290-4e1df2db024a.svg?height=628&pad_color=fff&v=1693931693&width=1200",
+      "og:image:width": "1200",
+      "og:image:height": "628"
+    },
+    "twitterTags": [
+      "twitter:card",
+      "twitter:title",
+      "twitter:description"
+    ],
+    "hreflang": [],
+    "preconnect": [
+      "https://fonts.googleapis.com",
+      "https://fonts.gstatic.com",
+      "https://prodanimiami.com/collections/all-products",
+      "https://cdn.shopify.com",
+      "https://shop.app"
+    ],
+    "stylesheets": 39,
+    "scriptsTotal": 21,
+    "scriptsBlocking": 1,
+    "inlineStyleBlocks": 38,
+    "htmlBytes": 549521
+  },
+  "product": {
+    "title": "Family Vanilla Strawberry Cake",
+    "titleLen": 30,
+    "metaDescription": "Fresh strawberry. Warm vanilla. A cake designed for the days when you want something that feels like a reward.Ingredients: Eggs, organic strawberries, organic applesauce, organic coconut milk, protein powder (whey protein concentrate and isolate), organic coconut flour, pure vanilla extract, aluminum-free baking powder",
+    "descLen": 320,
+    "canonical": "https://prodanimiami.com/products/strawberry-short-cake",
+    "robotsMeta": null,
+    "viewport": true,
+    "lang": "en",
+    "headings": {
+      "h1": 1,
+      "h2": 5,
+      "h3": 3,
+      "h4": 0,
+      "h5": 0,
+      "h6": 0
+    },
+    "h1s": [
+      "Family Vanilla Strawberry Cake"
+    ],
+    "images": {
+      "total": 33,
+      "withAltAttr": 27,
+      "nonEmptyAlt": 3,
+      "missingOrEmptyAlt": 30,
+      "lazy": 27,
+      "withDims": 32
+    },
+    "jsonLdBlocks": 2,
+    "jsonLdTypes": [
+      "Organization",
+      "Product",
+      "Brand",
+      "Offer"
+    ],
+    "og": {
+      "og:site_name": "ProDani Miami",
+      "og:url": "https://prodanimiami.com/products/strawberry-short-cake",
+      "og:title": "Family Vanilla Strawberry Cake",
+      "og:type": "product",
+      "og:description": "Fresh strawberry. Warm vanilla. A cake designed for the days when you want something that feels like a reward.Ingredients: Eggs, organic strawberries, organic applesauce, organic coconut milk, protein powder (whey protein concentrate and isolate), organic coconut flour, pure vanilla extract, aluminum-free baking powder",
+      "og:image": "http://prodanimiami.com/cdn/shop/files/STRAWBERRYSHORTCAKECAKE_2.png?v=1694446642",
+      "og:image:secure_url": "https://prodanimiami.com/cdn/shop/files/STRAWBERRYSHORTCAKECAKE_2.png?v=1694446642",
+      "og:image:width": "1000",
+      "og:image:height": "1000",
+      "og:price:amount": "42.99",
+      "og:price:currency": "USD"
+    },
+    "twitterTags": [
+      "twitter:card",
+      "twitter:title",
+      "twitter:description"
+    ],
+    "hreflang": [],
+    "preconnect": [
+      "https://fonts.googleapis.com",
+      "https://fonts.gstatic.com",
+      "https://prodanimiami.com/products/strawberry-short-cake",
+      "https://cdn.shopify.com",
+      "https://shop.app"
+    ],
+    "stylesheets": 14,
+    "scriptsTotal": 27,
+    "scriptsBlocking": 2,
+    "inlineStyleBlocks": 14,
+    "htmlBytes": 247541
+  }
+}

@@ -1,0 +1,139 @@
+# ─────────────────────────────────────────────────────────────
+# ProDani Miami — .gitignore
+# PUBLIC REPO. Everything committed here is world-readable.
+# When in doubt, add it here.
+# ─────────────────────────────────────────────────────────────
+
+# ---- Dependencies & build output ----
+node_modules/
+/dist
+dist/
+build/
+out/
+.cache/
+.parcel-cache/
+.next/
+.nuxt/
+.output/
+*.tsbuildinfo
+
+# ---- Environment & config ----
+.env
+.env.*
+!.env.example
+*.env
+.envrc
+config.local.*
+settings.local.json
+
+# ---- Shopify CLI / theme auth ----
+.shopify/
+.shopifyignore
+shopify.theme.toml
+shopify.app.*.toml
+.theme-check.yml.local
+.shopify-cli.yml
+.theme-kit-access
+config.yml
+config/*.yml
+!config/settings_schema.json
+!config/settings_data.json
+.oauth/
+.shopify-cli/
+
+# ---- Credentials, tokens, keys ----
+*.key
+*.pem
+*.p12
+*.pfx
+*.crt
+*.cer
+*.der
+*.keystore
+*.jks
+*.asc
+*.gpg
+*.ppk
+id_*
+id_*.pub
+*.ssh
+.ssh/
+known_hosts
+*.netrc
+.netrc
+.npmrc
+.yarnrc
+.pypirc
+credentials
+credentials.*
+.aws/
+.gcloud/
+service-account*.json
+
+# ---- Catch-all name matches (deliberately broad) ----
+*secret*
+*Secret*
+*SECRET*
+*credential*
+*Credential*
+*CREDENTIAL*
+*token*
+*Token*
+*TOKEN*
+*password*
+*Password*
+*apikey*
+*api_key*
+*private*
+*.private.*
+!*.tokens.css
+
+# ---- Logs & temp ----
+*.log
+logs/
+npm-debug.log*
+yarn-debug.log*
+yarn-error.log*
+pnpm-debug.log*
+lerna-debug.log*
+.pid
+*.pid
+*.seed
+tmp/
+temp/
+.tmp/
+
+# ---- Editors & OS ----
+.vscode/
+!.vscode/extensions.json
+.idea/
+*.iml
+*.swp
+*.swo
+*~
+.DS_Store
+.DS_Store?
+._*
+.Spotlight-V100
+.Trashes
+ehthumbs.db
+Thumbs.db
+desktop.ini
+
+# ---- Audit working files ----
+# Raw full-page HTML scrapes of the live storefront.
+# Regenerable, large, and may embed store-internal markup — not committed.
+audit/raw/
+
+# ---- Client-internal / never publish ----
+private/
+internal/
+clients/
+*.client.*
+customers*.csv
+orders*.csv
+*export*.csv
+*.sql
+*.sqlite
+*.dump
+*.bak
