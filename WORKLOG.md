@@ -4,6 +4,54 @@ Newest entries first. One entry per working session — what was done, what was 
 
 ---
 
+## 2026-08-19 — Take four: hero dialled back
+
+**Why**
+
+Client: "the hero is too much now." Fair. The type wall was the right call, but I had
+stacked confetti sprinkles, a rotating stamp badge, two overlapping cake photos and a
+per-letter spring animation on top of the single loudest element on the page. Everything
+was shouting at once.
+
+**What changed**
+
+Kept the wall, removed the competition:
+
+- Sprinkles: gone from the hero.
+- Rotating stamp badge: removed from the hero, kept in the calmer chocolate mid-band where it has room.
+- Two cake photos → one, at roughly half the size, opacity .82, with a gradient dissolving its left edge into the ground so the type reads cleanly over it. Support, not a co-star.
+- Per-letter spring → one calm reveal per line. Two moves instead of sixteen.
+- Four fact pills → one quiet line of text.
+- More padding above and below the wall.
+
+**Correction to the previous entry**
+
+Last session I recorded that both hero lines were "set flush to the same measure" and
+reported 1468px for each. That was wrong — `.giant__line` is `display:block`, so I had
+measured the container, not the glyphs. The real widths were **746px and 957px**: visibly
+ragged, not flush.
+
+Fixed properly this time by measuring per-glyph width against font-size:
+
+- `"BITE INTO"` → 4.0899 px of width per px of font-size
+- `"BALANCE"`  → 4.2122
+
+So line 2 must be **0.971×** line 1 for the two to set to one width — the opposite of what
+I had assumed (I'd made BALANCE *larger*, on the reasoning that fewer glyphs need more
+size; in fact BALANCE's round wide letters more than compensate for the shorter string).
+Ratio is now held across the entire clamp range. Verified in the browser: **909px vs 910px**.
+
+They also now set to about 62% of the measure rather than filling it, which is a large
+part of why the hero reads calm.
+
+**Next**
+
+- Client review on the quieter hero.
+- Reshoot the personal-size range out of the plastic containers.
+- On sign-off, port to Liquid and fold in the audit fixes.
+
+---
+
 ## 2026-08-19 — Take three: type-wall hero + flare pass
 
 **Why**
