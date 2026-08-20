@@ -4,6 +4,59 @@ Newest entries first. One entry per working session — what was done, what was 
 
 ---
 
+## 2026-08-19 — Marquee rebuilt on GSAP TextPath, as a wave ribbon
+
+**Brief:** client supplied a `TextPath` component (GSAP text-on-a-path, looping) to
+replace the marquee. Keep the pink, drop the cursive. Then: match a reference showing a
+much deeper wave. Then: "I don't want background around the container, I want the
+background around the text itself."
+
+**Porting the component**
+
+It arrived as TypeScript with Tailwind utility classes; this project is plain JSX with
+hand-written CSS and no Tailwind. Ported faithfully with three deliberate changes:
+
+- `fontFamily` became a prop instead of a hardcoded `"sans-serif"`, so Konnect can be
+  used. It's applied to **both** the visible text and the hidden measuring text — they
+  must match or `getComputedTextLength()` returns the wrong number and the fitting breaks.
+- Re-measure on `document.fonts.ready`. Webfonts land after first paint, so the original
+  fits the text against fallback metrics and then jumps.
+- Skips the timeline under `prefers-reduced-motion`.
+
+Added `gsap` and `@gsap/react`. Tailwind classes became `.textpath` / `.textpath__svg`
+rules in `app.css`.
+
+**How the seamless loop actually works** (worth recording, it's non-obvious)
+
+The component only loops without a gap when the text is **longer** than the path — then
+it sets `textLength` to the path length and `lengthAdjust="spacingAndGlyphs"` squeezes
+it to fit exactly, so the two copies chasing each other meet perfectly. If the text is
+*shorter*, `textLength` is left undefined and a visible gap opens up.
+
+So the marquee copy has to be tuned to overrun the path slightly. Measured and adjusted
+until both bands sat at **92–94% fit** — seamless, with compression too slight to see.
+At 44px the original eight claims came out at 84%, visibly condensed; trimmed to five
+items per band.
+
+**The ribbon**
+
+Final note was the important one. A full-width pink rectangle behind a wavy line of text
+looks like a band with text in it. What was wanted was the colour hugging the lettering.
+
+Added optional `ribbonColor` / `ribbonWidth` / `ribbonOffset` props: the same path drawn
+as a thick stroke behind the text. `ribbonOffset={-12}` lifts the stroke so it centres on
+the glyphs' optical middle rather than the baseline — otherwise the text rides the top
+edge, since glyphs grow upward from the path. Container background removed entirely; the
+cream page now shows above and below the wave.
+
+**Next**
+
+- Client review.
+- Performance work, then re-measure, before deciding React islands vs Liquid.
+- Reshoot the personal-size range out of the plastic containers.
+
+---
+
 ## 2026-08-19 — "The files aren't on my machine" — they were; wrong port
 
 **Reported:** app appeared to be missing locally.

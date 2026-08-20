@@ -10,15 +10,9 @@ import Reviews from './components/Reviews.jsx'
 import Footer from './components/Footer.jsx'
 import CartDrawer from './components/CartDrawer.jsx'
 
-const CLAIMS = [
-  'high protein', 'non GMO', 'gluten free', 'no sugar added',
-  'high fibre', 'low calorie', 'small batch', 'miami made',
-]
+const CLAIMS = ['high protein', 'no sugar added', 'gluten free', 'small batch', 'miami made']
 
-const TREATS = [
-  'carrot cake', 'banana bread', 'chocolate fudge', 'cinnamon apple',
-  'dubai dream', 'pumpkin muffins', 'strawberry & vanilla', 'hazelnut',
-]
+const TREATS = ['carrot cake', 'banana bread', 'chocolate fudge', 'dubai dream', 'hazelnut']
 
 export default function App() {
   const [cart, setCart] = useState([])
