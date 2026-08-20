@@ -4,6 +4,31 @@ Newest entries first. One entry per working session — what was done, what was 
 
 ---
 
+## 2026-08-19 — "The files aren't on my machine" — they were; wrong port
+
+**Reported:** app appeared to be missing locally.
+
+**Actually:** every file was present. Two things caused it.
+
+1. **There is no `package.json` at `~/Desktop/prodani`.** The app is in `design/`.
+   Running `npm install` at the repo root finds nothing.
+2. **Ports 5173, 5174 *and* 5175 are all occupied on this machine** by an unrelated
+   app ("Ticket Queue"). Vite's default is 5173 and it *silently falls forward* to the
+   next free port — so `npm run dev` would land somewhere unexpected, and opening
+   `localhost:5173` out of habit shows the other app entirely.
+
+**Fix:** pinned the dev server to **5183** with `strictPort: true` and `open: true` in
+`vite.config.js`. A port clash now fails loudly instead of drifting, and the browser
+opens the right URL by itself. Preview pinned to 4173.
+
+Verified by running `npm run dev` exactly as the client would and checking the served
+`<title>` is "ProDani Miami", not the other app.
+
+**Lesson for this repo:** never trust a bare `localhost:5173` when several dev servers
+run on this machine — check the port Vite actually prints.
+
+---
+
 ## 2026-08-19 — Make the React app runnable with just `npm install`
 
 **Why**

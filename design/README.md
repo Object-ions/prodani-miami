@@ -15,14 +15,19 @@ real photography, real Judge.me review copy.
 ## Run it
 
 ```bash
-cd design
+cd design            # the app lives here — there is no package.json at the repo root
 npm install
-npm run dev          # http://localhost:5173
+npm run dev          # http://localhost:5183 (opens automatically)
 ```
 
 That's it. `npm install` bootstraps the two generated files automatically
 (via `postinstall`), so there's no separate setup step — fonts and product
 photos load over the network from Google Fonts and the Shopify CDN.
+
+The port is pinned to **5183** with `strictPort`, not Vite's default 5173.
+Vite silently falls forward to 5174, 5175 and so on when its port is taken,
+which makes it easy to open a different app and think this one is broken.
+Pinning means a clash fails loudly instead.
 
 ### Scripts
 
