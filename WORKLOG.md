@@ -4,6 +4,48 @@ Newest entries first. One entry per working session — what was done, what was 
 
 ---
 
+## 2026-08-20 — Hero meets the ribbon on the wave
+
+**Brief:** two screenshots, before and after. The scalloped hem between the chocolate
+hero and the pink ribbon had to go; the chocolate should run all the way down and the
+ribbon's own wave should form the boundary.
+
+**Done**
+
+Added a `fillAbove` prop to `TextPath`. It closes the wave path up to the top corners
+(`${path} L{vbWidth} 0 L0 0 Z`) and fills it, so the section above ends on exactly the
+curve the ribbon follows instead of a straight edge.
+
+The fill is translated by `ribbonOffset - ribbonWidth / 2`, which puts its lower edge
+precisely on the ribbon's **top** edge — not the path centreline. Get that wrong by half
+the stroke width and you either overlap the ribbon or leave a cream sliver above it.
+
+Removed `.scallop` (and its CSS) from the hero, trimmed the hero's bottom padding that
+existed to make room for it.
+
+Both marquees now use the same device — each sits at a chocolate-to-cream boundary (hero
+→ shop, and the chocolate mid-band → stacking deck), so both get chocolate above, pink
+ribbon, cream below. Dropped the `cocoa` variant: the second marquee's chocolate ribbon
+would have been invisible against a chocolate fill. Direction and copy still tell them
+apart.
+
+**Debugging note**
+
+Spent a while convinced the fill wasn't rendering — the region below the hero read as
+cream in screenshots. Setting the fill to bright green showed the geometry was correct
+all along; chocolate-on-chocolate at JPEG compression simply wasn't legible to me in a
+downscaled screenshot. Worth remembering: **screenshots here are downscaled ~0.67x from a
+2242px viewport**, so `getBoundingClientRect` values do not map 1:1 to screenshot pixels,
+and low-contrast boundaries can vanish entirely.
+
+**Next**
+
+- Client review.
+- Performance work, then re-measure, before deciding React islands vs Liquid.
+- Reshoot the personal-size range out of the plastic containers.
+
+---
+
 ## 2026-08-19 — Stats section rebuilt as a scroll-stacking deck
 
 **Brief:** replace the four flat stat cards with the supplied stacking-card component.

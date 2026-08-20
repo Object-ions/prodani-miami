@@ -32,7 +32,13 @@ export default function TextPath({
   ribbonColor,
   ribbonWidth = 0,
   ribbonOffset = 0,
+  // Optional solid fill covering everything ABOVE the ribbon. Lets the section
+  // above end on the same wave the ribbon follows, instead of a straight edge.
+  fillAbove,
 }) {
+  const viewBoxWidth = Number(viewBox.split(/[\s,]+/)[2]) || 0
+  // Sit the fill's lower edge exactly on the ribbon's top edge.
+  const fillOffset = ribbonOffset - ribbonWidth / 2
   const id = useId()
   const pathId = `text-path-curve-${id.replace(/:/g, '')}`
 
@@ -105,6 +111,15 @@ export default function TextPath({
         <defs>
           <path ref={pathRef} id={pathId} d={path} />
         </defs>
+
+        {fillAbove && (
+          <path
+            className="textpath__fill"
+            d={`${path} L${viewBoxWidth} 0 L0 0 Z`}
+            transform={`translate(0 ${fillOffset})`}
+            fill={fillAbove}
+          />
+        )}
 
         {ribbonColor && ribbonWidth > 0 && (
           <path

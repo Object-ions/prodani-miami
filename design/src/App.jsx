@@ -92,7 +92,7 @@ export default function App() {
         <Marquee items={CLAIMS} />
         <Shop products={products} onAdd={add} />
         <Shout />
-        <Marquee items={TREATS} speed={38} reverse cocoa />
+        <Marquee items={TREATS} speed={38} reverse />
         <StackCards
           id="why"
           items={statCards}

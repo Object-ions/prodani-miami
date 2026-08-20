@@ -63,7 +63,6 @@ export default function Hero({ cakes }) {
         </motion.div>
       </div>
 
-      <div className="scallop" aria-hidden="true" />
     </section>
   )
 }
