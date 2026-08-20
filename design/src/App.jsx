@@ -1,0 +1,72 @@
+import React, { useCallback, useMemo, useState } from 'react'
+import catalog from './data/catalog.json'
+import IMAGES from './data/images.json'
+import Nav from './components/Nav.jsx'
+import Hero from './components/Hero.jsx'
+import Marquee from './components/Marquee.jsx'
+import Shop from './components/Shop.jsx'
+import Story, { Stats } from './components/Story.jsx'
+import Reviews from './components/Reviews.jsx'
+import Footer from './components/Footer.jsx'
+import CartDrawer from './components/CartDrawer.jsx'
+
+const CLAIMS = [
+  'High protein', 'Non GMO', 'Gluten free', 'No sugar added',
+  'High fibre', 'Low calorie', 'Small batch', 'Miami made',
+]
+
+export default function App() {
+  const [cart, setCart] = useState([])
+  const [open, setOpen] = useState(false)
+
+  // Swap in base64 images so the page renders with zero network requests.
+  const products = useMemo(
+    () => catalog.map((p) => ({
+      ...p,
+      img:  IMAGES[p.handle] || p.img,
+      img2: IMAGES[p.handle + '__2'] || p.img2,
+    })),
+    []
+  )
+
+  const hero = useMemo(
+    () => ({ ...(products.find((p) => p.handle === 'strawberry-short-cake') || products[0]),
+             img: IMAGES.__hero || products[0].img }),
+    [products]
+  )
+
+  const add = useCallback((p) => {
+    setCart((c) => {
+      const hit = c.find((i) => i.id === p.id)
+      return hit
+        ? c.map((i) => (i.id === p.id ? { ...i, qty: i.qty + 1 } : i))
+        : [...c, { ...p, qty: 1 }]
+    })
+    setOpen(true)
+  }, [])
+
+  const qty = useCallback((id, d) => {
+    setCart((c) =>
+      c.map((i) => (i.id === id ? { ...i, qty: i.qty + d } : i)).filter((i) => i.qty > 0)
+    )
+  }, [])
+
+  const count = cart.reduce((s, i) => s + i.qty, 0)
+
+  return (
+    <>
+      <a className="skip" href="#shop">Skip to products</a>
+      <Nav count={count} onCart={() => setOpen(true)} />
+      <main id="main">
+        <Hero product={hero} />
+        <Marquee items={CLAIMS} />
+        <Shop products={products} onAdd={add} />
+        <Stats />
+        <Story />
+        <Reviews />
+      </main>
+      <Footer />
+      <CartDrawer open={open} items={cart} onClose={() => setOpen(false)} onQty={qty} />
+    </>
+  )
+}

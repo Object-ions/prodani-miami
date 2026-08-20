@@ -7,6 +7,7 @@ Theme development and site-audit workspace for the **ProDani Miami** storefront 
 - The Shopify theme source, pulled from the live store via the Shopify CLI.
 - A site audit (`audit/`) — Lighthouse reports plus an on-page SEO crawl — and the findings written up in [`audit/AUDIT.md`](audit/AUDIT.md).
 - A running [`WORKLOG.md`](WORKLOG.md) of what changed each session.
+- A redesign concept in [`design/`](design/README.md) — a React build of a dark editorial direction, running on the real catalog.
 
 > **This repo is public.** No credentials, tokens, store admin URLs, or customer data belong here. See `.gitignore` — it is deliberately over-broad. If you are unsure whether a file is safe, do not commit it.
 
