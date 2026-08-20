@@ -5,7 +5,8 @@ import Nav from './components/Nav.jsx'
 import Hero from './components/Hero.jsx'
 import Marquee from './components/Marquee.jsx'
 import Shop from './components/Shop.jsx'
-import Story, { Stats, Shout } from './components/Story.jsx'
+import Story, { Shout } from './components/Story.jsx'
+import StackCards from './components/StackCards.jsx'
 import Reviews from './components/Reviews.jsx'
 import Footer from './components/Footer.jsx'
 import CartDrawer from './components/CartDrawer.jsx'
@@ -13,6 +14,26 @@ import CartDrawer from './components/CartDrawer.jsx'
 const CLAIMS = ['high protein', 'no sugar added', 'gluten free', 'small batch', 'miami made']
 
 const TREATS = ['carrot cake', 'banana bread', 'chocolate fudge', 'dubai dream', 'hazelnut']
+
+/* The four proof points, as a stacking deck. Each pairs a figure with a real cake. */
+const STAT_CARDS = [
+  { figure: '20g', handle: 'strawberry-short-cake',
+    title: 'Protein in a personal cake',
+    description: 'The same protein as a bar, in the shape of an actual dessert. No chalk, no aftertaste.',
+    cta: 'Shop personal cakes', color: '#FDC3D4' },
+  { figure: '0g', handle: 'carrot-cake-copy',
+    title: 'Added sugar. Across everything.',
+    description: 'Sweetness comes from fruit and the ingredients themselves — nothing refined, nothing hidden.',
+    cta: 'See the ingredients', color: '#FFFBE5' },
+  { figure: '27', handle: 'chocolate-banana-cake',
+    title: 'Recipes in rotation',
+    description: 'Personal cakes, family cakes and muffins — including a full vegan line.',
+    cta: 'Browse all 27', color: '#48312A', textColor: '#FBF5E8' },
+  { figure: '4.9★', handle: 'banana-bread',
+    title: 'From 70+ verified reviews',
+    description: 'Every one left by someone who actually ordered. Read them before you decide.',
+    cta: 'Read the reviews', color: '#F79CBB' },
+]
 
 export default function App() {
   const [cart, setCart] = useState([])
@@ -52,6 +73,14 @@ export default function App() {
     )
   }, [])
 
+  const statCards = useMemo(
+    () => STAT_CARDS.map((c) => ({
+      ...c,
+      img: (products.find((p) => p.handle === c.handle) || products[0]).img,
+    })),
+    [products]
+  )
+
   const count = cart.reduce((s, i) => s + i.qty, 0)
 
   return (
@@ -64,7 +93,12 @@ export default function App() {
         <Shop products={products} onAdd={add} />
         <Shout />
         <Marquee items={TREATS} speed={38} reverse cocoa />
-        <Stats />
+        <StackCards
+          id="why"
+          items={statCards}
+          eyebrow="Four reasons"
+          heading={<h2 className="d-script sec__title">What makes prodani different</h2>}
+        />
         <Story />
         <Reviews />
       </main>

@@ -4,6 +4,61 @@ Newest entries first. One entry per working session — what was done, what was 
 
 ---
 
+## 2026-08-19 — Stats section rebuilt as a scroll-stacking deck
+
+**Brief:** replace the four flat stat cards with the supplied stacking-card component.
+
+**Done**
+
+The four proof points are now full-height cards that pin to the top of the viewport and
+scale down as the next one rides over them, gathering into a deck. Each pairs its figure
+with a real product photo and its own brand colour — pink, butter, chocolate (cream text),
+deep pink.
+
+Two departures from the supplied component:
+
+- **No Lenis.** The demo wraps the whole document in smooth-scroll. That hijacks
+  scrolling site-wide and would fight the page's other scroll-linked animations. The
+  stack mechanic is just `position: sticky` + `useScroll` and needs no help.
+- Tailwind classes → this project's CSS, as with `TextPath`.
+
+**A long debugging detour worth recording**
+
+The cards rendered but never scaled. Chased it a long way: checked for stale
+measurements, `prefers-reduced-motion`, React StrictMode double-mounting, and instrumented
+the MotionValue with `useMotionValueEvent` — which showed the section's `scrollYProgress`
+**never fired at all**. Nor did a plain page-level `useScroll()`.
+
+**None of it was a bug.** framer-motion's scroll tracking is driven by its rAF frameloop,
+and Chrome throttles `requestAnimationFrame` in a background/automation tab — the same
+throttling that had been freezing every entry animation mid-way all session. Driving the
+page with real scroll input instead of `window.scrollTo` showed the deck working
+perfectly.
+
+**Rule for next time:** in this automation tab, scroll-linked animation cannot be
+verified with `window.scrollTo` + `getComputedStyle`. Use real scroll input and read the
+screenshot. rAF-driven values are meaningless otherwise.
+
+**Two genuine fixes did come out of it**
+
+1. **`body { overflow-x: hidden }` → `overflow-x: clip`.** Per spec, `hidden` on one axis
+   computes the other to `auto`, which makes `<body>` a scroll container. Scroll libraries
+   that walk up for the nearest scrollable ancestor then bind to body — which never
+   scrolls, since the page scrolls on `<html>`. `clip` prevents horizontal scroll without
+   creating a scroll container. Latent hazard, now closed.
+2. **`Shop`'s `Card` is now `forwardRef`.** `AnimatePresence mode="popLayout"` wraps each
+   child in `PopChild`, which attaches a ref to measure it. Card was a plain function
+   component, so React warned and the measurement was silently unavailable. Console is
+   clean now.
+
+**Next**
+
+- Client review.
+- Performance work, then re-measure, before deciding React islands vs Liquid.
+- Reshoot the personal-size range out of the plastic containers.
+
+---
+
 ## 2026-08-19 — Marquee rebuilt on GSAP TextPath, as a wave ribbon
 
 **Brief:** client supplied a `TextPath` component (GSAP text-on-a-path, looping) to

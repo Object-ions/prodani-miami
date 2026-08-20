@@ -233,13 +233,69 @@
   color:var(--pink); white-space:nowrap; user-select:none; display:block;
 }
 
-/* ---------- stats ---------- */
-.stats{ background:var(--pink); }
-.stats__grid{ display:grid; grid-template-columns:repeat(4,1fr); gap:clamp(14px,2vw,26px); }
-@media (max-width:820px){ .stats__grid{ grid-template-columns:repeat(2,1fr); } }
-.stat{ background:var(--butter); border-radius:var(--r); padding:clamp(24px,3vw,38px); }
-.stat b{ font-family:var(--display); font-size:clamp(2.3rem,4.4vw,3.6rem); font-weight:400; line-height:1; display:block; color:var(--cocoa); }
-.stat > span{ color:var(--ink-soft); display:block; margin-top:11px; font-size:13.5px; line-height:1.5; font-weight:500; }
+/* ---------- stacking stat cards ---------- */
+.stack{ background:var(--cream); position:relative; padding-bottom:clamp(40px,6vw,90px); }
+.stack__head{
+  display:flex; align-items:flex-end; justify-content:space-between; gap:24px;
+  flex-wrap:wrap; padding-top:clamp(56px,7vw,110px); padding-bottom:clamp(8px,1.5vw,20px);
+}
+
+/* one full-height slot per card; the card pins to the top of it */
+.stack__slot{
+  height:100svh; display:flex; align-items:center; justify-content:center;
+  position:sticky; top:0;
+}
+.stack__card{
+  position:relative; transform-origin:top;
+  width:min(1180px, 88%); height:min(58svh, 470px);
+  border-radius:calc(var(--r) + 10px);
+  padding:clamp(22px,3vw,44px);
+  display:flex; flex-direction:column;
+  box-shadow:0 24px 60px rgba(72,49,42,.16);
+  overflow:hidden;
+}
+.stack__body{
+  display:flex; gap:clamp(20px,3vw,46px); height:100%; align-items:stretch;
+}
+.stack__text{
+  width:42%; display:flex; flex-direction:column; justify-content:center;
+}
+.stack__figure{
+  font-family:var(--display); font-weight:400; line-height:.9;
+  font-size:clamp(3rem,6.4vw,5.6rem); display:block;
+}
+.stack__title{
+  margin:clamp(10px,1.4vw,18px) 0 0; font-weight:700;
+  font-size:clamp(1.05rem,1.6vw,1.4rem); letter-spacing:-.01em;
+}
+.stack__desc{
+  margin:10px 0 0; font-size:clamp(.88rem,1.05vw,1rem); line-height:1.55;
+  font-weight:500; opacity:.72; max-width:34ch;
+}
+.stack__link{
+  display:inline-flex; align-items:center; gap:10px; margin-top:clamp(14px,2vw,24px);
+  font-weight:700; font-size:14px; width:fit-content;
+  border-bottom:2px solid currentColor; padding-bottom:3px;
+  transition:gap .35s var(--bounce);
+}
+.stack__link:hover{ gap:16px; }
+
+.stack__media{
+  width:58%; position:relative; border-radius:var(--r); overflow:hidden;
+  background:rgba(72,49,42,.06);
+}
+.stack__media-inner{ width:100%; height:100%; }
+.stack__media img{
+  position:absolute; inset:0; width:100%; height:100%; object-fit:cover;
+}
+
+@media (max-width:760px){
+  .stack__card{ height:min(70svh, 560px); }
+  .stack__body{ flex-direction:column; gap:16px; }
+  .stack__text{ width:100%; justify-content:flex-start; }
+  .stack__media{ width:100%; flex:1; }
+  .stack__desc{ display:none; }
+}
 
 /* ---------- story ---------- */
 .story__in{ display:grid; grid-template-columns:repeat(12,1fr); gap:clamp(24px,4vw,54px); align-items:center; }

@@ -1,5 +1,5 @@
 import React from 'react'
-import { Reveal, CountUp, Squiggle, SpinBadge } from '../lib.jsx'
+import { Reveal, Squiggle, SpinBadge } from '../lib.jsx'
 import IMAGES from '../data/images.json'
 
 // Falls back to the live CDN when images.json is empty (i.e. `npm run setup`
@@ -12,13 +12,6 @@ const PILLARS = [
   ['Sugar',   'None added — sweetness comes from fruit and the ingredients themselves.'],
   ['Flour',   'Gluten-free by design, not by substitution. Coconut flour, not filler.'],
   ['Protein', 'Whey concentrate and isolate. Real macros, printed honestly.'],
-]
-
-const STATS = [
-  { n: 20,  suffix: 'g', label: 'Protein in a personal cake — a protein bar, in cake form.' },
-  { n: 0,   suffix: 'g', label: 'Added sugar across the whole range. Nothing refined, nothing hidden.' },
-  { n: 27,  suffix: '',  label: 'Recipes in rotation, including a full vegan line.' },
-  { n: 4.9, suffix: '★', dec: 1, label: 'Average rating from more than seventy verified reviews.' },
 ]
 
 /* Chocolate mid-band. The hero owns "bite into balance" now, so this one
@@ -38,21 +31,6 @@ export function Shout() {
           </p>
         </Reveal>
         <SpinBadge className="shout__badge" text="dessert you can feel good about ✦ " speed={26} />
-      </div>
-    </section>
-  )
-}
-
-export function Stats() {
-  return (
-    <section className="sec stats">
-      <div className="wrap stats__grid">
-        {STATS.map((s, i) => (
-          <Reveal key={s.label} className="stat" delay={i * 0.08}>
-            <b><CountUp to={s.n} decimals={s.dec || 0} />{s.suffix}</b>
-            <span>{s.label}</span>
-          </Reveal>
-        ))}
       </div>
     </section>
   )

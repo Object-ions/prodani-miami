@@ -1,10 +1,11 @@
-import React, { useMemo, useState } from 'react'
+import React, { forwardRef, useMemo, useState } from 'react'
 import { motion, AnimatePresence } from 'framer-motion'
 import { Reveal, Icon, money, Squiggle } from '../lib.jsx'
 
-function Card({ p, i, onAdd }) {
+const Card = forwardRef(function Card({ p, i, onAdd }, ref) {
   return (
     <motion.article
+      ref={ref}
       layout
       className={'card' + (p.img2 ? '' : ' card--single')}
       initial={{ opacity: 0, y: 26, scale: 0.96 }}
@@ -45,7 +46,7 @@ function Card({ p, i, onAdd }) {
       </div>
     </motion.article>
   )
-}
+})
 
 export default function Shop({ products, onAdd }) {
   const [tab, setTab] = useState('All')

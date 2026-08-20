@@ -48,7 +48,12 @@ body{
   margin:0; background:var(--cream); color:var(--ink);
   font-family:var(--sans); font-weight:500; font-size:16.5px; line-height:1.55;
   -webkit-font-smoothing:antialiased; -moz-osx-font-smoothing:grayscale;
-  overflow-x:hidden;
+  /* `overflow-x: hidden` computes overflow-y to `auto`, which makes <body> a
+     scroll container. framer-motion's useScroll then binds to body — which never
+     scrolls, because the page scrolls on <html> — and every scroll-linked
+     animation silently freezes at progress 0. `clip` prevents horizontal scroll
+     without creating a scroll container. */
+  overflow-x:clip;
 }
 img{ display:block; max-width:100%; }
 a{ color:inherit; text-decoration:none; }
