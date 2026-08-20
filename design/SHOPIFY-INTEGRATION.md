@@ -36,40 +36,79 @@ Liquid still renders the page and Shopify still owns routing, cart and checkout.
   existing JavaScript.
 - Two build systems to keep in sync — Shopify CLI for the theme, Vite for the bundles.
 
-## Why I'd recommend option C here
+## Revisiting the performance objection
 
-**1. It makes the site's actual problem worse.** The audit found the storefront's
-biggest weakness is JavaScript weight — 1,590 ms total blocking time on product pages,
-14.4 s time-to-interactive, 354 requests. Adding a React runtime to a theme that is
-already too heavy is pushing in the wrong direction.
+My first take was "don't add React, the site is already too slow." Then I actually broke
+down where the 1,590 ms of blocking time on the product page comes from, and that
+objection doesn't hold up the way I stated it.
 
-**2. Nothing in this design needs React.** Going through it honestly:
+Main-thread time by script, product page (total scripted: **6,392 ms**):
 
-| Feature | React version | Liquid + JS version |
+| ms | Script | Can you cut it? |
+|---:|---|---|
+| 1,735 | Shopify `shop-js` (Shop Pay / Shop app) | Mostly no — platform |
+| 1,376 | The document's own inline scripts | Partly |
+| 1,207 | Unattributable | Partly |
+| 529 | Judge.me reviews | **Yes** — lazy-load below the fold |
+| 485 | Facebook Pixel (`fbevents` + `signals/config`) | **Yes** |
+| 324 | Portable wallets | Only by dropping Shop Pay buttons |
+| 272 | Shopify web-pixel-manager | No — platform |
+| 137 | Theme `vendor.min.js` | Yes |
+
+**The theme accounts for roughly 1,414 ms of 6,392 ms — about 22%.** The rest is
+Shopify's own platform code and third-party apps. I was implicitly blaming the theme;
+it isn't the theme.
+
+So: **you're right.** Cutting the Pixel and lazy-loading Judge.me recovers on the order
+of **1,000 ms**. React 18 + hydration of a 27-card grid costs roughly **200–400 ms** on
+the mid-tier mobile Lighthouse emulates. You'd still be meaningfully ahead of today.
+
+The nuance worth keeping: Shopify's own code sets a floor of roughly **2,500 ms** that no
+amount of optimisation removes. That headroom you're about to win is finite and
+hard-earned — spending a chunk of it is a legitimate choice, just not a free one.
+
+**If you do go with React islands, drop Framer Motion.** It's the heavy half of this
+prototype (~110 KB unminified, and it does layout work on the main thread). Every
+animation in this design can be done with CSS transitions, `@keyframes` and
+`IntersectionObserver`. React alone is ~45 KB gzipped; React + Framer Motion is roughly
+double that for no visual gain.
+
+## What actually decides it — and it isn't speed
+
+Two costs survive the performance work entirely:
+
+**1. The theme editor.** Any section converted to React becomes an opaque box in the
+customizer. Dani can't reorder it, edit its copy, swap its images, or change its
+settings without a developer. This is permanent and unrelated to page speed.
+
+**2. Two build systems.** Shopify CLI for the theme, Vite for the bundles, kept in sync
+forever.
+
+So the real question is **who edits this site**. If Dani edits her own content, keep the
+content sections in Liquid. If a developer always does it, islands are fine.
+
+## The answer I'd actually give: do both
+
+This splits cleanly, and it's not a compromise — it's the right shape:
+
+| Section | Build as | Why |
 |---|---|---|
-| Category filter | `useState` + `AnimatePresence` | ~15 lines toggling a class |
-| Cart drawer | Local state + spring | Shopify's own AJAX cart |
-| Scroll reveals | `whileInView` | `IntersectionObserver` + CSS transition |
-| Count-up stats | `requestAnimationFrame` hook | ~15 lines |
-| Marquees | `motion.div` animate | `@keyframes translateX` |
-| Card hover, tilt, squiggles, scalloped hem | CSS already | Same CSS, unchanged |
+| Product grid + filter | **React island** | Real state, real interaction, benefits from a framework |
+| Cart drawer | **React island** (or Shopify's AJAX cart) | Genuinely app-like |
+| Hero, story, reviews, footer, marquees | **Liquid** | Content Dani should be able to edit; zero JS needed |
 
-The visual design is plain CSS with custom properties and no framework, so **it ports
-essentially verbatim.** The React in this repo is doing state management for a filter
-and a cart — that's it.
-
-**3. Scale doesn't justify it.** 27 SKUs, one collection page, one product template.
-Shopify's own Dawn theme does everything above with web components and no framework.
+You get React where it earns its place, Dani keeps the theme editor for everything she
+actually touches, and the JS you ship is a fraction of hydrating the whole page.
 
 ## What I'd actually do
 
-1. Keep `design/` as-is — it's the design artifact and doubles as the spec.
-2. Port it to Liquid section-by-section. The CSS moves across almost unchanged; the
-   JavaScript gets rewritten small.
-3. Fold in the audit fixes at the same time (hero video, meta descriptions,
-   `aggregateRating`, the `user-scalable=0` viewport tag).
+1. **Performance work first**, so the budget is measured on a clean baseline rather
+   than guessed at: strip the Facebook Pixel, lazy-load Judge.me, defer the checkout
+   bundles off browse pages, fix the 5.6 MB hero video.
+2. Re-run Lighthouse. Now you know exactly what headroom you have.
+3. Port the content sections to Liquid; build the grid and cart as React islands.
+4. Fold in the remaining audit fixes (meta descriptions, `aggregateRating`, the
+   `user-scalable=0` viewport tag).
 
-If you'd rather have React in the theme anyway — for future app-like features, or
-because a developer prefers it — option A is legitimate and I'll build it that way.
-It's a preference call, not a correctness one. I'd just want the performance work done
-first rather than after.
+Order matters mainly so you're deciding with real numbers instead of estimates — not
+because React is dangerous.

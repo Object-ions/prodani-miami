@@ -4,6 +4,66 @@ Newest entries first. One entry per working session — what was done, what was 
 
 ---
 
+## 2026-08-19 — Architecture: React on the storefront without going headless
+
+**Question from the client:** can the existing Shopify store use a React frontend, given
+we're going to fix the performance flaws anyway?
+
+**Answer: yes, via React islands in the Liquid theme.** Not headless — Liquid still
+renders the page, Shopify still owns routing, cart and checkout. Written up in
+`design/SHOPIFY-INTEGRATION.md`.
+
+**I revised my own recommendation after checking the data.** My first answer was "don't,
+the site is too slow already." Then I broke down the 1,590 ms of blocking time on the
+product page:
+
+| ms | Script | Removable |
+|---:|---|---|
+| 1,735 | Shopify `shop-js` (Shop Pay / Shop app) | Mostly no |
+| 1,376 | Document inline scripts | Partly |
+| 1,207 | Unattributable | Partly |
+| 529 | Judge.me | Yes |
+| 485 | Facebook Pixel | Yes |
+| 324 | Portable wallets | Only by dropping Shop Pay |
+| 272 | Shopify web-pixel-manager | No |
+| 137 | Theme `vendor.min.js` | Yes |
+
+**The theme is only ~1,414 ms of 6,392 ms — about 22%.** I had been implicitly blaming
+the theme; it isn't the theme. Cutting the Pixel and lazy-loading Judge.me recovers
+roughly 1,000 ms; React hydration of a 27-card grid costs roughly 200–400 ms. The client
+was right — the arithmetic works.
+
+Caveat kept on record: Shopify's own platform code sets a floor around 2,500 ms that no
+optimisation removes, so the headroom is finite.
+
+**What actually decides it turns out not to be speed** — it's the theme editor. Any
+section converted to React becomes an opaque box in the customizer, so Dani can't edit
+its copy or reorder it without a developer. That cost survives all the performance work.
+
+**Landed on a hybrid**, which is the right shape rather than a compromise: product grid
+and cart drawer as React islands (real state, real interaction); hero, story, reviews,
+footer and marquees stay Liquid (content Dani edits, zero JS needed).
+
+**Note for whoever builds it:** if we do islands, drop Framer Motion. It's the heavy half
+of the prototype (~110 KB unminified, does main-thread layout work) and every animation
+in this design is achievable with CSS transitions, keyframes and `IntersectionObserver`.
+
+**Also this session**
+
+- Added `npm run setup` so a fresh clone is two commands to running — it generates the
+  gitignored font and image bundles. Verified by deleting both and rebuilding clean.
+- Confirmed the design already *is* a React app (Vite + React 18); the shared preview
+  link is just a production build of it. Nothing to convert.
+
+**Next**
+
+- Performance work first, then re-measure, so the island decision is made against real
+  numbers rather than estimates.
+- Client review on the quieter hero.
+- Reshoot the personal-size range out of the plastic containers.
+
+---
+
 ## 2026-08-19 — Take four: hero dialled back
 
 **Why**
