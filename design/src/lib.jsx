@@ -90,12 +90,47 @@ export const money = (n) => '$' + n.toFixed(2)
 /* ---------- hand-drawn squiggle rule ----------
    Sits under script headings so the section head reads as drawn, not ruled. */
 export function Squiggle({ width = 190 }) {
+  const reduce = useReducedMotion()
   return (
     <svg className="squiggle" viewBox="0 0 190 16" width={width} height={16}
          fill="none" aria-hidden="true" preserveAspectRatio="none">
-      <path d="M2 9C14 2 26 2 38 9s24 7 36 0 24-7 36 0 24 7 36 0 24-7 40 0"
-            stroke="currentColor" strokeWidth="3.5" strokeLinecap="round" />
+      <motion.path
+        d="M2 9C14 2 26 2 38 9s24 7 36 0 24-7 36 0 24 7 36 0 24-7 40 0"
+        stroke="currentColor" strokeWidth="3.5" strokeLinecap="round"
+        initial={reduce ? false : { pathLength: 0 }}
+        whileInView={{ pathLength: 1 }}
+        viewport={{ once: true, margin: '-10% 0px' }}
+        transition={{ duration: 0.9, ease: EASE }}
+      />
     </svg>
+  )
+}
+
+/* Rotating circular stamp — words chase their own tail around a circle.
+   The one piece of pure decoration on the page, and it earns its place. */
+export function SpinBadge({ className = '', text = 'no added sugar ✦ high protein ✦ gluten free ✦ small batch ✦ ', speed = 22 }) {
+  const reduce = useReducedMotion()
+  return (
+    <motion.div
+      className={'spin-badge ' + className}
+      aria-hidden="true"
+      initial={{ opacity: 0, scale: 0.6 }}
+      animate={{ opacity: 1, scale: 1 }}
+      transition={{ type: 'spring', stiffness: 200, damping: 16, delay: 1.2 }}
+    >
+      <motion.svg
+        viewBox="0 0 200 200"
+        animate={reduce ? undefined : { rotate: 360 }}
+        transition={{ duration: speed, repeat: Infinity, ease: 'linear' }}
+      >
+        <defs>
+          <path id="spin-badge-path" fill="none"
+                d="M100,100 m-74,0 a74,74 0 1,1 148,0 a74,74 0 1,1 -148,0" />
+        </defs>
+        <text><textPath href="#spin-badge-path" startOffset="0">{text}</textPath></text>
+      </motion.svg>
+      <span className="spin-badge__core">🧁</span>
+    </motion.div>
   )
 }
 

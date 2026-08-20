@@ -19,6 +19,11 @@ function Card({ p, i, onAdd }) {
         </div>
         <img className="card__img card__img--main" src={p.img} alt={p.name} loading="lazy" width="600" height="600" />
         {p.img2 && <img className="card__img card__img--alt" src={p.img2} alt="" aria-hidden="true" loading="lazy" width="600" height="600" />}
+        {p.available && (
+          <button className="card__quick" onClick={() => onAdd(p)} tabIndex={-1} aria-hidden="true">
+            <Icon.plus /> Add to cart
+          </button>
+        )}
       </div>
 
       <div className="card__cat">{p.cat}</div>

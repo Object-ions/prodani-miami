@@ -12,6 +12,14 @@ const CLAIMS = [
 export default function Nav({ count, onCart }) {
   const stuck = useStuck()
   const [i, setI] = React.useState(0)
+  const first = React.useRef(true)
+  const [pop, setPop] = React.useState(0)
+
+  // bump the cart pill whenever the count changes (but not on first paint)
+  React.useEffect(() => {
+    if (first.current) { first.current = false; return }
+    setPop((p) => p + 1)
+  }, [count])
 
   React.useEffect(() => {
     const t = setInterval(() => setI((v) => (v + 1) % CLAIMS.length), 4200)
@@ -44,9 +52,15 @@ export default function Nav({ count, onCart }) {
           <div className="nav__right">
             <button className="icon-btn icon-btn--ghost" aria-label="Search"><Icon.search /></button>
             <button className="icon-btn icon-btn--ghost" aria-label="Account"><Icon.user /></button>
-            <button className="nav__cart" onClick={onCart} aria-label={`Open cart, ${count} items`}>
+            <motion.button
+              className="nav__cart" onClick={onCart}
+              aria-label={`Open cart, ${count} items`}
+              animate={pop ? { scale: [1, 1.14, 1], rotate: [0, -4, 0] } : undefined}
+              transition={{ duration: 0.45, ease: 'easeOut' }}
+              key={pop}
+            >
               Cart <span className="nav__count">{count}</span>
-            </button>
+            </motion.button>
           </div>
         </div>
       </header>

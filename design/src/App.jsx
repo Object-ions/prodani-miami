@@ -15,6 +15,11 @@ const CLAIMS = [
   'high fibre', 'low calorie', 'small batch', 'miami made',
 ]
 
+const TREATS = [
+  'carrot cake', 'banana bread', 'chocolate fudge', 'cinnamon apple',
+  'dubai dream', 'pumpkin muffins', 'strawberry & vanilla', 'hazelnut',
+]
+
 export default function App() {
   const [cart, setCart] = useState([])
   const [open, setOpen] = useState(false)
@@ -29,11 +34,13 @@ export default function App() {
     []
   )
 
-  const hero = useMemo(
-    () => ({ ...(products.find((p) => p.handle === 'strawberry-short-cake') || products[0]),
-             img: IMAGES.__hero || products[0].img }),
-    [products]
-  )
+  // Three photos for the hero collage — visually distinct so the wall reads varied.
+  const heroCakes = useMemo(() => {
+    const want = ['strawberry-short-cake', 'chocolate-banana-cake', 'carrot-cake-copy']
+    const picked = want.map((h) => products.find((p) => p.handle === h)).filter(Boolean)
+    const rest = products.filter((p) => !picked.includes(p))
+    return [...picked, ...rest].slice(0, 3)
+  }, [products])
 
   const add = useCallback((p) => {
     setCart((c) => {
@@ -58,10 +65,11 @@ export default function App() {
       <a className="skip" href="#shop">Skip to products</a>
       <Nav count={count} onCart={() => setOpen(true)} />
       <main id="main">
-        <Hero product={hero} />
+        <Hero cakes={heroCakes} />
         <Marquee items={CLAIMS} />
         <Shop products={products} onAdd={add} />
         <Shout />
+        <Marquee items={TREATS} speed={38} reverse cocoa />
         <Stats />
         <Story />
         <Reviews />

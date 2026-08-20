@@ -1,5 +1,5 @@
 import React from 'react'
-import { Reveal, CountUp, Squiggle } from '../lib.jsx'
+import { Reveal, CountUp, Squiggle, SpinBadge } from '../lib.jsx'
 import IMAGES from '../data/images.json'
 
 const PILLARS = [
@@ -16,18 +16,23 @@ const STATS = [
   { n: 4.9, suffix: '★', dec: 1, label: 'Average rating from more than seventy verified reviews.' },
 ]
 
-/* Big pink statement on chocolate — the brand's loudest voice. */
+/* Chocolate mid-band. The hero owns "bite into balance" now, so this one
+   carries the other half of the brand line instead of repeating it. */
 export function Shout() {
   return (
     <section className="shout" id="nutrition">
       <div className="wrap shout__in on-dark">
-        <Reveal><h2 className="d-shout">Bite into<br />balance</h2></Reveal>
+        <Reveal>
+          <h2 className="d-script shout__script">Where sweet<br />meets balance</h2>
+        </Reveal>
         <Reveal delay={0.1}>
           <p className="lede">
             Desserts that support your lifestyle, not work against it. High-protein,
-            low-sugar treats made to satisfy cravings while staying mindful of how your body feels.
+            low-sugar treats made to satisfy cravings while staying mindful of how your
+            body feels — because indulgence should feel satisfying, not heavy.
           </p>
         </Reveal>
+        <SpinBadge className="shout__badge" text="dessert you can feel good about ✦ " speed={26} />
       </div>
     </section>
   )

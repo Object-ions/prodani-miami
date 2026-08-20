@@ -4,6 +4,56 @@ Newest entries first. One entry per working session — what was done, what was 
 
 ---
 
+## 2026-08-19 — Take three: type-wall hero + flare pass
+
+**Why**
+
+Client: "still missing a little bit of flare, also — I don't like the hero." The hero was
+the most conventional thing on the page (split layout, headline left, cake in a circle
+right) and all the big-type energy was buried below the fold. Offered four hero
+directions with mockups; client picked the **giant type wall**.
+
+**New hero**
+
+The whole viewport is now "BITE INTO BALANCE" in pink Konnect ExtraBold on chocolate,
+with product photos cropped in around the letters.
+
+- **Both lines are set flush to the same measure.** "BITE INTO" is 9 glyphs and "BALANCE"
+  is 7, so a single `font-size` leaves the second line short. Sized per line instead
+  (15.2vw / 19vw) — both now measure identically and the block reads as a wall, not a
+  ragged heading. This is the detail that makes it work.
+- Letters spring in one at a time from behind overflow masks.
+- Two cake photos in circles, one behind the type and one in front, which is what gives
+  flat type actual depth. Both are **plate-shot family cakes** — deliberately avoiding
+  the personal range, whose plastic meal-prep containers look bad at this scale.
+- Confetti sprinkles drifting round the edges, pushed out of the middle band so they
+  don't read as specks on the type.
+- The tagline "The power of protein. The joy of cake." survives as the kicker above.
+
+**Flare added elsewhere**
+
+- **Rotating stamp badge** — words chasing their own tail round a circle via SVG
+  `textPath`, with a cupcake in the middle. One in the hero, one in the chocolate band.
+- **Squiggles now draw themselves on** when scrolled into view (animated `pathLength`).
+- **Quick-add pill** rises out of each product card's image well on hover.
+- **Second marquee** under the chocolate band, running the opposite direction in
+  chocolate-on-pink so the pair reads as deliberate rather than repeated.
+- **Cart pill pops** when something lands in it.
+
+**Also**
+
+The mid-page chocolate band used to be "BITE INTO BALANCE" — now redundant, so it
+carries the other half of the brand line ("Where sweet meets balance") instead.
+
+**Next**
+
+- Client review on the type-wall hero.
+- Reshoot the personal-size range out of the plastic containers — now blocking two
+  things, since those photos also can't be used at hero scale.
+- On sign-off, port to Liquid and fold in the audit fixes.
+
+---
+
 ## 2026-08-19 — Redesign, take two: whimsical, on brand colours
 
 **Why**
