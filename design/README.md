@@ -17,10 +17,21 @@ real photography, real Judge.me review copy.
 ```bash
 cd design
 npm install
-node scripts/build-fonts.mjs    # inlines the brand fonts (required once)
-node scripts/embed-images.mjs   # downloads + inlines product photos (required once)
-npm run dev
+npm run setup     # fetches + inlines the brand fonts and product photos (once)
+npm run dev       # http://localhost:5173
 ```
+
+`npm run setup` is required after cloning — it generates `src/fonts.css` and
+`src/data/images.json`, both of which are gitignored. It needs network access and
+macOS `sips` (used to re-encode the product photos).
+
+Other scripts:
+
+| | |
+|---|---|
+| `npm run build` | normal production build to `dist/` |
+| `npm run build:single` | one self-contained `dist/index.html`, no external requests |
+| `npm run preview` | serve the last build |
 
 `scripts/embed-images.mjs` writes `src/data/images.json` (~6 MB of base64 JPEGs).
 That file is generated, so it is gitignored — run the script after cloning.
@@ -35,6 +46,12 @@ SINGLEFILE=1 npm run build # one self-contained dist/index.html, no external req
 
 The single-file build is what gets published as the shareable client preview —
 everything (fonts, images, CSS, JS) is inlined, so it renders under a strict CSP.
+
+## Putting it on the real store
+
+See [`SHOPIFY-INTEGRATION.md`](SHOPIFY-INTEGRATION.md) — whether this can run as React
+on the live storefront without going headless (it can), and why I'd still recommend
+porting it to Liquid instead.
 
 ## Design system
 
