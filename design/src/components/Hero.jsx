@@ -1,15 +1,23 @@
 import React, { useRef } from 'react'
 import { motion, useScroll, useTransform, useReducedMotion } from 'framer-motion'
 import { Icon, EASE } from '../lib.jsx'
+import VIDEO from '../data/video.json'
 
-export default function Hero({ cakes }) {
+// Falls back to the storefront's own CDN when `npm run setup` hasn't inlined the
+// compressed copy. That fallback is the original 5.5 MB file — fine for local
+// dev, not what should ship.
+const SRC = VIDEO.mp4 || 'https://cdn.shopify.com/videos/c/o/v/5cb3aeadf0864053899148b99e96d5ff.mp4'
+const POSTER = VIDEO.poster || undefined
+
+export default function Hero() {
   const ref = useRef(null)
   const reduce = useReducedMotion()
   const { scrollYProgress } = useScroll({ target: ref, offset: ['start start', 'end start'] })
-  const artY = useTransform(scrollYProgress, [0, 1], ['0%', '18%'])
 
-  /* One reveal per line, not per letter. The wall arrives as two calm moves
-     instead of sixteen springy ones. */
+  // The footage drifts slower than the page, so the type feels like it sits in front.
+  const videoY = useTransform(scrollYProgress, [0, 1], ['0%', '12%'])
+  const videoScale = useTransform(scrollYProgress, [0, 1], [1.04, 1.14])
+
   const Line = ({ text, delay }) => (
     <span className="giant__line">
       <span className="giant__mask">
@@ -27,17 +35,29 @@ export default function Hero({ cakes }) {
 
   return (
     <section className="hero" ref={ref} id="top">
-      {/* a single cake, sitting behind the type */}
       <motion.div
-        className="hero__cake"
-        style={reduce ? undefined : { y: artY }}
-        initial={{ opacity: 0, scale: 0.9 }}
-        animate={{ opacity: 1, scale: 1 }}
-        transition={{ duration: 1.1, delay: 0.45, ease: EASE }}
+        className="hero__video"
+        style={reduce ? undefined : { y: videoY, scale: videoScale }}
         aria-hidden="true"
       >
-        <img src={cakes[0]?.img} alt="" />
+        {reduce ? (
+          POSTER && <img src={POSTER} alt="" />
+        ) : (
+          <video
+            src={SRC}
+            poster={POSTER}
+            autoPlay
+            muted
+            loop
+            playsInline
+            preload="metadata"
+            tabIndex={-1}
+          />
+        )}
       </motion.div>
+
+      {/* Keeps the pink legible over moving footage without washing it out. */}
+      <div className="hero__scrim" aria-hidden="true" />
 
       <div className="wrap hero__in">
         <motion.p
@@ -62,7 +82,6 @@ export default function Hero({ cakes }) {
           <p className="hero__note">0g added sugar · 20g protein · gluten-free</p>
         </motion.div>
       </div>
-
     </section>
   )
 }

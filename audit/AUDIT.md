@@ -25,6 +25,11 @@ Fix, in order of preference:
 
 Expected: homepage weight drops ~5 MB, LCP moves from ~7.8 s toward ~2.5 s, Performance 55 → ~85. Nothing else on this list comes close.
 
+> **Done — ready to upload.** `assets/hero-video-optimised.mp4` is this exact video
+> re-encoded: **5,638 KB → 374 KB (93% smaller)**, audio stripped (it can never play on a
+> muted autoplaying background video), CRF 27 at 24fps, visually indistinguishable from
+> the source. A poster frame is included. See `assets/README.md`.
+
 ---
 
 ## 1. SEO

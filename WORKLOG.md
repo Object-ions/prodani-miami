@@ -4,6 +4,63 @@ Newest entries first. One entry per working session — what was done, what was 
 
 ---
 
+## 2026-08-20 — Video hero, and the 5.6 MB problem solved on the way
+
+**Brief:** drop the circular cake image from the hero, use the storefront's existing
+video as the hero background.
+
+That video is the one flagged in `audit/AUDIT.md` as the single highest-impact fix —
+5,638 KB, 73% of the homepage payload, direct cause of the 7.8s LCP. So rather than
+point at it again, it got fixed.
+
+**Re-encoded it**
+
+| | Original (live now) | Optimised |
+|---|---|---|
+| Size | 5,638 KB | **374 KB** |
+| Video | 1280×720, 3.1 Mbps, 30fps | 1280×720, CRF 27, 24fps |
+| Audio | AAC 253 kbps | none |
+
+**93% smaller.** Compared frames side by side at CRF 24 / 27 / 31 against the source —
+27 is visually indistinguishable, and behind a scrim nobody would ever tell. The audio
+track was free money: a hero background video *must* be muted to autoplay at all, so
+those 253 kbps could never be heard.
+
+Written to `assets/hero-video-optimised.mp4` with a poster frame and a README, ready to
+upload to Shopify. That closes audit item #1 on its own.
+
+**In the hero**
+
+Full-bleed video bed, muted / loop / playsInline / `preload="metadata"`, poster frame so
+something is on screen before it decodes. Under `prefers-reduced-motion` it renders the
+poster as a still image and never plays.
+
+Over it sits a two-axis scrim — a horizontal gradient (95% → 70% left to right) and a
+vertical one — tuned so the pink type holds over the bright plate in the footage while
+the ground still reads as brand chocolate rather than plain black. First pass at 50% on
+the right edge washed out under the "O" of INTO; strengthened to 70%.
+
+The video parallaxes slightly slower than the page, so the type reads as sitting in front
+of it rather than pasted on.
+
+**Pipeline**
+
+`scripts/embed-video.mjs` fetches, re-encodes and inlines it as a data URI for the
+single-file build (needed — the artifact CSP blocks remote media). Degrades gracefully:
+no ffmpeg or a failed fetch writes an empty map and the app streams from the CDN instead.
+`src/data/video.json` is gitignored like the other generated bundles.
+
+Single-file build is now 7.62 MB, comfortably inside the 16 MB artifact limit.
+
+**Next**
+
+- Client review.
+- Upload `assets/hero-video-optimised.mp4` to the live store — biggest single perf win
+  available and it's already done.
+- Reshoot the personal-size range out of the plastic containers.
+
+---
+
 ## 2026-08-20 — Hero meets the ribbon on the wave
 
 **Brief:** two screenshots, before and after. The scalloped hem between the chocolate

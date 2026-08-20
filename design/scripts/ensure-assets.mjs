@@ -14,6 +14,7 @@ import { fileURLToPath } from 'node:url'
 const here = dirname(fileURLToPath(import.meta.url))
 const fonts = join(here, '../src/fonts.css')
 const images = join(here, '../src/data/images.json')
+const video = join(here, '../src/data/video.json')
 
 if (!existsSync(fonts)) {
   copyFileSync(join(here, '../src/fonts.remote.css'), fonts)
@@ -23,4 +24,9 @@ if (!existsSync(images)) {
   mkdirSync(dirname(images), { recursive: true })
   writeFileSync(images, '{}')
   console.log('  created src/data/images.json (empty — images load from the Shopify CDN)')
+}
+if (!existsSync(video)) {
+  mkdirSync(dirname(video), { recursive: true })
+  writeFileSync(video, '{}')
+  console.log('  created src/data/video.json (empty — hero video streams from the Shopify CDN)')
 }

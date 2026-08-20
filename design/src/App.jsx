@@ -49,14 +49,6 @@ export default function App() {
     []
   )
 
-  // Three photos for the hero collage — visually distinct so the wall reads varied.
-  const heroCakes = useMemo(() => {
-    const want = ['strawberry-short-cake', 'chocolate-banana-cake', 'carrot-cake-copy']
-    const picked = want.map((h) => products.find((p) => p.handle === h)).filter(Boolean)
-    const rest = products.filter((p) => !picked.includes(p))
-    return [...picked, ...rest].slice(0, 3)
-  }, [products])
-
   const add = useCallback((p) => {
     setCart((c) => {
       const hit = c.find((i) => i.id === p.id)
@@ -88,7 +80,7 @@ export default function App() {
       <a className="skip" href="#shop">Skip to products</a>
       <Nav count={count} onCart={() => setOpen(true)} />
       <main id="main">
-        <Hero cakes={heroCakes} />
+        <Hero />
         <Marquee items={CLAIMS} />
         <Shop products={products} onAdd={add} />
         <Shout />
