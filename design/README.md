@@ -17,35 +17,37 @@ real photography, real Judge.me review copy.
 ```bash
 cd design
 npm install
-npm run setup     # fetches + inlines the brand fonts and product photos (once)
-npm run dev       # http://localhost:5173
+npm run dev          # http://localhost:5173
 ```
 
-`npm run setup` is required after cloning — it generates `src/fonts.css` and
-`src/data/images.json`, both of which are gitignored. It needs network access and
-macOS `sips` (used to re-encode the product photos).
+That's it. `npm install` bootstraps the two generated files automatically
+(via `postinstall`), so there's no separate setup step — fonts and product
+photos load over the network from Google Fonts and the Shopify CDN.
 
-Other scripts:
+### Scripts
 
 | | |
 |---|---|
-| `npm run build` | normal production build to `dist/` |
-| `npm run build:single` | one self-contained `dist/index.html`, no external requests |
+| `npm run dev` | dev server with hot reload |
+| `npm run build` | production build to `dist/` (~320 KB, remote assets) |
+| `npm run setup` | download and inline every font + photo as base64 |
+| `npm run build:single` | runs setup, then emits one self-contained `dist/index.html` (~6.9 MB, zero network requests) |
 | `npm run preview` | serve the last build |
 
-`scripts/embed-images.mjs` writes `src/data/images.json` (~6 MB of base64 JPEGs).
-That file is generated, so it is gitignored — run the script after cloning.
-It shells out to macOS `sips` for JPEG re-encoding.
+`npm run setup` is only needed for an offline-capable or single-file build —
+it's what produces the shareable client preview. It requires network access
+and macOS `sips` for image re-encoding. Everyday development doesn't need it.
 
-## Build
+### Generated vs committed
 
-```bash
-npm run build              # normal dist/
-SINGLEFILE=1 npm run build # one self-contained dist/index.html, no external requests
-```
+| File | Committed? | Notes |
+|---|---|---|
+| `src/fonts.remote.css` | yes | network `@font-face` rules — the default |
+| `src/fonts.css` | no | created on install; `npm run setup` replaces it with inlined base64 |
+| `src/data/images.json` | no | created empty on install; `npm run setup` fills it with base64 photos |
 
-The single-file build is what gets published as the shareable client preview —
-everything (fonts, images, CSS, JS) is inlined, so it renders under a strict CSP.
+Konnect is ProDani's licensed typeface. It is referenced by URL from the store's
+own CDN and inlined only into local builds — the binaries are never committed here.
 
 ## Putting it on the real store
 

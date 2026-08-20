@@ -2,6 +2,11 @@ import React from 'react'
 import { Reveal, CountUp, Squiggle, SpinBadge } from '../lib.jsx'
 import IMAGES from '../data/images.json'
 
+// Falls back to the live CDN when images.json is empty (i.e. `npm run setup`
+// has not been run), so the app works straight after `npm install`.
+const STORY_IMG = IMAGES.__story
+  || 'https://prodanimiami.com/cdn/shop/collections/PRODANI_09.01.23_N.A_218_of_323.jpg?width=1200'
+
 const PILLARS = [
   ['Batch',   'Small batches, never mass-produced. Every cake is baked to order in Miami.'],
   ['Sugar',   'None added — sweetness comes from fruit and the ingredients themselves.'],
@@ -93,7 +98,7 @@ export default function Story() {
           </div>
 
           <Reveal className="story__media" delay={0.1} y={36}>
-            <img src={IMAGES.__story} alt="Dani of ProDani Miami with a freshly baked protein cake" loading="lazy" />
+            <img src={STORY_IMG} alt="Dani of ProDani Miami with a freshly baked protein cake" loading="lazy" />
             <div className="story__stamp" style={{ transform: 'rotate(-9deg)' }}>
               Baked<br />in<br />Miami
             </div>

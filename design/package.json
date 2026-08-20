@@ -4,10 +4,11 @@
   "version": "0.1.0",
   "type": "module",
   "scripts": {
-    "setup": "node scripts/build-fonts.mjs && node scripts/embed-images.mjs",
+    "postinstall": "node scripts/ensure-assets.mjs",
     "dev": "vite",
     "build": "vite build",
-    "build:single": "SINGLEFILE=1 vite build",
+    "setup": "node scripts/build-fonts.mjs && node scripts/embed-images.mjs",
+    "build:single": "npm run setup && SINGLEFILE=1 vite build",
     "preview": "vite preview"
   },
   "dependencies": {

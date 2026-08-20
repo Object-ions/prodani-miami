@@ -4,6 +4,53 @@ Newest entries first. One entry per working session — what was done, what was 
 
 ---
 
+## 2026-08-19 — Make the React app runnable with just `npm install`
+
+**Why**
+
+The app was already React (Vite + React 18), but getting it running took three steps and
+`npm run setup` needed network access plus macOS `sips`. Too much friction for handing to
+someone to run locally.
+
+**Done**
+
+`npm install && npm run dev` is now the whole thing.
+
+- Added `scripts/ensure-assets.mjs`, wired to `postinstall`. If the two generated files
+  are missing it creates them: `src/fonts.css` copied from a new committed
+  `src/fonts.remote.css` (network `@font-face` rules), and `src/data/images.json` as an
+  empty map.
+- With images.json empty, `App.jsx` already falls back to the live CDN URLs in
+  catalog.json. Added the same fallback to `Story.jsx`, which was the one place reading
+  `IMAGES.__story` directly and would have rendered a broken image.
+- `npm run setup` still exists and still inlines everything as base64 — now only needed
+  for the offline/single-file build. `build:single` runs it automatically.
+
+**Verified from a genuine clean room:** deleted `node_modules`, `dist`, `src/fonts.css`
+and `src/data/images.json`, then ran `npm install` and `npm run dev`. Checked in the
+browser: 27 products render, all three brand faces (Konnect, Damion, Fugaz One) report
+loaded via `document.fonts.check`, images resolve to remote CDN URLs, hero type correct.
+`npm run build` also succeeds in that state.
+
+**Bundle sizes now diverge usefully**
+
+| Build | Size | Use |
+|---|---|---|
+| `npm run build` | ~320 KB | normal dev/deploy, assets over the network |
+| `npm run build:single` | ~6.9 MB | one self-contained file, zero requests — the shareable preview |
+
+**Licensing note stays intact:** Konnect is referenced by URL from ProDani's own CDN in
+the committed `fonts.remote.css` (4 KB, zero `data:font` URIs). The binaries are only
+ever inlined into local, gitignored files.
+
+**Next**
+
+- Client review on the quieter hero.
+- Performance work, then re-measure, before deciding React islands vs Liquid.
+- Reshoot the personal-size range out of the plastic containers.
+
+---
+
 ## 2026-08-19 — Architecture: React on the storefront without going headless
 
 **Question from the client:** can the existing Shopify store use a React frontend, given

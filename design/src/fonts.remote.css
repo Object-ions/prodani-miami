@@ -1,0 +1,15 @@
+/* Default font loading for local development — fonts fetched over the network.
+   `npm run setup` replaces src/fonts.css with a fully inlined base64 version,
+   which is what the self-contained single-file build needs. */
+@import url('https://fonts.googleapis.com/css2?family=Damion&family=Fugaz+One&display=swap');
+
+/* Konnect is ProDani's licensed face, served from their own storefront CDN —
+   referenced by URL here, never copied into this repo. */
+@font-face{font-family:'Konnect';font-style:normal;font-weight:500;font-display:swap;
+  src:url('https://cdn.shopify.com/s/files/1/0792/9475/9222/files/KonnectMedium.otf?v=1689183432') format('opentype');}
+@font-face{font-family:'Konnect';font-style:normal;font-weight:600;font-display:swap;
+  src:url('https://cdn.shopify.com/s/files/1/0792/9475/9222/files/KonnectSemiBold.otf?v=1689183432') format('opentype');}
+@font-face{font-family:'Konnect';font-style:normal;font-weight:700;font-display:swap;
+  src:url('https://cdn.shopify.com/s/files/1/0792/9475/9222/files/KonnectBold.otf?v=1689183432') format('opentype');}
+@font-face{font-family:'Konnect';font-style:normal;font-weight:800;font-display:swap;
+  src:url('https://cdn.shopify.com/s/files/1/0792/9475/9222/files/KonnectExtraBold.otf?v=1689100216') format('opentype');}
