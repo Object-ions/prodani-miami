@@ -1,24 +1,20 @@
 import React from 'react'
 import { motion, useReducedMotion } from 'framer-motion'
 
-/* Seamless infinite marquee: two identical tracks, translate one full width. */
-export default function Marquee({ items, speed = 34 }) {
+/* Seamless loop in Damion — the brand's own script face. */
+export default function Marquee({ items, speed = 30 }) {
   const reduce = useReducedMotion()
-  const Track = ({ ariaHidden }) => (
-    <div className="marquee__track" aria-hidden={ariaHidden || undefined}>
+  const Track = ({ hidden }) => (
+    <div className="marquee__track" aria-hidden={hidden || undefined}>
       {items.map((t, i) => (
         <React.Fragment key={i}>
-          <span className="mono">{t}</span>
-          <span className="marquee__sep" aria-hidden="true">✦</span>
+          <span>{t}</span>
+          <span className="marquee__sep" aria-hidden="true">●</span>
         </React.Fragment>
       ))}
     </div>
   )
-
-  if (reduce) {
-    return <div className="marquee"><Track /></div>
-  }
-
+  if (reduce) return <div className="marquee"><Track /></div>
   return (
     <div className="marquee">
       <motion.div
@@ -26,8 +22,7 @@ export default function Marquee({ items, speed = 34 }) {
         animate={{ x: ['0%', '-50%'] }}
         transition={{ duration: speed, ease: 'linear', repeat: Infinity }}
       >
-        <Track />
-        <Track ariaHidden />
+        <Track /><Track hidden />
       </motion.div>
     </div>
   )

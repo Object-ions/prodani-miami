@@ -1,6 +1,6 @@
 import React from 'react'
 import { motion } from 'framer-motion'
-import { Icon, useStuck, EASE } from '../lib.jsx'
+import { Icon, useStuck } from '../lib.jsx'
 
 const CLAIMS = [
   'Free local delivery in Miami over $75',
@@ -20,36 +20,32 @@ export default function Nav({ count, onCart }) {
 
   return (
     <>
-      {/* rotating announcement — one line, no layout shift */}
       <div className="announce" role="status" aria-live="polite">
         <motion.div
           key={i}
           className="announce__track"
-          initial={{ opacity: 0, y: 9 }}
+          initial={{ opacity: 0, y: 12 }}
           animate={{ opacity: 1, y: 0 }}
-          transition={{ duration: 0.55, ease: EASE }}
+          transition={{ type: 'spring', stiffness: 400, damping: 26 }}
         >
           <span className="announce__dot" />
-          <span className="mono">{CLAIMS[i]}</span>
+          <span className="label">{CLAIMS[i]}</span>
         </motion.div>
       </div>
 
       <header className="nav" data-stuck={stuck}>
         <div className="wrap nav__in">
-          <a href="#top" className="nav__logo" aria-label="ProDani Miami — home">
-            Pro<em>Dani</em>
-          </a>
+          <a href="#top" className="nav__logo" aria-label="ProDani Miami — home">prodani</a>
           <nav className="nav__links" aria-label="Primary">
-            {['Shop', 'Our Story', 'Nutrition', 'Stockists'].map((l) => (
-              <a key={l} className="nav__link" href={'#' + l.toLowerCase().replace(/\s/g, '-')}>{l}</a>
+            {['Shop', 'Meet Your Baker', 'Nutrition', 'Contact'].map((l) => (
+              <a key={l} className="nav__link" href={'#' + l.toLowerCase().replace(/\s+/g, '-')}>{l}</a>
             ))}
           </nav>
           <div className="nav__right">
-            <button className="icon-btn" aria-label="Search"><Icon.search /></button>
-            <button className="icon-btn" aria-label="Account"><Icon.user /></button>
+            <button className="icon-btn icon-btn--ghost" aria-label="Search"><Icon.search /></button>
+            <button className="icon-btn icon-btn--ghost" aria-label="Account"><Icon.user /></button>
             <button className="nav__cart" onClick={onCart} aria-label={`Open cart, ${count} items`}>
-              <span className="mono">Cart</span>
-              <span className="nav__count">{count}</span>
+              Cart <span className="nav__count">{count}</span>
             </button>
           </div>
         </div>

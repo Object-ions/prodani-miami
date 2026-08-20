@@ -87,11 +87,39 @@ export const Icon = {
 /* ---------- money ---------- */
 export const money = (n) => '$' + n.toFixed(2)
 
-/* ---------- category accent colours ---------- */
-export const TIER = {
-  Personal: 'var(--caramel)',
-  Family:   'var(--coral)',
-  Muffins:  '#D98CB3',
+/* ---------- hand-drawn squiggle rule ----------
+   Sits under script headings so the section head reads as drawn, not ruled. */
+export function Squiggle({ width = 190 }) {
+  return (
+    <svg className="squiggle" viewBox="0 0 190 16" width={width} height={16}
+         fill="none" aria-hidden="true" preserveAspectRatio="none">
+      <path d="M2 9C14 2 26 2 38 9s24 7 36 0 24-7 36 0 24 7 36 0 24-7 40 0"
+            stroke="currentColor" strokeWidth="3.5" strokeLinecap="round" />
+    </svg>
+  )
+}
+
+/* ---------- the oversized cropped word ----------
+   Scrolls slowly against the page so it reads as a moving banner, not a static slab. */
+export function BleedWord({ text, speed = 26 }) {
+  const reduce = useReducedMotion()
+  const Row = ({ hidden }) => (
+    <span className="bleed__word" aria-hidden={hidden || undefined}
+          style={{ paddingRight: '0.12em' }}>{text}</span>
+  )
+  if (reduce) return <div className="bleed"><Row /></div>
+  return (
+    <div className="bleed">
+      <motion.div
+        style={{ display: 'flex', flex: '0 0 auto' }}
+        animate={{ x: ['0%', '-50%'] }}
+        transition={{ duration: speed, ease: 'linear', repeat: Infinity }}
+      >
+        <div style={{ display: 'flex', flex: '0 0 auto' }}><Row /><Row hidden /></div>
+        <div style={{ display: 'flex', flex: '0 0 auto' }} aria-hidden="true"><Row hidden /><Row hidden /></div>
+      </motion.div>
+    </div>
+  )
 }
 
 /* ---------- sticky-state hook ---------- */

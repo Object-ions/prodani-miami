@@ -4,6 +4,47 @@ Newest entries first. One entry per working session — what was done, what was 
 
 ---
 
+## 2026-08-19 — Redesign, take two: whimsical, on brand colours
+
+**Why**
+
+The dark editorial pass read as too "powerful" for the brand. Client pointed at ProDani's
+own existing colour scheme instead — chocolate, pink, cream — and asked for whimsical.
+
+**Done**
+
+- Went and looked at the live site properly this time (the audit only ever parsed its HTML, never rendered it) and pulled the real brand tokens straight off the DOM:
+  - `#48312A` chocolate · `#FDC3D4` pink · `#FBF5E8` cream · `#FFFBE5` butter
+  - **Konnect** (Medium/SemiBold/Bold/ExtraBold) for headings and UI, **Damion** script, **Fugaz One** display — the store's actual stack.
+- Rewrote the whole design system around them. Both CSS files replaced, every component reworked.
+- Added `scripts/build-fonts.mjs`. Damion and Fugaz One are OFL and inlined from Google Fonts; Konnect is fetched from ProDani's own CDN at build time and **never committed** — `design/src/fonts.css` is now gitignored. Verified nothing proprietary ever reached the public repo (the pushed version only ever held Instrument Serif / Inter / JetBrains Mono).
+- Republished to the same preview URL: https://claude.ai/code/artifact/856a201e-d0c7-4cea-b59c-ebffaf799f22
+
+**Where the whimsy actually comes from**
+
+Structure, not stickers: a 22px house radius on everything (the previous pass had zero radius throughout), spring easing instead of cinematic curves, a CSS-masked **scalloped hem** between the chocolate hero and the cream page, hand-drawn SVG squiggles under the script headings, rotated sticker chips on the hero, cards that tilt on hover, a Damion-script marquee, and giant cropped pink Konnect for "BITE INTO BALANCE" and a scrolling "DELICIOUS" band — both straight from the client's own reference screenshots.
+
+**Two bugs caught and fixed during review**
+
+1. `.lede` defaults to dark ink; the hero sits on chocolate and had no override, so the hero paragraph was dark-brown-on-brown and nearly unreadable. Added explicit overrides for every dark-ground section.
+2. `.stat span` was also matching the CountUp component's inner `<span>`, shrinking the stat figure to 13.5px and forcing `display:block`, so "20g" rendered as a tiny "2" above a huge "g". Scoped to `.stat > span`. Swept the rest of the stylesheet for the same class of loose descendant selector.
+
+**Note on tooling**
+
+Browser screenshots during review kept showing blank or half-faded sections. That is Chrome throttling `requestAnimationFrame` in a background tab, freezing Framer Motion mid-animation — not a defect in the page. Worth remembering next session: force a repaint, or inject `*{opacity:1!important}`, before judging a screenshot.
+
+**Unexpected upside**
+
+The light-backdrop product photography that was a real problem in the dark direction largely stops mattering here — on a cream page the backdrops blend into the ground instead of fighting it. The plastic-container shots for the personal range are still the weak link, and that stays a photography fix.
+
+**Next**
+
+- Get a direction call from the client on this vs. the dark version.
+- Reshoot the personal-size range out of the plastic meal-prep containers.
+- On sign-off, port to Liquid and fold in the audit fixes (hero video, meta descriptions, `aggregateRating`, viewport tag).
+
+---
+
 ## 2026-08-19 — Redesign concept (dark editorial direction)
 
 **Done**

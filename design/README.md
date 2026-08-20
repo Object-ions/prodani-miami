@@ -1,9 +1,13 @@
 # ProDani Miami — redesign concept
 
-A dark editorial storefront concept, built as a React app. Direction taken from
-[davidprotein.com](https://davidprotein.com) at the client's request, re-pitched
-around ProDani's own brand values — warmth, small-batch, Miami — rather than
-David's cold bronze-and-black.
+A whimsical storefront concept, built as a React app, using **ProDani's own brand
+system** — the chocolate / pink / cream palette and the real Konnect, Damion and
+Fugaz One type stack lifted from the live site.
+
+An earlier pass took its direction from [davidprotein.com](https://davidprotein.com)
+and landed too austere for the brand. This version keeps the structural discipline
+but swaps the mood: soft corners, bouncy spring motion, scalloped edges, oversized
+pink type, script headings.
 
 Runs on the **real catalog**: 27 products pulled from `products.json`, real prices,
 real photography, real Judge.me review copy.
@@ -13,6 +17,7 @@ real photography, real Judge.me review copy.
 ```bash
 cd design
 npm install
+node scripts/build-fonts.mjs    # inlines the brand fonts (required once)
 node scripts/embed-images.mjs   # downloads + inlines product photos (required once)
 npm run dev
 ```
@@ -35,23 +40,26 @@ everything (fonts, images, CSS, JS) is inlined, so it renders under a strict CSP
 
 | Role | Face | Used for |
 |---|---|---|
-| Display | Instrument Serif | Headlines, filter row, stat figures, footer wordmark |
-| Body | Inter | Product names, running copy, navigation |
-| Utility | JetBrains Mono | Eyebrows, badges, prices, labels |
+| Display | **Fugaz One** | Hero headline, stat figures |
+| Script | **Damion** | Section headings, review pull-quotes, marquee, footer wordmark |
+| Sans | **Konnect** | Logo, the shouted display type, body, UI |
 
-All three are OFL/free and self-hosted as base64 `@font-face` in `src/fonts.css` —
-no font CDN, no render-blocking request.
+Fugaz One and Damion are OFL and inlined from Google Fonts. **Konnect is ProDani's own
+licensed face** — `scripts/build-fonts.mjs` fetches it from the store's CDN at build
+time and the binaries are never committed, so nothing proprietary is redistributed here.
 
-Palette is defined once in `src/index.css`:
+Palette is defined once in `src/index.css`, taken from the live site:
 
-- `--ink #0A0908` — warm black, never pure `#000`
-- `--cream #F7F2EA` — primary text
-- `--caramel #E0A458` — accent; the one loud colour
-- `--coral #FF7A5C` / `--leaf #8FBF6F` — category and vegan markers
+- `--cocoa #48312A` — brand brown, statement bands
+- `--pink #FDC3D4` — the joy; used at display scale
+- `--cream #FBF5E8` — page ground
+- `--butter #FFFBE5` — cards
+- `--berry #C4587E` — pink dark enough for small text on cream
 
-Structural rules borrowed from the reference: **zero border-radius on containers**
-(pills only on buttons), hairline seams instead of gaps between cards, and an
-oversized serif filter row in place of a conventional filter bar.
+Whimsy is carried by structure, not decoration: a 22px house radius on everything,
+spring easing (`--bounce`) instead of cinematic curves, a CSS-masked **scalloped hem**
+between the chocolate hero and the cream page, hand-drawn SVG squiggles under script
+headings, rotated sticker chips, and cards that tilt slightly on hover.
 
 ## Structure
 
@@ -69,9 +77,12 @@ design/
 ## Known constraints
 
 Product photography has **no alpha channel** — every shot is a photo on a light grey
-backdrop. The reference site's look depends on products cut out or shot on black.
-The concept works around this by framing the hero shot as a circular plate and
-running card images full-bleed with a warm grade. Cutout or dark-background
-photography would let the design go considerably further.
+backdrop. This mattered enormously in the earlier dark direction; on a cream page it
+mostly resolves itself, since the light backdrops blend into the ground instead of
+fighting it.
+
+What does still show: the personal-size range is shot in clear plastic meal-prep
+containers with blue and pink cutlery, while the family cakes are on ceramic. That
+inconsistency is visible in the grid and is a photography fix, not a layout one.
 
 Motion respects `prefers-reduced-motion` throughout.

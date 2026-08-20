@@ -41,8 +41,8 @@ export default function CartDrawer({ open, items, onClose, onQty }) {
             transition={{ type: 'spring', stiffness: 320, damping: 36 }}
           >
             <div className="drawer__head">
-              <span className="mono">Your cart ({items.reduce((s, i) => s + i.qty, 0)})</span>
-              <button className="icon-btn" onClick={onClose} aria-label="Close cart"><Icon.close /></button>
+              <b>Your cart ({items.reduce((s, i) => s + i.qty, 0)})</b>
+              <button className="icon-btn icon-btn--ghost" onClick={onClose} aria-label="Close cart"><Icon.close /></button>
             </div>
 
             <div className="drawer__body">
@@ -63,7 +63,7 @@ export default function CartDrawer({ open, items, onClose, onQty }) {
                     <img src={i.img} alt="" />
                     <div>
                       <div className="line__n">{i.name}</div>
-                      <div className="line__m mono">{i.cat} · {money(i.price)}</div>
+                      <div className="line__m">{i.cat} · {money(i.price)}</div>
                     </div>
                     <div className="qty">
                       <button onClick={() => onQty(i.id, -1)} aria-label={`Decrease ${i.name}`}><Icon.minus /></button>
@@ -77,10 +77,10 @@ export default function CartDrawer({ open, items, onClose, onQty }) {
 
             <div className="drawer__foot">
               <div className="drawer__row">
-                <span className="mono">Subtotal</span>
+                <span style={{ fontWeight: 700 }}>Subtotal</span>
                 <b>{money(subtotal)}</b>
               </div>
-              <p className="mono" style={{ color: 'var(--dim)', margin: 0 }}>
+              <p style={{ color: 'var(--ink-faint)', margin: 0, fontSize: 12.5, fontWeight: 600 }}>
                 Free local delivery over $75 · Taxes at checkout
               </p>
               <button className="btn" disabled={!items.length} style={!items.length ? { opacity: 0.4 } : undefined}>

@@ -5,14 +5,14 @@ import Nav from './components/Nav.jsx'
 import Hero from './components/Hero.jsx'
 import Marquee from './components/Marquee.jsx'
 import Shop from './components/Shop.jsx'
-import Story, { Stats } from './components/Story.jsx'
+import Story, { Stats, Shout } from './components/Story.jsx'
 import Reviews from './components/Reviews.jsx'
 import Footer from './components/Footer.jsx'
 import CartDrawer from './components/CartDrawer.jsx'
 
 const CLAIMS = [
-  'High protein', 'Non GMO', 'Gluten free', 'No sugar added',
-  'High fibre', 'Low calorie', 'Small batch', 'Miami made',
+  'high protein', 'non GMO', 'gluten free', 'no sugar added',
+  'high fibre', 'low calorie', 'small batch', 'miami made',
 ]
 
 export default function App() {
@@ -61,6 +61,7 @@ export default function App() {
         <Hero product={hero} />
         <Marquee items={CLAIMS} />
         <Shop products={products} onAdd={add} />
+        <Shout />
         <Stats />
         <Story />
         <Reviews />

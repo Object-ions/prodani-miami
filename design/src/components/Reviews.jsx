@@ -1,5 +1,5 @@
 import React from 'react'
-import { Reveal } from '../lib.jsx'
+import { Reveal, Squiggle } from '../lib.jsx'
 
 /* Verbatim from the store's Judge.me widget. */
 const REVIEWS = [
@@ -22,11 +22,14 @@ const REVIEWS = [
 
 export default function Reviews() {
   return (
-    <section className="sec" id="stockists" style={{ paddingTop: 0 }}>
+    <section className="sec" style={{ paddingTop: 0 }}>
       <div className="wrap">
-        <Reveal className="sec__head">
-          <h2 className="d3" style={{ margin: 0 }}>70+ five-star reviews</h2>
-          <span className="sec__num mono">Verified · Judge.me</span>
+        <Reveal className="sec__head" style={{ marginBottom: 8 }}>
+          <div>
+            <h2 className="d-script sec__title">70+ five-star reviews</h2>
+            <Squiggle />
+          </div>
+          <span className="sec__eyebrow label">Verified · Judge.me</span>
         </Reveal>
 
         <div className="rev__grid">
@@ -39,7 +42,7 @@ export default function Reviews() {
                 <span className="rev__av" aria-hidden="true">{r.who[0]}</span>
                 <div>
                   <div className="rev__name">{r.who}</div>
-                  <div className="rev__ver mono">Verified buyer</div>
+                  <div className="rev__ver">Verified buyer</div>
                 </div>
               </div>
             </Reveal>
