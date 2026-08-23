@@ -608,3 +608,71 @@ copy hygiene, and a guard that the live theme is still published.
 
 Two real a11y defects it caught and we fixed: Dawn ships two `<h1>` on every cart
 page, and collection pages had none.
+
+## 2026-08-23 — measuring the rebuild
+
+Committed the Judge.me app embed, the re-sliced badge icons and the flattened
+bleed word, then measured both versions of the store so the redesign could be
+argued from numbers rather than taste.
+
+**The measurement problem.** The brief was "screenshot the before at 1150px".
+The visible browser could not do it: the automated tab reports a fixed
+innerWidth of 1333 and `outerWidth` of 0, so it is rendering detached from any
+window and `resize_window` succeeds while changing nothing. Two other routes
+failed before the third worked:
+
+  - An iframe rig (site framed at exactly 1150px, media queries evaluating
+    against the frame) died on the storefront's own headers: `X-Frame-Options:
+    DENY` and `frame-ancestors 'none'`.
+  - `document.documentElement.style.width` would have laid out at 1150px but
+    media queries evaluate against the viewport, so every breakpoint would still
+    have been wrong. Faithful-looking and false.
+
+What worked: headless Chrome driven over the DevTools protocol, with
+`Emulation.setDeviceMetricsOverride` pinning the viewport to exactly
+1150x1000 at DPR 1. `theme/scripts/casestudy.mjs`. It needs the Bash sandbox
+disabled — inside it, Chrome's network service crashes on launch.
+
+**Three things that were wrong on the first pass and are worth remembering:**
+
+  1. `performance.getEntriesByType('largest-contentful-paint')` returns `[]`.
+     LCP entries are delivered to observers and never added to the main
+     performance timeline. The first run reported LCP as 0ms for all eight
+     measurements and looked plausible. Same trap applies to `layout-shift`.
+     Both are now registered via `Page.addScriptToEvaluateOnNewDocument` so the
+     observers exist before the first byte.
+  2. The first version ran all five BEFORE loads, then all five AFTER loads. On
+     a live storefront that lets one slow minute land entirely on one variant
+     and read as a design result. Runs are interleaved now.
+  3. Shopify injects its preview bar (`#PBarNextFrameWrapper`) into the
+     previewed theme only, so every AFTER screenshot had a control strip across
+     the bottom and no BEFORE did. `?pb=0` suppresses it; it goes on both
+     variants so the measured URLs stay identical in shape.
+
+**Results** (median of 5, cache disabled, 1150x1000, full data in
+`casestudy/metrics.json`):
+
+  homepage weight     6.94MB -> 1.83MB   -74%   (the 5.6MB hero video re-encode)
+  homepage LCP          812ms -> 320ms   -61%
+  product CLS          0.0759 -> 0.0118  -84%
+  product DOM           2,026 -> 743     -63%
+  TTFB, all pages       ~147ms -> ~49ms  -66%
+
+TTFB is worth a caveat in either direction: it is server render time, and a
+preview theme does not get the full benefit of Shopify's page cache, so the new
+theme is measured at a disadvantage there.
+
+Not everything improved, and the case study says so on the page rather than in a
+footnote: the homepage carries 53% more elements and is 69% taller (four
+sections became nine), the product page lost only 2% of its weight because the
+new gallery serves 251KB more photography than the scripts saved, and the
+contact page picked up a 100ms long task that is the embedded map. Both versions
+still load ~150 scripts, nearly all of it apps and pixels that live outside the
+theme; a theme rebuild cannot touch them.
+
+`casestudy/build.py` renders the page straight from `metrics.json`, so no figure
+on it is transcribed by hand.
+
+Also added `theme/scripts/crop.py`, the PNG cropper written when `sips` mangled
+the badge icons — its `--cropOffset` is measured from the centre of the image,
+not the top-left, which displaced every slice by ~1944px.
