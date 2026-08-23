@@ -173,7 +173,7 @@
         "color_top": "#FBF5E8",
         "color_bottom": "#48312A",
         "color_text": "#48312A",
-        "split": 70,
+        "split": 80,
         "speed": 40
       }
     },
@@ -384,10 +384,10 @@
   },
   "order": [
     "hero",
-    "badges",
     "collection",
-    "shout",
     "deck",
+    "badges",
+    "shout",
     "baker",
     "bleed",
     "reviews",
