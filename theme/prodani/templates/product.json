@@ -93,10 +93,21 @@
         "padding_top": 36,
         "padding_bottom": 28
       }
+    },
+    "reviews": {
+      "type": "prodani-product-reviews",
+      "settings": {
+        "heading": "What people said",
+        "eyebrow": "VERIFIED \u00b7 JUDGE.ME",
+        "anchor": "reviews",
+        "all_reviews_url": "/#reviews",
+        "all_reviews_label": "Read all 70+ reviews"
+      }
     }
   },
   "order": [
     "main",
+    "reviews",
     "disclosures",
     "related-products"
   ]

@@ -1,0 +1,9 @@
+{
+  "publishedAt": "2026-08-23T17:28:59.683Z",
+  "publishedThemeId": 187797995830,
+  "publishedThemeName": "prodani-rebuild (preview)",
+  "rollbackToId": 154419691830,
+  "rollbackToName": "Prodani - v.0.0.1",
+  "rollbackToUpdatedAt": "2026-03-02T23:41:56-05:00",
+  "command": "node scripts/publish.mjs 154419691830 --yes"
+}

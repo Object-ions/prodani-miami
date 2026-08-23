@@ -1,0 +1,127 @@
+/* Judge.me's product widget, dressed to match the store.
+
+   The widget's own markup is not ours and can change under us when Judge.me ships
+   an update, so this restyles only the outer surfaces — ground, type, stars,
+   controls — and leaves the widget's internal structure alone. Anything that
+   depends on a particular nesting order is avoided on purpose.
+
+   Contrast, on the cream page (#FBF5E8):
+     body copy   ink #48312A            -> 9.83:1
+     meta / date ink-soft 68%           -> 5.29:1
+     stars       berry #C4587E          -> 4.55:1  (non-text, needs 3:1; clears as text too)
+     button      cream on cocoa #48312A -> 9.83:1
+     hairline    line 14%               -> decorative only, never the sole cue */
+
+.pd-prevs{
+  background:var(--cream);
+  color:var(--ink);
+  padding-block:clamp(44px,6vw,86px);
+}
+
+.pd-prevs__widget{ margin-top:clamp(22px,3vw,38px); }
+
+/* ---- the widget itself ---- */
+.pd-prevs .jdgm-widget{ font-family:var(--sans); color:var(--ink); }
+.pd-prevs .jdgm-rev-widg__title{
+  font-family:var(--display); font-weight:400; letter-spacing:-.01em;
+  color:var(--cocoa); font-size:clamp(22px,2.4vw,30px);
+}
+.pd-prevs .jdgm-rev-widg__summary-text,
+.pd-prevs .jdgm-rev__timestamp,
+.pd-prevs .jdgm-rev__buyer-badge{ color:var(--ink-soft); }
+
+/* Stars. Judge.me paints these from its own app settings, which are set for the
+   old theme's palette — override so they read against cream. */
+.pd-prevs .jdgm-star{ color:var(--berry); }
+.pd-prevs .jdgm-star.jdgm--off{ color:var(--ink-faint); }
+
+/* Each review is a card, matching the homepage grid rather than Judge.me's
+   default full-width rules. */
+.pd-prevs .jdgm-rev{
+  background:var(--butter);
+  border:1px solid var(--line);
+  border-radius:var(--r);
+  padding:clamp(16px,1.6vw,22px);
+  margin-block:0 14px;
+}
+.pd-prevs .jdgm-rev__title{
+  font-family:var(--display); font-weight:400; color:var(--cocoa);
+  font-size:17px; letter-spacing:-.005em;
+}
+.pd-prevs .jdgm-rev__body p{ color:var(--ink); font-size:15px; line-height:1.65; }
+.pd-prevs .jdgm-rev__author{ color:var(--cocoa); font-weight:600; }
+
+/* Histogram bars */
+.pd-prevs .jdgm-histogram__bar-content{ background-color:var(--pink-deep); }
+.pd-prevs .jdgm-histogram__bar{ background-color:var(--line); }
+.pd-prevs .jdgm-histogram__row:hover .jdgm-histogram__bar-content{ background-color:var(--berry); }
+
+/* Controls. The write-a-review button is the one action in this block, so it
+   gets the solid cocoa fill and everything else stays quiet. */
+.pd-prevs .jdgm-write-rev-link,
+.pd-prevs .jdgm-rev-widg__sort-wrapper select,
+.pd-prevs .jdgm-paginate__page{
+  font-family:var(--sans);
+  border-radius:999px;
+}
+.pd-prevs .jdgm-write-rev-link{
+  background:var(--cocoa) !important;
+  color:var(--cream) !important;
+  border:0 !important;
+  padding:12px 26px !important;
+  font-weight:700; font-size:15px;
+  transition:transform .4s var(--bounce), background .3s;
+}
+.pd-prevs .jdgm-write-rev-link:hover{ transform:translateY(-2px); background:var(--cocoa-deep) !important; }
+.pd-prevs .jdgm-paginate__page{ color:var(--ink-soft); }
+.pd-prevs .jdgm-paginate__page.jdgm-curt{ color:var(--cocoa); font-weight:700; }
+
+/* The review form, when it opens */
+.pd-prevs .jdgm-form input,
+.pd-prevs .jdgm-form textarea{
+  font-family:var(--sans); color:var(--ink);
+  background:var(--butter); border:2px solid var(--line);
+  border-radius:14px; padding:11px 14px;
+}
+.pd-prevs .jdgm-form input:focus-visible,
+.pd-prevs .jdgm-form textarea:focus-visible{ outline:none; border-color:var(--berry); }
+.pd-prevs .jdgm-form__submit-btn-wrapper input[type="submit"]{
+  background:var(--cocoa) !important; color:var(--cream) !important;
+  border:0 !important; border-radius:999px !important; padding:12px 26px !important;
+  font-weight:700;
+}
+
+/* ---- link out to the full feed ---- */
+.pd-prevs__all{ margin:clamp(22px,3vw,34px) 0 0; }
+.pd-prevs__all a{
+  display:inline-flex; align-items:center; gap:12px;
+  color:var(--cocoa); font-weight:700; font-size:15px;
+  text-decoration:none; border-bottom:2px solid var(--pink-deep);
+  padding-bottom:4px;
+}
+.pd-prevs__all a:hover{ border-bottom-color:var(--cocoa); }
+.pd-prevs__all svg{ transition:transform .4s var(--ease); }
+.pd-prevs__all a:hover svg{ transform:translateX(5px); }
+@media (prefers-reduced-motion:reduce){
+  .pd-prevs__all svg,
+  .pd-prevs .jdgm-write-rev-link{ transition:none; }
+}
+
+/* Judge.me centres its widget; every other block on this page is left-aligned
+   off the same edge. Only the text alignment is changed.
+
+   An earlier version of this also forced `display:flex` onto the widget header
+   to put the button on the summary's baseline. It laid the title on top of the
+   summary text and clipped the button's label, because the widget's own layout
+   already positions those children. The rule at the top of this file — restyle
+   surfaces, never structure — exists because of that.  */
+.pd-prevs .jdgm-rev-widg,
+.pd-prevs .jdgm-rev-widg__header,
+.pd-prevs .jdgm-rev-widg__title,
+.pd-prevs .jdgm-rev-widg__summary,
+.pd-prevs .jdgm-paginate{ text-align:left; }
+
+/* With no reviews yet the widget body is an empty box holding open a stretch of
+   nothing between the summary and the link out. */
+.pd-prevs .jdgm-rev-widg__body:empty,
+.pd-prevs .jdgm-rev-widg__reviews:empty{ display:none; }

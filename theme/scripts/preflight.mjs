@@ -7,8 +7,14 @@ import { join, dirname } from 'node:path'
 import { fileURLToPath } from 'node:url'
 
 const here = dirname(fileURLToPath(import.meta.url))
-const SHOP = 'https://dani-pro-miami.myshopify.com'
+/* Two modes. Default checks the unpublished PREVIEW theme via preview_theme_id.
+   LIVE=1 drops the preview param and checks whatever the storefront actually
+   serves — which is the only thing that matters once a theme is published.
+   SHOP_URL lets it run against the customer-facing domain, not just myshopify. */
+const SHOP = process.env.SHOP_URL || 'https://dani-pro-miami.myshopify.com'
+const LIVE = process.env.LIVE === '1'
 const THEME = process.env.PREVIEW_THEME_ID || '187797995830'
+const EXPECT_LIVE_ID = Number(process.env.EXPECT_LIVE_ID || 154419691830)
 const UA = { 'User-Agent': 'Mozilla/5.0 (Macintosh; Intel Mac OS X 10_15_7) preflight' }
 
 let pass = 0, fail = 0, warn = 0
@@ -29,7 +35,7 @@ const absorb = (res) => {
     if (i > 0) jar.set(pair.slice(0, i).trim(), pair.slice(i + 1).trim())
   }
 }
-const url = (p) => `${SHOP}${p}${p.includes('?') ? '&' : '?'}preview_theme_id=${THEME}`
+const url = (p) => LIVE ? `${SHOP}${p}` : `${SHOP}${p}${p.includes('?') ? '&' : '?'}preview_theme_id=${THEME}`
 const raw = async (u, opts = {}) => {
   const res = await fetch(u, {
     ...opts,
@@ -51,9 +57,12 @@ const get = async (p) => {
 await raw(url('/'))
 const primed = await get('/')
 if (!primed.html.includes('pd-nav')) {
-  console.log('\n\x1b[31mABORT\x1b[0m  preview theme did not stick; suite would be testing the live site.')
+  console.log(LIVE
+    ? '\n\x1b[31mABORT\x1b[0m  the live storefront is not serving the new theme.'
+    : '\n\x1b[31mABORT\x1b[0m  preview theme did not stick; suite would be testing the live site.')
   process.exit(2)
 }
+console.log(`\n\x1b[1mTarget:\x1b[0m ${SHOP}  ${LIVE ? '(LIVE storefront)' : `(preview theme ${THEME})`}`)
 
 /* ---------- 1. every route renders ---------- */
 head('1. Routes render (200 + no Liquid error)')
@@ -122,6 +131,31 @@ for (const [name, marker] of [
   ['footer',      'pd-foot'],
 ]) home.includes(marker) ? ok(name) : bad(name, `"${marker}" missing`)
 
+/* ---------- 3b. the product page carries its reviews ---------- */
+head('3b. Product page reviews')
+const productRoute = routes.find(r => r.startsWith('/products/'))
+const productHtml = pages[productRoute]?.html || ''
+/* Judge.me ships a settings <style> block that names every jdgm-* class it owns,
+   so a plain substring search finds "jdgm-review-widget" on a page that has no
+   widget at all. Strip style and script before looking for markup. */
+const productBody = productHtml
+  .replace(/<style[\s\S]*?<\/style>/g, '')
+  .replace(/<script[\s\S]*?<\/script>/g, '')
+for (const [what, marker] of [
+  ['reviews section renders', 'pd-prevs'],
+  ['Judge.me widget element present', 'jdgm-review-widget'],
+]) productBody.includes(marker) ? ok(what) : bad(what, `"${marker}" missing on ${productRoute}`)
+/* The link out has to go somewhere real — an earlier draft pointed at
+   /pages/reviews, which does not exist on this store. */
+const allLink = productBody.match(/class="pd-prevs__all"[\s\S]{0,120}?href="([^"]+)"/)?.[1]
+if (!allLink) note('no "all reviews" link on the product page')
+else if (allLink.startsWith('#') || allLink.startsWith('/#')) ok('all-reviews link is an on-page anchor', allLink)
+else {
+  const r = await raw(new URL(allLink, SHOP).toString())
+  r.ok ? ok('all-reviews link resolves', `${allLink} → ${r.status}`)
+       : bad('all-reviews link is broken', `${allLink} → ${r.status}`)
+}
+
 /* ---------- 4. no stock Dawn leaking through ---------- */
 head('4. No stock Dawn remnants')
 for (const [what, marker] of [
@@ -183,10 +217,20 @@ const themes = await fetch('https://theme-kit-access.shopifyapps.com/cli/admin/a
   headers: { 'X-Shopify-Shop': 'dani-pro-miami.myshopify.com', 'X-Shopify-Access-Token': token },
 }).then(r => r.json())
 const live = themes.themes.find(t => t.role === 'main')
-live.id === 154419691830 ? ok('live theme is still Prodani - v.0.0.1', `updated ${live.updated_at.slice(0, 10)}`)
-                         : bad('LIVE THEME CHANGED', live.name)
-const preview = themes.themes.find(t => String(t.id) === THEME)
-preview?.role === 'unpublished' ? ok('preview theme is unpublished') : bad('preview theme role', preview?.role)
+if (LIVE) {
+  /* After a publish the question flips: the new theme must BE live, and the old
+     one must still be sitting in the library so a rollback is one call away. */
+  String(live.id) === THEME ? ok('live theme is the new build', `${live.name} · ${live.id}`)
+                            : bad('live theme is not the new build', `${live.name} · ${live.id}`)
+  const prev = themes.themes.find(t => t.id === EXPECT_LIVE_ID)
+  prev ? ok('previous theme still recoverable', `${prev.name} · role=${prev.role}`)
+       : bad('previous theme is GONE from the library', String(EXPECT_LIVE_ID))
+} else {
+  live.id === EXPECT_LIVE_ID ? ok('live theme is untouched', `${live.name} · updated ${live.updated_at.slice(0, 10)}`)
+                             : bad('LIVE THEME CHANGED', live.name)
+  const preview = themes.themes.find(t => String(t.id) === THEME)
+  preview?.role === 'unpublished' ? ok('preview theme is unpublished') : bad('preview theme role', preview?.role)
+}
 
 /* ---------- summary ---------- */
 console.log(`\n\x1b[1m${pass} passed · ${fail} failed · ${warn} warnings\x1b[0m`)
