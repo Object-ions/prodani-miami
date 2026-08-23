@@ -1,0 +1,48 @@
+{%- comment -%}
+  Wave ribbon. The lettering rides an SVG path; the pink is that same path drawn as
+  a thick stroke, so the colour hugs the words instead of sitting in a rectangle.
+
+  The path runs the full 0–1600 but the viewBox only shows 16–1584. That inset is
+  deliberate: a stroke's butt caps are cut square to the tangent, and the wave is
+  sloping where it ends, so each cap is a diagonal that leaves a bare wedge in the
+  corner. Hiding the caps outside the viewBox is what keeps it edge to edge.
+{%- endcomment -%}
+
+{%- assign uid = 'mq-' | append: section.id | append: modifier -%}
+{%- assign sep = '  ✦  ' -%}
+{%- assign words = items | split: ',' -%}
+{%- comment -%} Once only. Emitting the list twice made the two textPaths overlap. {%- endcomment -%}
+{%- capture text -%}
+  {%- for w in words -%}{{ w | strip }}{{ sep }}{%- endfor -%}
+{%- endcapture -%}
+
+<div class="pd-marquee {{ modifier }}" data-pd-marquee data-speed="{{ speed | default: 26 }}">
+  <svg class="pd-marquee__svg" viewBox="16 0 1568 158" xmlns="http://www.w3.org/2000/svg"
+       role="img" aria-label="{{ items | escape }}">
+    <defs>
+      <path id="{{ uid }}" fill="none"
+            d="M0 88 C 200 52 400 52 600 88 S 1000 124 1200 88 S 1400 52 1600 88"/>
+    </defs>
+
+    {%- if fill_below != blank -%}
+      <path d="M0 88 C 200 52 400 52 600 88 S 1000 124 1200 88 S 1400 52 1600 88 L1584 158 L16 158 Z"
+            transform="translate(0 27)" fill="{{ fill_below }}"/>
+    {%- endif -%}
+    {%- if fill_above != blank -%}
+      <path d="M0 88 C 200 52 400 52 600 88 S 1000 124 1200 88 S 1400 52 1600 88 L1584 0 L16 0 Z"
+            transform="translate(0 -51)" fill="{{ fill_above }}"/>
+    {%- endif -%}
+
+    <path d="M0 88 C 200 52 400 52 600 88 S 1000 124 1200 88 S 1400 52 1600 88"
+          transform="translate(0 -12)" fill="none"
+          stroke="var(--pink)" stroke-width="78" stroke-linecap="butt"/>
+
+    <text fill="var(--cocoa)" font-family="Konnect, sans-serif" font-weight="700"
+          font-size="44" letter-spacing="0.01em">
+      <textPath data-pd-track href="#{{ uid }}" startOffset="0%">{{ text }}</textPath>
+      <textPath data-pd-track href="#{{ uid }}" startOffset="-100%">{{ text }}</textPath>
+    </text>
+  </svg>
+</div>
+
+<script src="{{ 'prodani-marquee.js' | asset_url }}" defer></script>

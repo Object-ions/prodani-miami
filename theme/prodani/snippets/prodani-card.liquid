@@ -1,0 +1,37 @@
+{%- comment -%}
+  Product card. Shared by the shop grid and the collection rows so there is one
+  implementation to fix, not two.
+  Params: product (required)
+{%- endcomment -%}
+{%- capture handles -%}
+  {%- for c in product.collections -%}{{ c.handle }} {% endfor -%}
+{%- endcapture -%}
+{%- assign cat = '' -%}
+{%- for c in product.collections -%}
+  {%- if cat == '' and c.handle != 'all-products' -%}{%- assign cat = c.title -%}{%- endif -%}
+{%- endfor -%}
+
+<a class="pd-card{% if product.images.size < 2 %} pd-card--single{% endif %}"
+   href="{{ product.url }}" data-pd-item data-collections="{{ handles | strip }}">
+  <div class="pd-card__media">
+    {%- if product.featured_image != blank -%}
+      {{ product.featured_image | image_url: width: 800
+         | image_tag: loading: 'lazy', class: 'pd-card__img pd-card__img--main',
+           alt: product.title,
+           sizes: '(min-width:1181px) 22vw, (min-width:821px) 30vw, 46vw',
+           widths: '300, 450, 600, 800' }}
+    {%- endif -%}
+    {%- if product.images[1] != blank -%}
+      {{ product.images[1] | image_url: width: 800
+         | image_tag: loading: 'lazy', class: 'pd-card__img pd-card__img--alt', alt: '' }}
+    {%- endif -%}
+    <div class="pd-card__badges">
+      {%- unless product.available -%}<span class="pd-badge pd-badge--out">Sold out</span>{%- endunless -%}
+      {%- if handles contains 'vegan' -%}<span class="pd-badge pd-badge--vegan">Vegan</span>{%- endif -%}
+    </div>
+    <span class="pd-card__quick">View treat</span>
+  </div>
+  <p class="pd-card__cat">{{ cat | default: 'Treat' | escape }}</p>
+  <h3 class="pd-card__name">{{ product.title | escape }}</h3>
+  <p class="pd-card__price">{{ product.price | money }}</p>
+</a>

@@ -1,0 +1,97 @@
+{%- comment -%}
+  Chocolate band — brand line on the left, baker photo + route into their story on
+  the right. The band used to run out into empty brown; the photo and CTA fill it.
+{%- endcomment -%}
+
+{{ 'prodani-shout.css' | asset_url | stylesheet_tag }}
+<script src="{{ 'prodani-badge.js' | asset_url }}" defer></script>
+
+<section class="pd-shout" {% if section.settings.anchor != blank %}id="{{ section.settings.anchor }}"{% endif %}>
+  <div class="pd-wrap pd-shout__in">
+    <div class="pd-shout__text">
+      <h2 class="pd-shout__script">{{ section.settings.heading | newline_to_br }}</h2>
+      {%- if section.settings.body != blank -%}
+        <div class="pd-rte pd-rte--dark">{{ section.settings.body }}</div>
+      {%- endif -%}
+      {%- if section.settings.cta_label != blank -%}
+        <a class="pd-btn pd-btn--pink pd-shout__cta" href="{{ section.settings.cta_link }}">
+          {{ section.settings.cta_label | escape }}
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+            <path d="M5 12h13M12 5l7 7-7 7"/>
+          </svg>
+        </a>
+      {%- endif -%}
+    </div>
+
+    {%- assign shout_img = section.settings.image -%}
+    {%- if shout_img == blank and section.settings.product != blank -%}
+      {%- assign shout_img = section.settings.product.featured_image -%}
+    {%- endif -%}
+    {%- if shout_img != blank or section.settings.bundled_photo != 'none' -%}
+      <div class="pd-shout__media">
+        <div class="pd-shout__frame">
+          {%- if shout_img != blank -%}
+            {{ shout_img | image_url: width: 900
+               | image_tag: loading: 'lazy',
+                 alt: section.settings.image_alt,
+                 sizes: '(min-width: 981px) 420px, 92vw',
+                 widths: '400, 600, 900' }}
+          {%- else -%}
+            <img src="{{ section.settings.bundled_photo | append: '.jpg' | asset_url }}"
+                 alt="{{ section.settings.image_alt | escape }}" loading="lazy"
+                 width="800" height="1200"
+                 style="object-position:{{ section.settings.photo_focus | default: '50% 12%' }};">
+          {%- endif -%}
+        </div>
+        {%- if section.settings.badge_text != blank -%}
+          {% render 'prodani-badge', text: section.settings.badge_text, speed: section.settings.badge_speed %}
+        {%- endif -%}
+      </div>
+    {%- endif -%}
+  </div>
+
+  {%- if section.settings.ribbon_items != blank -%}
+    {% render 'prodani-marquee',
+       items: section.settings.ribbon_items,
+       speed: section.settings.ribbon_speed,
+       fill_above: 'var(--cocoa)',
+       fill_below: 'var(--cream)',
+       modifier: 'pd-marquee--shout' %}
+  {%- endif -%}
+</section>
+
+{% schema %}
+{
+  "name": "Chocolate band",
+  "tag": "section",
+  "class": "pd-section",
+  "settings": [
+    { "type": "text", "id": "anchor", "label": "Anchor id", "default": "nutrition" },
+    { "type": "textarea", "id": "heading", "label": "Heading", "default": "Where sweet\nmeets balance" },
+    { "type": "richtext", "id": "body", "label": "Body" },
+    { "type": "text", "id": "cta_label", "label": "Button label", "default": "Meet your baker" },
+    { "type": "url", "id": "cta_link", "label": "Button link" },
+    { "type": "image_picker", "id": "image", "label": "Photo" },
+    {
+      "type": "select", "id": "bundled_photo", "label": "Bundled photo (used if none picked)",
+      "options": [
+        { "value": "none", "label": "None" },
+        { "value": "prodani-dani-1", "label": "Dani — portrait" },
+        { "value": "prodani-dani-2", "label": "Dani — with cake" },
+        { "value": "prodani-trays", "label": "Tray spread" }
+      ],
+      "default": "prodani-dani-2"
+    },
+    { "type": "product", "id": "product", "label": "Product (photo used if no image picked)" },
+    { "type": "text", "id": "image_alt", "label": "Photo alt text" },
+    { "type": "text", "id": "photo_focus", "label": "Photo focus", "default": "50% 12%" },
+    { "type": "text", "id": "badge_text", "label": "Spinning badge text", "default": "dessert you can feel good about ✦ " },
+    { "type": "range", "id": "badge_speed", "label": "Badge speed (s)", "min": 10, "max": 60, "step": 2, "default": 26 },
+    { "type": "header", "content": "Wave ribbon below" },
+    { "type": "text", "id": "ribbon_items", "label": "Ribbon words", "info": "Separated by commas.",
+      "default": "carrot cake, banana bread, chocolate fudge, dubai dream, hazelnut" },
+    { "type": "range", "id": "ribbon_speed", "label": "Ribbon speed (s)", "min": 10, "max": 60, "step": 2, "default": 38 }
+  ],
+  "presets": [{ "name": "Chocolate band" }]
+}
+{% endschema %}

@@ -1,0 +1,65 @@
+/* Header — announcement strip + sticky nav, from the prototype. */
+.pd-announce{
+  height:32px; display:flex; align-items:center; justify-content:center;
+  background:var(--pink); color:var(--cocoa); overflow:hidden;
+}
+.pd-announce__track{ display:flex; align-items:center; gap:10px; }
+.pd-announce__track[hidden]{ display:none; }
+.pd-announce__dot{ width:6px; height:6px; border-radius:999px; background:var(--cocoa); }
+.pd-label{ font-size:11px; font-weight:700; letter-spacing:.14em; text-transform:uppercase; }
+
+.pd-nav{
+  position:sticky; top:0; z-index:90; height:60px; display:flex; align-items:center;
+  background:rgba(251,245,232,.86); backdrop-filter:blur(14px) saturate(160%);
+  border-bottom:2px solid transparent; transition:border-color .35s, background .35s;
+}
+.pd-nav[data-stuck="true"]{ border-bottom-color:var(--line); background:rgba(251,245,232,.96); }
+.pd-nav__in{ display:flex; align-items:center; gap:34px; width:100%; }
+.pd-nav__logo{
+  font-family:var(--sans); font-weight:800; font-size:25px; line-height:1;
+  letter-spacing:-.03em; color:var(--cocoa); text-decoration:none;
+}
+.pd-nav__logo-img{ height:clamp(24px,2.4vw,32px); width:auto; display:block; }
+
+/* Wordmark painted through a mask, so one cream PNG serves any ground colour. */
+.pd-nav__logo-mark{ display:none; }
+.pd-nav__logo-text{ display:inline; }
+@supports (mask-image: url('')) or (-webkit-mask-image: url('')) {
+  .pd-nav__logo-mark{
+    display:block;
+    height:clamp(22px,2.2vw,30px);
+    aspect-ratio:3.7 / 1;      /* 900x243 */
+    background:var(--cocoa);
+    -webkit-mask:var(--pd-logo) no-repeat center / contain;
+    mask:var(--pd-logo) no-repeat center / contain;
+  }
+  .pd-nav__logo-text{ display:none; }
+}
+.pd-nav__links{ display:flex; gap:6px; }
+.pd-nav__link{
+  font-weight:600; font-size:14.5px; color:var(--ink-soft); text-decoration:none;
+  padding:7px 14px; border-radius:999px;
+  transition:color .25s, background .35s var(--bounce);
+}
+.pd-nav__link:hover{ color:var(--cocoa); background:var(--pink); }
+.pd-nav__right{ margin-left:auto; display:flex; align-items:center; gap:10px; }
+.pd-icon-btn{
+  width:38px; height:38px; border-radius:999px; display:grid; place-items:center;
+  background:rgba(72,49,42,.08); color:var(--cocoa);
+  transition:background .3s, transform .4s var(--bounce);
+}
+.pd-icon-btn:hover{ background:var(--pink); transform:scale(1.08) rotate(-6deg); }
+.pd-icon-btn svg{ width:17px; height:17px; }
+.pd-nav__cart{
+  display:flex; align-items:center; gap:8px; height:38px; padding:0 8px 0 18px;
+  border-radius:999px; background:var(--cocoa); color:var(--cream);
+  font-weight:700; font-size:13.5px; text-decoration:none;
+  transition:transform .4s var(--bounce);
+}
+.pd-nav__cart:hover{ transform:translateY(-2px) scale(1.03); }
+.pd-nav__count{
+  min-width:22px; height:22px; padding:0 6px; border-radius:999px;
+  background:var(--pink); color:var(--cocoa);
+  display:grid; place-items:center; font-size:12.5px; font-weight:700;
+}
+@media (max-width:960px){ .pd-nav__links{ display:none; } }

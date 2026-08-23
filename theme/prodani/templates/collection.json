@@ -1,0 +1,18 @@
+{
+  "sections": {
+    "grid": {
+      "type": "prodani-shop",
+      "settings": {
+        "heading": "",
+        "eyebrow": "baked to order",
+        "anchor": "shop",
+        "limit": 40,
+        "cta_label": "",
+        "heading_tag": "h1"
+      }
+    }
+  },
+  "order": [
+    "grid"
+  ]
+}

@@ -1,0 +1,83 @@
+{%- comment -%}
+  Header — announcement strip + sticky nav, ported from the prototype.
+  Replaces Dawn's announcement-bar + header pair as a single unit.
+{%- endcomment -%}
+
+{{ 'prodani-header.css' | asset_url | stylesheet_tag }}
+
+{%- if section.settings.claims != blank -%}
+  {%- assign claims = section.settings.claims | split: '|' -%}
+  <div class="pd-announce" role="status" aria-live="polite" data-pd-announce>
+    {%- for claim in claims -%}
+      <div class="pd-announce__track"{% unless forloop.first %} hidden{% endunless %}>
+        <span class="pd-announce__dot"></span>
+        <span class="pd-label">{{ claim | strip | escape }}</span>
+      </div>
+    {%- endfor -%}
+  </div>
+{%- endif -%}
+
+<header class="pd-nav" data-pd-nav>
+  <div class="pd-wrap pd-nav__in">
+    <a href="{{ routes.root_url }}" class="pd-nav__logo" aria-label="{{ shop.name | escape }} — home">
+      {%- comment -%}
+        The store's own wordmark (Asset_4) is cream-on-transparent, drawn for a dark
+        header. Ours is cream, so painting it as a mask lets it take the brand colour
+        instead of vanishing. Falls back to the text logo where masks are unsupported.
+      {%- endcomment -%}
+      {%- if section.settings.logo != blank -%}
+        {{ section.settings.logo | image_url: width: 400 | image_tag: alt: shop.name, class: 'pd-nav__logo-img' }}
+      {%- elsif section.settings.use_brand_logo -%}
+        <span class="pd-nav__logo-mark" role="img" aria-label="{{ shop.name | escape }}"
+              style="--pd-logo:url({{ 'prodani-wordmark.png' | asset_url }});"></span>
+        <span class="pd-nav__logo-text">{{ section.settings.logo_text | default: shop.name | escape | downcase }}</span>
+      {%- else -%}
+        {{ section.settings.logo_text | default: shop.name | escape | downcase }}
+      {%- endif -%}
+    </a>
+
+    <nav class="pd-nav__links" aria-label="Primary">
+      {%- for link in section.settings.menu.links -%}
+        <a class="pd-nav__link" href="{{ link.url }}">{{ link.title }}</a>
+      {%- endfor -%}
+    </nav>
+
+    <div class="pd-nav__right">
+      <a class="pd-icon-btn" href="{{ routes.search_url }}" aria-label="Search">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round">
+          <circle cx="11" cy="11" r="7"/><path d="M20 20l-3.6-3.6"/>
+        </svg>
+      </a>
+      <a class="pd-icon-btn" href="{{ routes.account_url }}" aria-label="Account">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round">
+          <circle cx="12" cy="8" r="4"/><path d="M4 21c0-4 3.6-6 8-6s8 2 8 6"/>
+        </svg>
+      </a>
+      <a class="pd-nav__cart" href="{{ routes.cart_url }}"
+         aria-label="Open cart, {{ cart.item_count }} items">
+        Cart <span class="pd-nav__count">{{ cart.item_count }}</span>
+      </a>
+    </div>
+  </div>
+</header>
+
+<script src="{{ 'prodani-header.js' | asset_url }}" defer></script>
+
+{% schema %}
+{
+  "name": "Header",
+  "class": "pd-header-group",
+  "settings": [
+    { "type": "image_picker", "id": "logo", "label": "Logo image" },
+    { "type": "checkbox", "id": "use_brand_logo", "label": "Use the bundled prodani wordmark", "default": true },
+    { "type": "text", "id": "logo_text", "label": "Logo text (if no image)", "default": "prodani" },
+    { "type": "link_list", "id": "menu", "label": "Menu", "default": "main-menu" },
+    {
+      "type": "textarea", "id": "claims", "label": "Announcement claims",
+      "info": "Separate each with a | — they rotate.",
+      "default": "Free local delivery in Miami over $75|Baked in small batches — never mass-produced|70+ five-star reviews|No added sugar. Ever."
+    }
+  ],
+  "enabled_on": { "groups": ["header"] }
+}
+{% endschema %}

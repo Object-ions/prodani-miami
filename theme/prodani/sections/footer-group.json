@@ -1,0 +1,54 @@
+{
+  "type": "footer",
+  "name": "Footer",
+  "sections": {
+    "footer": {
+      "type": "prodani-footer",
+      "blocks": {
+        "c1": {
+          "type": "menu",
+          "settings": {
+            "heading": "Shop",
+            "links": "Personal cakes|/collections/all\nFamily cakes|/collections/all\nMuffins|/collections/all\nVegan range|/collections/all\nGift cards|/collections/all"
+          }
+        },
+        "c2": {
+          "type": "menu",
+          "settings": {
+            "heading": "Company",
+            "links": "Meet your baker|/pages/meet-your-baker\nNutrition|/#nutrition\nContact|/pages/contact"
+          }
+        },
+        "c3": {
+          "type": "menu",
+          "settings": {
+            "heading": "Help",
+            "links": "Delivery|/pages/contact\nStorage & shelf life|/pages/contact\nAllergens|/pages/contact\nReturns|/policies/refund-policy\nFAQ|/pages/contact"
+          }
+        }
+      },
+      "block_order": [
+        "c1",
+        "c2",
+        "c3"
+      ],
+      "settings": {
+        "wordmark": "prodani",
+        "signup_title": "First dibs on new bakes",
+        "signup_copy": "New flavors, restocks and the odd Miami pop-up. Once a month, nothing else.",
+        "signup_button": "Subscribe",
+        "follow_label": "Follow us",
+        "instagram": "https://instagram.com/prodanimiami",
+        "facebook": "https://www.facebook.com/profile.php?id=61550592411869",
+        "policy_menu": "footer",
+        "credit_label": "Designed and developed by",
+        "credit_name": "Switch Case Studio",
+        "credit_link": "https://switchcasestudio.com",
+        "signup_product": "strawberry-short-cake"
+      }
+    }
+  },
+  "order": [
+    "footer"
+  ]
+}

@@ -1,0 +1,88 @@
+/* Product page — brand skin over Dawn's own markup.
+   Deliberately CSS ONLY. The variant picker, quantity stepper, add-to-cart form,
+   Shop Pay button and pickup availability are Dawn's components wired into
+   Shopify's cart API. Restyling them is safe; rewriting the Liquid would put
+   add-to-cart and checkout at risk for a visual change. Nothing here alters
+   markup, names, or behaviour. */
+
+.product{ background:var(--cream); }
+.shopify-section--main-product{ background:var(--cream); }
+
+/* ---- media ---- */
+.product__media-wrapper .product__media,
+.product__media-wrapper .media{
+  border-radius:calc(var(--r) + 6px); overflow:hidden; background:var(--butter);
+}
+.product__media-item{ margin-bottom:clamp(10px,1.2vw,18px); }
+
+/* ---- title block ---- */
+.product__text.caption-with-letter-spacing{
+  font-size:11.5px; font-weight:700; letter-spacing:.14em; text-transform:uppercase;
+  color:var(--berry);
+}
+.product__title h1,
+.product__title{
+  font-family:var(--sans); font-weight:800; letter-spacing:-.02em; line-height:1.05;
+  color:var(--cocoa); font-size:clamp(30px,3.4vw,48px);
+}
+.product .price,
+.product .price__container{
+  font-family:var(--sans); font-weight:700; color:var(--cocoa);
+  font-size:clamp(20px,1.9vw,26px);
+}
+
+/* ---- variant picker ---- */
+.product-form__input .form__label{
+  font-size:11.5px; font-weight:700; letter-spacing:.1em; text-transform:uppercase;
+  color:var(--berry); margin-bottom:10px;
+}
+.product-form__input input[type='radio'] + label,
+.product-form__input .select__select{
+  border-radius:999px; border:2px solid var(--line); background:var(--butter);
+  color:var(--cocoa); font-weight:700; font-size:14px; padding:11px 20px;
+  transition:transform .35s var(--bounce), background .25s, border-color .25s, color .25s;
+}
+.product-form__input input[type='radio'] + label:hover{
+  transform:translateY(-2px); border-color:var(--pink-deep);
+}
+.product-form__input input[type='radio']:checked + label{
+  background:var(--cocoa); color:var(--cream); border-color:var(--cocoa);
+}
+/* Focus must stay visible: keyboard users navigate variants with arrow keys. */
+.product-form__input input[type='radio']:focus-visible + label{
+  outline:3px solid var(--pink-deep); outline-offset:2px;
+}
+
+/* ---- quantity ---- */
+.product-form__input .quantity,
+.quantity{
+  border-radius:999px; border:2px solid var(--line); background:var(--butter);
+  overflow:hidden; height:52px;
+}
+.quantity__input{ color:var(--cocoa); font-weight:700; }
+.quantity__button{ color:var(--cocoa); }
+.quantity__button:hover{ color:var(--berry); }
+
+/* ---- buttons ---- */
+.product-form__submit{
+  border-radius:999px; background:var(--cocoa); color:var(--cream);
+  border:0; box-shadow:none; font-weight:700; font-size:15px; min-height:54px;
+  transition:transform .4s var(--bounce), background .3s;
+}
+.product-form__submit:hover:not([disabled]){ transform:translateY(-2px); background:var(--cocoa-deep); }
+.product-form__submit[disabled]{ background:var(--cocoa-soft); color:rgba(251,245,232,.7); }
+/* Shop Pay's own brand colour is left alone; only its shape is matched. */
+.shopify-payment-button__button--unbranded,
+.shopify-payment-button__button{ border-radius:999px !important; }
+
+/* ---- pickup + description ---- */
+.product__pickup-availabilities,
+.product__description{ color:var(--ink-soft); }
+.product__description{ font-size:16.5px; line-height:1.7; }
+.product__description strong{ color:var(--cocoa); }
+.product__accordion .accordion__title,
+.product__accordion summary{ color:var(--cocoa); font-weight:700; }
+
+/* ---- inline links ---- */
+.product__info-container a{ color:var(--berry); text-underline-offset:3px; }
+.product__info-container a:hover{ color:var(--cocoa); }

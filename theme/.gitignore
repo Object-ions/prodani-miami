@@ -1,0 +1,8 @@
+node_modules/
+.shopify/
+.env
+*.log
+
+# Read-only copy of the live Minimog theme, pulled for reference only.
+# Never pushed, never edited — re-pull with `npm run pull:reference`.
+reference-minimog/

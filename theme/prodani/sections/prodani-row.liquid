@@ -1,0 +1,61 @@
+{%- comment -%}
+  One collection, one row. Used on the homepage to show a type at a time
+  (personal cakes, muffins, …) with a route into the full collection, instead of
+  dropping the entire catalogue on the front page.
+{%- endcomment -%}
+
+{{ 'prodani-shop.css' | asset_url | stylesheet_tag }}
+
+{%- assign c = section.settings.collection -%}
+{%- if c != blank -%}
+  <section class="pd-shop pd-row"
+           {% if section.settings.anchor != blank %}id="{{ section.settings.anchor }}"{% endif %}>
+    <div class="pd-wrap">
+      <div class="pd-sec-head">
+        <div>
+          <h2 class="pd-sec-title">{{ section.settings.heading | default: c.title | escape }}</h2>
+          {% render 'prodani-squiggle' %}
+        </div>
+        {%- if section.settings.eyebrow != blank -%}
+          <span class="pd-eyebrow">{{ section.settings.eyebrow | escape }}</span>
+        {%- else -%}
+          <span class="pd-eyebrow">{{ c.products_count }}&nbsp;in&nbsp;this&nbsp;range</span>
+        {%- endif -%}
+      </div>
+
+      <div class="pd-grid">
+        {%- for product in c.products limit: section.settings.count -%}
+          {% render 'prodani-card', product: product %}
+        {%- endfor -%}
+      </div>
+
+      <div class="pd-shop__foot">
+        <a class="pd-btn" href="{{ section.settings.cta_link | default: c.url }}">
+          {{ section.settings.cta_label | default: 'Shop all' | escape }}
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6"
+               stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+            <path d="M5 12h13M12 5l7 7-7 7"/>
+          </svg>
+        </a>
+      </div>
+    </div>
+  </section>
+{%- endif -%}
+
+{% schema %}
+{
+  "name": "Collection row",
+  "tag": "section",
+  "class": "pd-section",
+  "settings": [
+    { "type": "collection", "id": "collection", "label": "Collection" },
+    { "type": "text", "id": "heading", "label": "Heading (defaults to collection title)" },
+    { "type": "text", "id": "eyebrow", "label": "Eyebrow (defaults to a count)" },
+    { "type": "range", "id": "count", "label": "Products in the row", "min": 2, "max": 8, "step": 1, "default": 4 },
+    { "type": "text", "id": "cta_label", "label": "Button label", "default": "Shop all" },
+    { "type": "url", "id": "cta_link", "label": "Button link (defaults to the collection)" },
+    { "type": "text", "id": "anchor", "label": "Anchor id" }
+  ],
+  "presets": [{ "name": "Collection row" }]
+}
+{% endschema %}

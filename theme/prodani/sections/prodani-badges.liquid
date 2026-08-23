@@ -1,0 +1,67 @@
+{%- comment -%}
+  Product benefit strip. The icon art is the store's own (sliced out of the brand
+  strip on their CDN); the labels are real text rather than the baked-in pixels
+  from that strip, so they scale, translate, and reflow instead of turning into a
+  six-across smudge on a phone.
+{%- endcomment -%}
+
+{{ 'prodani-badges.css' | asset_url | stylesheet_tag }}
+
+<section class="pd-badges" style="--pd-badges-bg:{{ section.settings.background }};">
+  <div class="pd-wrap">
+    {%- if section.settings.heading != blank -%}
+      <h2 class="pd-badges__heading">{{ section.settings.heading | escape }}</h2>
+    {%- endif -%}
+    <ul class="pd-badges__row">
+      {%- for block in section.blocks -%}
+        <li class="pd-badge-item" {{ block.shopify_attributes }}>
+          {%- if block.settings.image != blank -%}
+            {{ block.settings.image | image_url: width: 320
+               | image_tag: loading: 'lazy', alt: '', class: 'pd-badge-item__icon' }}
+          {%- else -%}
+            <img class="pd-badge-item__icon"
+                 src="{{ block.settings.icon | append: '.png' | asset_url }}"
+                 alt="" loading="lazy" width="320" height="231">
+          {%- endif -%}
+          <span class="pd-badge-item__label">{{ block.settings.label | escape }}</span>
+        </li>
+      {%- endfor -%}
+    </ul>
+  </div>
+</section>
+
+{% schema %}
+{
+  "name": "Benefit badges",
+  "tag": "section",
+  "class": "pd-section",
+  "settings": [
+    { "type": "text", "id": "heading", "label": "Heading (optional)" },
+    { "type": "color", "id": "background", "label": "Background", "default": "#FDC3D4" }
+  ],
+  "blocks": [
+    {
+      "type": "badge",
+      "name": "Badge",
+      "limit": 8,
+      "settings": [
+        { "type": "text", "id": "label", "label": "Label" },
+        {
+          "type": "select", "id": "icon", "label": "Bundled icon",
+          "options": [
+            { "value": "prodani-badge-high-protein",  "label": "High protein" },
+            { "value": "prodani-badge-non-gmo",       "label": "Non GMO" },
+            { "value": "prodani-badge-no-sugar-added","label": "No sugar added" },
+            { "value": "prodani-badge-gluten-free",   "label": "Gluten free" },
+            { "value": "prodani-badge-high-fiber",    "label": "High fiber" },
+            { "value": "prodani-badge-low-calorie",   "label": "Low calorie" }
+          ],
+          "default": "prodani-badge-high-protein"
+        },
+        { "type": "image_picker", "id": "image", "label": "Custom icon (overrides the bundled one)" }
+      ]
+    }
+  ],
+  "presets": [{ "name": "Benefit badges" }]
+}
+{% endschema %}

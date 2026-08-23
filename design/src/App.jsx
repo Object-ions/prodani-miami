@@ -80,8 +80,7 @@ export default function App() {
       <a className="skip" href="#shop">Skip to products</a>
       <Nav count={count} onCart={() => setOpen(true)} />
       <main id="main">
-        <Hero />
-        <Marquee items={CLAIMS} />
+        <Hero claims={CLAIMS} />
         <Shop products={products} onAdd={add} />
         <Shout />
         <Marquee items={TREATS} speed={38} reverse />

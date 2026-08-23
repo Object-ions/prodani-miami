@@ -1,0 +1,30 @@
+/* The band is painted in two flat colours with a hard stop, then the whole thing
+   is clipped to the letterforms. Above the split the letters read as the next
+   section's colour on this one's ground; below, the relationship inverts — which
+   is what makes them look half-submerged. */
+.pd-bleed{
+  position:relative; overflow:hidden; line-height:0;
+  background:linear-gradient(
+    to bottom,
+    var(--pd-bleed-top) 0, var(--pd-bleed-top) var(--pd-bleed-split),
+    var(--pd-bleed-bottom) var(--pd-bleed-split), var(--pd-bleed-bottom) 100%);
+}
+.pd-bleed__word{
+  display:flex; width:max-content; white-space:nowrap;
+  font-family:var(--sans); font-weight:800; text-transform:uppercase;
+  font-size:clamp(72px, 17vw, 240px); line-height:.78; letter-spacing:-.03em;
+
+  /* Letters take the inverse of the band, so each half contrasts with its ground. */
+  background:linear-gradient(
+    to bottom,
+    var(--pd-bleed-text) 0, var(--pd-bleed-text) var(--pd-bleed-split),
+    var(--pd-bleed-top) var(--pd-bleed-split), var(--pd-bleed-top) 100%);
+  -webkit-background-clip:text;
+  background-clip:text;
+  color:transparent;
+
+  animation:pd-bleed-drift var(--pd-bleed-speed, 40s) linear infinite;
+}
+.pd-bleed__word span{ padding-right:.12em; }
+@keyframes pd-bleed-drift{ to{ transform:translateX(-50%); } }
+@media (prefers-reduced-motion: reduce){ .pd-bleed__word{ animation:none; } }

@@ -4,41 +4,41 @@
 
 /* ---------- announcement ---------- */
 .announce{
-  height:42px; display:flex; align-items:center; justify-content:center;
+  height:32px; display:flex; align-items:center; justify-content:center;
   background:var(--pink); color:var(--cocoa); overflow:hidden;
 }
 .announce__track{ display:flex; align-items:center; gap:10px; }
 .announce .label{ font-size:11px; }
-.announce__dot{ width:7px; height:7px; border-radius:999px; background:var(--cocoa); }
+.announce__dot{ width:6px; height:6px; border-radius:999px; background:var(--cocoa); }
 
 /* ---------- nav ---------- */
 .nav{
-  position:sticky; top:0; z-index:90; height:76px; display:flex; align-items:center;
+  position:sticky; top:0; z-index:90; height:60px; display:flex; align-items:center;
   background:rgba(251,245,232,.86); backdrop-filter:blur(14px) saturate(160%);
   border-bottom:2px solid transparent; transition:border-color .35s, background .35s;
 }
 .nav[data-stuck="true"]{ border-bottom-color:var(--line); background:rgba(251,245,232,.96); }
 .nav__in{ display:flex; align-items:center; gap:34px; width:100%; }
 .nav__logo{
-  font-family:var(--sans); font-weight:800; font-size:29px; line-height:1;
+  font-family:var(--sans); font-weight:800; font-size:25px; line-height:1;
   letter-spacing:-.03em; color:var(--cocoa);
 }
 .nav__links{ display:flex; gap:6px; }
 .nav__link{
-  font-weight:600; font-size:15px; color:var(--ink-soft);
-  padding:9px 15px; border-radius:999px;
+  font-weight:600; font-size:14.5px; color:var(--ink-soft);
+  padding:7px 14px; border-radius:999px;
   transition:color .25s, background .35s var(--bounce);
 }
 .nav__link:hover{ color:var(--cocoa); background:var(--pink); }
 .nav__right{ margin-left:auto; display:flex; align-items:center; gap:10px; }
 .nav__cart{
-  display:flex; align-items:center; gap:9px; height:44px; padding:0 9px 0 20px;
-  border-radius:999px; background:var(--cocoa); color:var(--cream); font-weight:700; font-size:14px;
+  display:flex; align-items:center; gap:8px; height:38px; padding:0 8px 0 18px;
+  border-radius:999px; background:var(--cocoa); color:var(--cream); font-weight:700; font-size:13.5px;
   transition:transform .4s var(--bounce);
 }
 .nav__cart:hover{ transform:translateY(-2px) scale(1.03); }
 .nav__count{
-  min-width:24px; height:24px; padding:0 7px; border-radius:999px;
+  min-width:22px; height:22px; padding:0 6px; border-radius:999px;
   background:var(--pink); color:var(--cocoa);
   display:grid; place-items:center; font-size:12.5px; font-weight:700;
 }
@@ -47,12 +47,21 @@
 /* ---------- hero — the type wall ---------- */
 .hero{
   position:relative; background:var(--cocoa); color:var(--on-dark);
-  min-height:auto;
-  display:flex; align-items:center;
-  padding-block:clamp(54px,7vw,104px) clamp(56px,6vw,86px);
+  /* Hero + ribbon are one 90vh block — the ribbon is the block's bottom edge,
+     not a band stacked underneath it. It's a floor, not a cage: on a short, wide
+     viewport the block grows rather than cropping the type. */
+  min-height:90vh;
+  min-height:90svh;   /* mobile: measure against the collapsed-chrome viewport */
+  display:flex; flex-direction:column;
   overflow:hidden;
 }
-.hero__in{ position:relative; z-index:2; width:100%; }
+/* Takes the leftover height above the ribbon and centres the type in it. */
+.hero__body{
+  position:relative; z-index:2; flex:1 1 auto; min-height:0;
+  display:flex; align-items:center;
+  padding-block:clamp(28px,4vw,64px) clamp(8px,1.5vw,20px);
+}
+.hero__in{ width:100%; }
 
 .hero__kicker{
   font-family:var(--display); font-size:clamp(1.05rem,2vw,1.7rem);
@@ -63,10 +72,16 @@
 .giant{ margin:0; display:grid; gap:0; }
 .giant__line{
   display:block; font-family:var(--sans); font-weight:800; text-transform:uppercase;
-  line-height:.84; letter-spacing:-.04em; color:var(--pink); white-space:nowrap;
+  /* At this weight and size, .84/-.04em welded the two lines into one slab: the
+     descender-free caps sat almost touching and the letters ran together. Opened
+     up on both axes, with a wider word space so "BITE INTO" reads as two words. */
+  line-height:.92; letter-spacing:-.012em; word-spacing:.06em;
+  color:var(--pink); white-space:nowrap;
 }
-.giant__line:nth-child(1){ font-size:clamp(2.60rem,13.50vw,15.00rem); }  /* BITE INTO */
-.giant__line:nth-child(2){ font-size:clamp(2.52rem,13.11vw,14.56rem); }  /* BALANCE — 0.971x so both lines set to one width */
+/* The vh term only bites on short, wide viewports, where width alone would size
+   the type taller than the 90vh block can hold. */
+.giant__line:nth-child(1){ font-size:clamp(2.50rem,min(12.90vw,24vh),14.30rem); }  /* BITE INTO */
+.giant__line:nth-child(2){ font-size:clamp(2.495rem,min(12.88vw,23.96vh),14.27rem); }  /* BALANCE — nudged so both lines set to one width at the new tracking */
 .giant__mask{ display:inline-block; overflow:hidden; vertical-align:top; }
 .giant__ch{ display:inline-block; }
 
@@ -93,11 +108,11 @@
 .hero__scrim{
   position:absolute; inset:0; z-index:1; pointer-events:none;
   background:
-    linear-gradient(90deg, rgba(58,39,33,.95) 0%, rgba(58,39,33,.88) 45%, rgba(58,39,33,.7) 100%),
-    linear-gradient(180deg, rgba(58,39,33,.6) 0%, rgba(58,39,33,.42) 40%, rgba(58,39,33,.78) 100%);
+    linear-gradient(90deg, rgba(58,39,33,.86) 0%, rgba(58,39,33,.74) 34%, rgba(58,39,33,.46) 64%, rgba(58,39,33,.16) 100%),
+    linear-gradient(180deg, rgba(58,39,33,.24) 0%, rgba(58,39,33,.1) 40%, rgba(58,39,33,.4) 100%);
 }
 @media (max-width:820px){
-  .hero__scrim{ background:linear-gradient(180deg, rgba(58,39,33,.86), rgba(58,39,33,.9)); }
+  .hero__scrim{ background:linear-gradient(180deg, rgba(58,39,33,.62), rgba(58,39,33,.7)); }
 }
 
 /* rotating stamp */
@@ -116,6 +131,9 @@
    follows the same wave, so the colour hugs the lettering rather than filling a
    rectangular band — hence no background on the container itself. */
 .marquee{ color:var(--cocoa); overflow:hidden; display:block; line-height:0; }
+/* Sits over the footage rather than after it, so there is no band of flat cocoa
+   between the video and the lettering. */
+.marquee--hero{ position:relative; z-index:3; flex:0 0 auto; margin-bottom:-1px; }
 
 /* TextPath primitive — replaces the Tailwind utilities from the original component */
 .textpath{ width:100%; height:100%; display:flex; align-items:center; justify-content:center; }
@@ -209,7 +227,25 @@
 
 /* ---------- shout band ---------- */
 .shout{ background:var(--cocoa); position:relative; padding-block:clamp(64px,9vw,120px); overflow:hidden; }
-.shout__in{ position:relative; z-index:2; }
+/* Two columns now: the band used to run out into empty brown on the right, so the
+   baker's photo and the route into their story fill it. */
+.shout__in{
+  position:relative; z-index:2;
+  display:grid; grid-template-columns:minmax(0,1fr) minmax(0,420px);
+  gap:clamp(28px,5vw,76px); align-items:center;
+}
+.shout__text{ min-width:0; }
+.shout__cta{ margin-top:clamp(24px,3vw,38px); }
+.shout__media{ position:relative; min-width:0; }
+.shout__frame{
+  border-radius:calc(var(--r) + 6px); overflow:hidden;
+  background:rgba(251,245,232,.06); aspect-ratio:3/4;
+}
+.shout__frame img{ width:100%; height:100%; object-fit:cover; display:block; }
+@media (max-width:980px){
+  .shout__in{ grid-template-columns:1fr; }
+  .shout__media{ max-width:330px; }
+}
 .shout h2{ color:var(--pink); margin:0; }
 .shout .lede{ color:var(--on-dark-soft); max-width:48ch; margin:26px 0 0; }
 
@@ -330,22 +366,102 @@
 
 /* ---------- footer ---------- */
 .foot{ background:var(--cocoa); color:var(--on-dark); padding-top:clamp(48px,6vw,76px); }
-.foot__top{ display:grid; grid-template-columns:1.5fr 1fr 1fr 1fr; gap:34px; }
-@media (max-width:900px){ .foot__top{ grid-template-columns:1fr 1fr; } }
-@media (max-width:520px){ .foot__top{ grid-template-columns:1fr; } }
-.foot h4{ font-size:12px; letter-spacing:.14em; text-transform:uppercase; color:var(--pink); margin:0 0 16px; font-weight:700; }
+
+/* nav columns | rail — the two zones of the Footer9 layout */
+.foot__grid{
+  display:grid; grid-template-columns:minmax(0,1fr) minmax(0,400px);
+  gap:clamp(34px,5vw,80px); align-items:start;
+}
+@media (max-width:1080px){
+  .foot__grid{ grid-template-columns:1fr; }
+  /* stacked, the rail would otherwise stretch the signup card across the page */
+  .foot__rail{ max-width:480px; }
+}
+
+.foot__cols{ display:grid; grid-template-columns:repeat(3,minmax(0,1fr)); gap:34px; }
+@media (max-width:640px){ .foot__cols{ grid-template-columns:1fr 1fr; } }
+@media (max-width:420px){ .foot__cols{ grid-template-columns:1fr; } }
+.foot__colhead{
+  display:inline-flex; margin:0 0 18px; padding:5px 10px; border-radius:8px;
+  background:rgba(251,245,232,.09); color:var(--pink);
+  font-size:11px; font-weight:700; letter-spacing:.14em; text-transform:uppercase;
+}
 .foot ul{ list-style:none; padding:0; margin:0; display:grid; gap:10px; }
 .foot li a{ color:var(--on-dark-soft); font-size:14.5px; font-weight:500; transition:color .25s; }
 .foot li a:hover{ color:var(--pink); }
-.foot__word{
-  font-family:var(--script); font-size:clamp(3.6rem,15vw,12rem); line-height:1;
-  margin:clamp(40px,6vw,72px) 0 0; color:var(--pink); user-select:none; white-space:nowrap;
+
+/* right rail: signup card + follow bar */
+.foot__rail{ display:flex; flex-direction:column; gap:14px; }
+.foot__card{
+  border-radius:calc(var(--r) + 6px); padding:clamp(16px,1.6vw,22px);
+  background:rgba(251,245,232,.05); border:2px solid var(--line-dark);
 }
+.foot__card-media{
+  height:150px; border-radius:var(--r); overflow:hidden; background:rgba(251,245,232,.08);
+}
+/* same lower-half framing as the stat cards — these are the identical square shots */
+.foot__card-media img{ width:100%; height:100%; object-fit:cover; object-position:50% 80%; display:block; }
+.foot__card-title{
+  margin:18px 0 0; font-size:18px; font-weight:700; letter-spacing:-.01em; color:var(--on-dark);
+}
+.foot__card-copy{ margin:7px 0 0; font-size:14px; line-height:1.55; color:var(--on-dark-soft); }
+.foot__form{ display:flex; gap:8px; margin-top:16px; flex-wrap:wrap; }
+.foot__form input{
+  flex:1 1 150px; min-width:0; height:44px; padding:0 16px; border-radius:999px;
+  background:transparent; border:2px solid var(--line-dark); color:var(--on-dark);
+  font:inherit; font-size:14px; font-weight:500;
+}
+.foot__form input::placeholder{ color:rgba(251,245,232,.45); }
+.foot__form input:focus-visible{ outline:none; border-color:var(--pink); }
+.foot__form button{
+  height:44px; padding:0 20px; border-radius:999px; background:var(--pink); color:var(--cocoa);
+  font-weight:700; font-size:14px; cursor:pointer;
+  transition:background .3s, transform .4s var(--bounce);
+}
+.foot__form button:hover{ background:var(--pink-deep); transform:translateY(-2px); }
+
+.foot__social{
+  display:flex; align-items:center; justify-content:space-between; gap:16px;
+  padding:9px 11px 9px 22px; border-radius:999px;
+  background:rgba(251,245,232,.05); border:2px solid var(--line-dark);
+}
+.foot__social-label{ font-size:14px; font-weight:700; color:var(--on-dark); }
+.foot__social-links{ display:flex; gap:6px; }
+.foot__social-links a{
+  width:38px; height:38px; border-radius:999px; display:grid; place-items:center;
+  color:var(--on-dark-soft);
+  transition:background .3s, color .3s, transform .4s var(--bounce);
+}
+.foot__social-links a:hover{ background:var(--pink); color:var(--cocoa); transform:translateY(-2px); }
+.foot__social-links svg{ width:19px; height:19px; }
+
+/* Footer9's wordmark spans the full measure, so ours does too. As HTML text that
+   fails: a script face's glyph box is far taller than its line box, so at this size
+   the descender of the "p" punched straight through the legal strip below. Drawing
+   it in an SVG whose viewBox IS the glyph box means the element's height is exactly
+   the ink, at any width. The numbers come from measuring "prodani" in Damion at
+   font-size 100 (ink runs x -11.8..306.4, y -64.6..24.8), plus a unit of slack so
+   antialiasing has somewhere to go. */
+.foot__word{ display:block; width:100%; height:auto;
+  margin:clamp(26px,3.4vw,52px) 0 clamp(4px,1vw,14px);
+  color:var(--pink); user-select:none;
+}
+.foot__word text{ fill:currentColor; font-family:var(--script); font-size:100px; }
 .foot__bar{
-  display:flex; justify-content:space-between; gap:18px; flex-wrap:wrap;
+  display:flex; justify-content:space-between; align-items:center; gap:12px 26px; flex-wrap:wrap;
   padding:20px 0 28px; border-top:2px solid var(--line-dark); margin-top:22px;
   color:rgba(251,245,232,.55); font-size:12.5px; font-weight:600;
 }
+.foot__legal{ display:flex; flex-wrap:wrap; gap:8px 22px; }
+.foot__legal a{
+  color:inherit; text-transform:uppercase; letter-spacing:.08em; transition:color .25s;
+}
+.foot__legal a:hover{ color:var(--pink); }
+.foot__credit a{
+  color:var(--pink); font-weight:700;
+  border-bottom:1px solid rgba(253,195,212,.38); transition:border-color .25s;
+}
+.foot__credit a:hover{ border-bottom-color:var(--pink); }
 
 /* ---------- cart drawer ---------- */
 .scrim{ position:fixed; inset:0; z-index:110; background:rgba(35,22,18,.5); backdrop-filter:blur(3px); }
@@ -372,5 +488,7 @@
 
 /* chocolate mid-band */
 .shout__script{ color:var(--pink); margin:0; }
-.shout__badge{ right:clamp(10px,3vw,40px); top:50%; margin-top:-66px; }
+/* Hangs in the gap between the copy and the photo — filling the dead space that
+   used to sit there, rather than covering the subject of the picture. */
+.shout__badge{ left:clamp(-164px,-10vw,-112px); top:50%; margin-top:-84px; }
 @media (max-width:1100px){ .shout__badge{ display:none; } }

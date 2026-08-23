@@ -12,6 +12,8 @@ const catalog = JSON.parse(readFileSync(join(here, '../src/data/catalog.json'), 
 const tmp = mkdtempSync(join(tmpdir(), 'pd-img-'))
 
 const STORY = 'https://prodanimiami.com/cdn/shop/collections/PRODANI_09.01.23_N.A_218_of_323.jpg'
+// Daniel, from the storefront's own Meet Your Baker page (second image on it).
+const BAKER = 'https://prodanimiami.com/cdn/shop/files/DSC04869_1.jpg'
 
 const jobs = []
 for (const p of catalog) {
@@ -20,6 +22,7 @@ for (const p of catalog) {
 }
 jobs.push({ key: '__hero',  url: catalog.find(p => p.handle === 'strawberry-short-cake')?.img || catalog[0].img, size: 1000 })
 jobs.push({ key: '__story', url: STORY, size: 1100 })
+jobs.push({ key: '__baker', url: BAKER, size: 900 })
 
 const out = {}
 let total = 0, n = 0

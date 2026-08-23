@@ -556,3 +556,55 @@ Separately, the **personal-size range is photographed in clear plastic meal-prep
 - Pull the theme with `shopify theme pull` so fixes can be made in source control.
 - Start with the hero video, then meta descriptions and titles, then the viewport tag.
 - Re-run Lighthouse after the video fix to confirm the LCP improvement before moving on.
+
+---
+
+## 2026-08-22 — Shopify theme build (`theme/`)
+
+Ported the React prototype in `design/` to a real Shopify theme and put it on an
+unpublished preview. **The live store was never touched**: `Prodani - v.0.0.1`
+(Minimog 3.5.0) is still the published theme, last modified 2026-03-02.
+
+### Setup
+- Shopify CLI installed locally (not globally), Dawn 16.0.0 scaffolded into `theme/prodani/`.
+- Auth via a Theme Access token in `theme/.env` (gitignored). Note: Theme Access
+  tokens authenticate through `theme-kit-access.shopifyapps.com`, **not** the shop's
+  own admin host — testing against `<shop>.myshopify.com/admin` returns 401 for a
+  perfectly valid token.
+- `theme/reference-minimog/` is a read-only pull of the live theme, gitignored.
+
+### Sections built
+header, hero (video + wave ribbon), benefit badges, collection (pills + per-type
+rows), chocolate band, stat deck, meet-your-baker, bleed word, reviews, contact
+(form + map), footer. Plus a CSS-only brand skin over Dawn's product page.
+
+### Deliberate constraints
+- **Product page is CSS-only.** Variant picker, quantity, add-to-cart, Shop Pay and
+  pickup are Dawn components wired to Shopify's cart API. Restyling cannot break
+  them; rewriting the Liquid could.
+- **No invented reviews.** Only verified customer quotes are hard-coded; the rest
+  come from the Judge.me widget, which renders server-side from
+  `shop.metafields.judgeme.*`.
+- **Prototype dependencies dropped.** GSAP, framer-motion and React are replaced by
+  plain rAF/scroll handlers; all honour `prefers-reduced-motion`.
+
+### Traps worth remembering
+- Dawn sets the root font-size to **10px** (`62.5%`). Every `rem` ported from the
+  prototype computed at 62.5% of intent; all converted to px.
+- Dawn's `base.css` has `div:empty { display: none }`, which silently collapsed the
+  hero scrim to zero height. It is a pseudo-element now.
+- `<img>` width/height attributes are presentational hints that **beat**
+  `aspect-ratio` unless CSS declares `height`. This rendered one photo 1500px tall.
+- Section group files need the group type (`header`/`footer`) at top level, not a
+  section type, or Shopify silently ignores the file.
+- Shopify serves theme assets as `application/mp4`; a bare `<video src>` will not
+  decode it. Use `<source type="video/mp4">`.
+
+### Verification — `npm run preflight`
+Read-only suite over the preview theme: route rendering, add-to-cart round trip,
+section presence, Dawn remnants, asset resolution, one-`<h1>`-per-page, alt text,
+copy hygiene, and a guard that the live theme is still published.
+**86 passed, 0 failed, 1 warning.**
+
+Two real a11y defects it caught and we fixed: Dawn ships two `<h1>` on every cart
+page, and collection pages had none.

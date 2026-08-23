@@ -1,0 +1,153 @@
+{%- comment -%}
+  The prodani collection — heading, filter pills, one row per type, then a CTA.
+
+  Two block types share this section: `filter` builds a pill, `row` builds a
+  labelled row of products from one collection. Pills filter the cards across
+  every row at once; a row whose cards are all filtered out hides itself, so you
+  never get a stranded heading over an empty grid.
+{%- endcomment -%}
+
+{{ 'prodani-shop.css' | asset_url | stylesheet_tag }}
+
+{%- assign source = section.settings.collection | default: collections['all-products'] -%}
+
+<section class="pd-shop pd-collection" data-pd-collection
+         {% if section.settings.anchor != blank %}id="{{ section.settings.anchor }}"{% endif %}>
+  <div class="pd-wrap">
+    <div class="pd-sec-head">
+      <div>
+        <h2 class="pd-sec-title">{{ section.settings.heading | escape }}</h2>
+        {% render 'prodani-squiggle' %}
+      </div>
+      {%- if section.settings.eyebrow != blank -%}
+        <span class="pd-eyebrow">
+          {{ source.products_count }}&nbsp;recipes&nbsp;·&nbsp;{{ section.settings.eyebrow | escape }}
+        </span>
+      {%- endif -%}
+    </div>
+
+    <div class="pd-filters" role="group" aria-label="Filter products">
+      <button class="pd-filter" type="button" data-pd-filter="*" data-on="true">
+        All <sup>{{ source.products_count }}</sup>
+      </button>
+      {%- for block in section.blocks -%}
+        {%- if block.type == 'filter' and block.settings.collection != blank -%}
+          {%- assign fc = block.settings.collection -%}
+          <button class="pd-filter" type="button" data-pd-filter="{{ fc.handle }}" {{ block.shopify_attributes }}>
+            {{ block.settings.label | default: fc.title | escape }} <sup>{{ fc.products_count }}</sup>
+          </button>
+        {%- endif -%}
+      {%- endfor -%}
+    </div>
+
+    <p class="pd-count" data-pd-count aria-live="polite"></p>
+
+    {%- capture row_handles -%}
+      {%- for b in section.blocks -%}
+        {%- if b.type == 'row' and b.settings.collection != blank -%}{{ b.settings.collection.handle }} {% endif -%}
+      {%- endfor -%}
+    {%- endcapture -%}
+
+    {%- for block in section.blocks -%}
+      {%- if block.type == 'row' and block.settings.collection != blank -%}
+        {%- assign rc = block.settings.collection -%}
+        <div class="pd-collection__row" data-pd-row {{ block.shopify_attributes }}>
+          <div class="pd-collection__rowhead">
+            <h3 class="pd-collection__rowtitle">{{ block.settings.heading | default: rc.title | escape }}</h3>
+            <a class="pd-collection__rowlink" href="{{ rc.url }}">
+              {{ block.settings.link_label | default: 'Shop all' | escape }}
+              <svg width="22" height="12" viewBox="0 0 22 12" fill="none" aria-hidden="true">
+                <path d="M21.53 6.53a.75.75 0 0 0 0-1.06L16.76.7a.75.75 0 1 0-1.06 1.06L19.94 6l-4.24 4.24a.75.75 0 1 0 1.06 1.06l4.77-4.77ZM0 6.75h21v-1.5H0v1.5Z" fill="currentColor"/>
+              </svg>
+            </a>
+          </div>
+          <div class="pd-grid">
+            {%- for product in rc.products limit: block.settings.count -%}
+              {% render 'prodani-card', product: product %}
+            {%- endfor -%}
+          </div>
+        </div>
+      {%- endif -%}
+    {%- endfor -%}
+
+    {%- comment -%}
+      A pill whose collection has no composed row would otherwise filter every
+      card away and leave the component blank. Give each one its own row, hidden
+      until that pill is picked.
+    {%- endcomment -%}
+    {%- for block in section.blocks -%}
+      {%- if block.type == 'filter' and block.settings.collection != blank -%}
+        {%- assign fc = block.settings.collection -%}
+        {%- unless row_handles contains fc.handle -%}
+          <div class="pd-collection__row" data-pd-row data-pd-only="{{ fc.handle }}" hidden>
+            <div class="pd-collection__rowhead">
+              <h3 class="pd-collection__rowtitle">{{ block.settings.label | default: fc.title | escape }}</h3>
+              <a class="pd-collection__rowlink" href="{{ fc.url }}">
+                Shop all
+                <svg width="22" height="12" viewBox="0 0 22 12" fill="none" aria-hidden="true">
+                  <path d="M21.53 6.53a.75.75 0 0 0 0-1.06L16.76.7a.75.75 0 1 0-1.06 1.06L19.94 6l-4.24 4.24a.75.75 0 1 0 1.06 1.06l4.77-4.77ZM0 6.75h21v-1.5H0v1.5Z" fill="currentColor"/>
+                </svg>
+              </a>
+            </div>
+            <div class="pd-grid">
+              {%- for product in fc.products limit: 8 -%}
+                {% render 'prodani-card', product: product %}
+              {%- endfor -%}
+            </div>
+          </div>
+        {%- endunless -%}
+      {%- endif -%}
+    {%- endfor -%}
+
+    {%- if section.settings.cta_label != blank -%}
+      <div class="pd-shop__foot">
+        <a class="pd-btn" href="{{ section.settings.cta_link | default: source.url }}">
+          {{ section.settings.cta_label | escape }}
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6"
+               stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+            <path d="M5 12h13M12 5l7 7-7 7"/>
+          </svg>
+        </a>
+      </div>
+    {%- endif -%}
+  </div>
+</section>
+
+<script src="{{ 'prodani-shop.js' | asset_url }}" defer></script>
+
+{% schema %}
+{
+  "name": "The collection",
+  "tag": "section",
+  "class": "pd-section",
+  "settings": [
+    { "type": "text", "id": "heading", "label": "Heading", "default": "The prodani collection" },
+    { "type": "text", "id": "eyebrow", "label": "Eyebrow suffix", "default": "baked to order" },
+    { "type": "text", "id": "anchor", "label": "Anchor id", "default": "shop" },
+    { "type": "collection", "id": "collection", "label": "Catalogue (for the All count)" },
+    { "type": "text", "id": "cta_label", "label": "Button label", "default": "View everything" },
+    { "type": "url", "id": "cta_link", "label": "Button link" }
+  ],
+  "blocks": [
+    {
+      "type": "filter",
+      "name": "Filter pill",
+      "settings": [
+        { "type": "collection", "id": "collection", "label": "Collection" },
+        { "type": "text", "id": "label", "label": "Label (defaults to collection title)" }
+      ]
+    },
+    {
+      "type": "row",
+      "name": "Product row",
+      "settings": [
+        { "type": "collection", "id": "collection", "label": "Collection" },
+        { "type": "text", "id": "heading", "label": "Row heading (defaults to collection title)" },
+        { "type": "text", "id": "link_label", "label": "Row link label", "default": "Shop all" },
+        { "type": "range", "id": "count", "label": "Products in the row", "min": 2, "max": 8, "step": 1, "default": 4 }
+      ]
+    }
+  ],
+  "presets": [{ "name": "The collection" }]
+}
+{% endschema %}

@@ -1,0 +1,54 @@
+/* The last card stays pinned to the end of its slot, so any padding here reads
+   as dead space before the next section. Keep it minimal. */
+.pd-stack{ background:var(--cream); position:relative; padding-bottom:0; }
+.pd-stack__head{
+  display:flex; align-items:flex-end; justify-content:space-between; gap:24px;
+  flex-wrap:wrap; padding-top:clamp(40px,4.5vw,72px); padding-bottom:clamp(4px,1vw,14px);
+}
+/* one full-height slot per card; the card pins to the top of it */
+/* The slot was a full 100svh around a ~470px card, so roughly 220px of dead air
+   sat above and below every card. The slot must also be CAPPED, not just reduced:
+   the card maxes out at 440px, so a purely viewport-relative slot re-opens the gap
+   on tall screens (72svh on a 1181px viewport is 850px, leaving 410px of air). */
+.pd-stack__slot{ height:min(72svh, 560px); display:flex; align-items:center; justify-content:center; position:sticky; top:0; }
+.pd-stack__card{
+  position:relative; transform-origin:top;
+  width:min(1180px, 88%); height:min(60svh, 440px);
+  border-radius:calc(var(--r) + 10px);
+  padding:clamp(22px,3vw,44px);
+  display:flex; flex-direction:column;
+  box-shadow:0 24px 60px rgba(72,49,42,.16);
+  overflow:hidden;
+  will-change:transform;
+}
+.pd-stack__body{ display:flex; gap:clamp(20px,3vw,46px); height:100%; align-items:stretch; }
+.pd-stack__text{ width:42%; display:flex; flex-direction:column; justify-content:center; }
+.pd-stack__figure{ font-family:var(--display); font-weight:400; line-height:.9;
+  font-size:clamp(48px,6.4vw,89.6px); display:block; }
+.pd-stack__title{ margin:clamp(10px,1.4vw,18px) 0 0; font-weight:700;
+  font-size:clamp(16.8px,1.6vw,22.4px); letter-spacing:-.01em; }
+.pd-stack__desc{ margin:10px 0 0; font-size:clamp(14.08px,1.05vw,16px); line-height:1.55;
+  font-weight:500; opacity:.72; max-width:34ch; }
+.pd-stack__link{
+  display:inline-flex; align-items:center; gap:10px; margin-top:clamp(14px,2vw,24px);
+  font-weight:700; font-size:14px; width:fit-content; text-decoration:none; color:inherit;
+  border-bottom:2px solid currentColor; padding-bottom:3px;
+  transition:gap .35s var(--bounce);
+}
+.pd-stack__link:hover{ gap:16px; }
+.pd-stack__media{ width:58%; position:relative; border-radius:var(--r); overflow:hidden;
+  background:rgba(72,49,42,.06); }
+.pd-stack__media-inner{ width:100%; height:100%; will-change:transform; }
+.pd-stack__media img{
+  position:absolute; inset:0; width:100%; height:100%; object-fit:cover;
+  /* The cake sits low in every one of these square product shots, so centring a
+     1.6:1 crop lands on the backdrop and cuts the cake off at the bottom. */
+  object-position:var(--pd-focus, 50% 88%);
+}
+@media (max-width:760px){
+  .pd-stack__card{ height:min(70svh, 560px); }
+  .pd-stack__body{ flex-direction:column; gap:16px; }
+  .pd-stack__text{ width:100%; justify-content:flex-start; }
+  .pd-stack__media{ width:100%; flex:1; }
+  .pd-stack__desc{ display:none; }
+}

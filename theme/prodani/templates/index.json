@@ -1,0 +1,396 @@
+{
+  "sections": {
+    "hero": {
+      "type": "prodani-hero",
+      "settings": {
+        "use_bundled_video": true,
+        "kicker": "The power of protein. The joy of cake.",
+        "line_one": "Bite into",
+        "line_two": "Balance",
+        "cta_label": "Shop the collection",
+        "cta_link": "/collections/all",
+        "note": "0g added sugar · 20g protein · gluten-free",
+        "ribbon_items": "high protein, no sugar added, gluten free, small batch, miami made",
+        "ribbon_speed": 26
+      }
+    },
+    "shout": {
+      "type": "prodani-shout",
+      "settings": {
+        "anchor": "nutrition",
+        "heading": "Where sweet\nmeets balance",
+        "body": "<p>Desserts that support your lifestyle, not work against it. High-protein, low-sugar treats made to satisfy cravings while staying mindful of how your body feels. Indulgence should feel satisfying, not heavy.</p>",
+        "cta_label": "Meet your baker",
+        "cta_link": "/pages/meet-your-baker",
+        "image_alt": "Dani with a ProDani strawberry short cake",
+        "badge_text": "dessert you can feel good about ✦ ",
+        "badge_speed": 26,
+        "bundled_photo": "prodani-dani-2",
+        "ribbon_items": "carrot cake, banana bread, chocolate fudge, dubai dream, hazelnut",
+        "ribbon_speed": 38,
+        "photo_focus": "50% 12%"
+      }
+    },
+    "deck": {
+      "type": "prodani-stack",
+      "blocks": {
+        "c1": {
+          "type": "card",
+          "settings": {
+            "figure": "20g",
+            "title": "Protein in a personal cake",
+            "description": "The same protein as a bar, in the shape of an actual dessert. No chalk, no aftertaste.",
+            "cta_label": "Shop personal cakes",
+            "product": "strawberry-short-cake",
+            "focus": "50% 88%",
+            "color": "#FDC3D4",
+            "text_color": "#48312A"
+          }
+        },
+        "c2": {
+          "type": "card",
+          "settings": {
+            "figure": "0g",
+            "title": "Added sugar. Across everything.",
+            "description": "Sweetness comes from fruit and the ingredients themselves. Nothing refined, nothing hidden.",
+            "cta_label": "See the ingredients",
+            "product": "carrot-cake-copy",
+            "focus": "50% 88%",
+            "color": "#FFFBE5",
+            "text_color": "#48312A"
+          }
+        },
+        "c3": {
+          "type": "card",
+          "settings": {
+            "figure": "27",
+            "title": "Recipes in rotation",
+            "description": "Personal cakes, family cakes and muffins, including a full vegan line.",
+            "cta_label": "Browse all 27",
+            "product": "vegan-personal-chocolate-banana-cake-copy",
+            "focus": "50% 88%",
+            "color": "#48312A",
+            "text_color": "#FBF5E8"
+          }
+        },
+        "c4": {
+          "type": "card",
+          "settings": {
+            "figure": "4.9★",
+            "title": "From 70+ verified reviews",
+            "description": "Every one left by someone who actually ordered. Read them before you decide.",
+            "cta_label": "Read the reviews",
+            "product": "vegan-family-banana-bread",
+            "focus": "50% 88%",
+            "color": "#F79CBB",
+            "text_color": "#48312A"
+          }
+        }
+      },
+      "block_order": [
+        "c1",
+        "c2",
+        "c3",
+        "c4"
+      ],
+      "settings": {
+        "heading": "What makes prodani different",
+        "eyebrow": "Four reasons",
+        "anchor": "why"
+      }
+    },
+    "collection": {
+      "type": "prodani-collection",
+      "blocks": {
+        "p1": {
+          "type": "filter",
+          "settings": {
+            "collection": "personal-protein-cakes",
+            "label": "Personal"
+          }
+        },
+        "p2": {
+          "type": "filter",
+          "settings": {
+            "collection": "family-cake",
+            "label": "Family"
+          }
+        },
+        "p3": {
+          "type": "filter",
+          "settings": {
+            "collection": "protein-muffins",
+            "label": "Muffins"
+          }
+        },
+        "p4": {
+          "type": "filter",
+          "settings": {
+            "collection": "vegan",
+            "label": "Vegan"
+          }
+        },
+        "r1": {
+          "type": "row",
+          "settings": {
+            "collection": "family-cake",
+            "heading": "Family cakes",
+            "link_label": "Shop all family cakes",
+            "count": 4
+          }
+        },
+        "r2": {
+          "type": "row",
+          "settings": {
+            "collection": "personal-protein-cakes",
+            "heading": "Personal cakes",
+            "link_label": "Shop all personal cakes",
+            "count": 4
+          }
+        }
+      },
+      "block_order": [
+        "p1",
+        "p2",
+        "p3",
+        "p4",
+        "r1",
+        "r2"
+      ],
+      "settings": {
+        "heading": "The prodani collection",
+        "eyebrow": "baked to order",
+        "anchor": "shop",
+        "collection": "all-products",
+        "cta_label": "View everything",
+        "cta_link": "/collections/all-products"
+      }
+    },
+    "bleed": {
+      "type": "prodani-bleed",
+      "settings": {
+        "text": "Delicious",
+        "color_top": "#FBF5E8",
+        "color_bottom": "#48312A",
+        "color_text": "#48312A",
+        "split": 70,
+        "speed": 40
+      }
+    },
+    "baker": {
+      "type": "prodani-baker",
+      "blocks": {
+        "b1": {
+          "type": "pillar",
+          "settings": {
+            "label": "Batch",
+            "text": "Small batches, never mass-produced. Every cake is baked to order in Miami."
+          }
+        },
+        "b2": {
+          "type": "pillar",
+          "settings": {
+            "label": "Sugar",
+            "text": "None added. Sweetness comes from fruit and the ingredients themselves."
+          }
+        },
+        "b3": {
+          "type": "pillar",
+          "settings": {
+            "label": "Flour",
+            "text": "Gluten-free by design, not by substitution. Coconut flour, not filler."
+          }
+        },
+        "b4": {
+          "type": "pillar",
+          "settings": {
+            "label": "Protein",
+            "text": "Whey concentrate and isolate. Real macros, printed honestly."
+          }
+        }
+      },
+      "block_order": [
+        "b1",
+        "b2",
+        "b3",
+        "b4"
+      ],
+      "settings": {
+        "heading": "Meet your baker",
+        "eyebrow": "Miami · since 2023",
+        "use_page_content": false,
+        "lede": "<p>I'm Daniel, the brain and brawn behind Pro Dani Miami. Let me give you the lowdown on how this sweet adventure began.</p>",
+        "body": "<p>As a personal trainer, I've always had one foot in the fitness world and the other in the world of tempting treats. I'd see my clients struggle to satisfy their sweet tooth while staying on track with their health and fitness goals. It got me thinking: why isn't there a bakery that offers cakes and muffins that are not only delicious but also high in protein, gluten-free, and low in sugar?</p><p>That's when the lightbulb moment struck, and Pro Dani Miami was born. Our cakes and muffins are my labor of love, crafted with top-notch ingredients and a dash of passion.</p>",
+        "bundled_photo": "prodani-trays",
+        "image_alt": "A tray spread of ProDani protein cakes",
+        "stamp": "<p>Baked<br>in<br>Miami</p>",
+        "heading_tag": "h2",
+        "photo_focus": "50% 8%"
+      }
+    },
+    "reviews": {
+      "type": "prodani-reviews",
+      "blocks": {
+        "r1": {
+          "type": "review",
+          "settings": {
+            "author": "Itamar",
+            "rating": 5,
+            "title": "I felt the love in every bite",
+            "body": "Simply delicious, 100% clean, absolutely healthy. Real protein. This is what they serve in heaven when you want something good and tasty.",
+            "note": "Verified buyer"
+          }
+        },
+        "r2": {
+          "type": "review",
+          "settings": {
+            "author": "Shalom",
+            "rating": 5,
+            "title": "Can't stop eating this cake",
+            "body": "The cake is absolutely delicious, and the chocolate is incredibly rich and indulgent — every bite is pure perfection.",
+            "note": "Verified buyer"
+          }
+        },
+        "r3": {
+          "type": "review",
+          "settings": {
+            "author": "Shai",
+            "rating": 5,
+            "title": "The healthiest dessert ever",
+            "body": "10/10. The white chocolate one is a must.",
+            "note": "Verified buyer"
+          }
+        }
+      },
+      "block_order": [
+        "r1",
+        "r2",
+        "r3"
+      ],
+      "settings": {
+        "heading": "70+ five-star reviews",
+        "anchor": "reviews",
+        "eyebrow": "Verified · Judge.me",
+        "show_widget": true,
+        "cta_label": "Shop the collection",
+        "cta_link": "/collections/all-products",
+        "more_label": "Read all reviews",
+        "less_label": "Show fewer"
+      }
+    },
+    "contact": {
+      "type": "prodani-contact",
+      "blocks": {
+        "d1": {
+          "type": "detail",
+          "settings": {
+            "label": "Address",
+            "value": "3131 NE 1st Ave, Miami, FL, 33137",
+            "link": ""
+          }
+        },
+        "d2": {
+          "type": "detail",
+          "settings": {
+            "label": "Phone",
+            "value": "+1 305 481 1441",
+            "link": "tel:+13054811441"
+          }
+        },
+        "d3": {
+          "type": "detail",
+          "settings": {
+            "label": "Email",
+            "value": "pdprodani@gmail.com",
+            "link": "mailto:pdprodani@gmail.com"
+          }
+        }
+      },
+      "block_order": [
+        "d1",
+        "d2",
+        "d3"
+      ],
+      "settings": {
+        "heading": "Come say hello",
+        "heading_tag": "h2",
+        "anchor": "contact",
+        "description": "<p>Please feel free to contact us regarding catering for events or bigger orders. We will be more than happy to offer you special discounts and offers.</p>",
+        "map_query": "3131 NE 1st Ave, Miami, FL 33137",
+        "button_label": "Send message",
+        "success_text": "Thanks, we'll be in touch shortly.",
+        "topics": "General enquiry, Catering for an event, Bigger / bulk order, Wholesale, Allergens and ingredients, Something else"
+      }
+    },
+    "badges": {
+      "type": "prodani-badges",
+      "blocks": {
+        "n1": {
+          "type": "badge",
+          "settings": {
+            "label": "High Protein",
+            "icon": "prodani-badge-high-protein"
+          }
+        },
+        "n2": {
+          "type": "badge",
+          "settings": {
+            "label": "Non GMO",
+            "icon": "prodani-badge-non-gmo"
+          }
+        },
+        "n3": {
+          "type": "badge",
+          "settings": {
+            "label": "No Sugar Added",
+            "icon": "prodani-badge-no-sugar-added"
+          }
+        },
+        "n4": {
+          "type": "badge",
+          "settings": {
+            "label": "Gluten Free",
+            "icon": "prodani-badge-gluten-free"
+          }
+        },
+        "n5": {
+          "type": "badge",
+          "settings": {
+            "label": "High Fiber",
+            "icon": "prodani-badge-high-fiber"
+          }
+        },
+        "n6": {
+          "type": "badge",
+          "settings": {
+            "label": "Low Calorie",
+            "icon": "prodani-badge-low-calorie"
+          }
+        }
+      },
+      "block_order": [
+        "n1",
+        "n2",
+        "n3",
+        "n4",
+        "n5",
+        "n6"
+      ],
+      "settings": {
+        "heading": "",
+        "background": "#FDC3D4"
+      }
+    }
+  },
+  "order": [
+    "hero",
+    "badges",
+    "collection",
+    "shout",
+    "deck",
+    "baker",
+    "bleed",
+    "reviews",
+    "contact"
+  ]
+}

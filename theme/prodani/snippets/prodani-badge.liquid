@@ -1,0 +1,19 @@
+{%- comment -%}
+  Rotating circular stamp. The ring has to CLOSE: a phrase set at a fixed size
+  lands wherever its own width puts it — too short and the circle ends in a gap,
+  too long and the tail is dropped where it overruns the path. prodani-badge.js
+  measures the phrase against the circle's real circumference and fits it.
+{%- endcomment -%}
+<div class="pd-badge" data-pd-badge data-speed="{{ speed | default: 26 }}" aria-hidden="true">
+  <svg viewBox="0 0 200 200">
+    <defs>
+      <path id="pd-badge-{{ section.id }}" fill="none"
+            d="M100,100 m-74,0 a74,74 0 1,1 148,0 a74,74 0 1,1 -148,0"/>
+    </defs>
+    <text data-pd-badge-probe fill="none" stroke="none" visibility="hidden">{{ text }}</text>
+    <text data-pd-badge-text style="opacity:0">
+      <textPath href="#pd-badge-{{ section.id }}" startOffset="0">{{ text }}</textPath>
+    </text>
+  </svg>
+  <span class="pd-badge__core">🧁</span>
+</div>

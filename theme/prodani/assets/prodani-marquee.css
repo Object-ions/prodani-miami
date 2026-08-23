@@ -1,0 +1,5 @@
+.pd-marquee{ color:var(--cocoa); overflow:hidden; display:block; line-height:0; }
+.pd-marquee__svg{ display:block; width:100%; height:auto; }
+/* Rides the bottom of the hero, over the footage — no band of flat cocoa between
+   the video and the lettering. */
+.pd-marquee--hero{ position:relative; z-index:3; flex:0 0 auto; margin-bottom:-1px; }

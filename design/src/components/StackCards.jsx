@@ -22,7 +22,8 @@ function Card({ i, item, progress, range, targetScale }) {
     offset: ['start end', 'start start'],
   })
 
-  const imageScale = useTransform(scrollYProgress, [0, 1], [1.6, 1])
+  // 1.6 magnified the crop so hard that the cake overflowed the frame on the way in.
+  const imageScale = useTransform(scrollYProgress, [0, 1], [1.25, 1])
   const scale = useTransform(progress, range, [1, targetScale])
 
   return (
@@ -54,7 +55,19 @@ function Card({ i, item, progress, range, targetScale }) {
 
           <div className="stack__media">
             <motion.div className="stack__media-inner" style={{ scale: reduce ? 1 : imageScale }}>
-              <img src={item.img} alt="" aria-hidden="true" loading="lazy" />
+              {/* The product shots are 620px squares dropped into a ~1.65:1 slot, so
+                  `cover` discards about 40% of the height. Centring that crop lands it on
+                  the backdrop — the cake sits in the lower half of every one of these
+                  photos (centre around 68% down), which is why it kept getting cut off at
+                  the bottom. Bias the crop down onto the subject; `focus` lets any card
+                  whose photo is framed differently override it. */}
+              <img
+                src={item.img}
+                alt=""
+                aria-hidden="true"
+                loading="lazy"
+                style={{ objectPosition: item.focus || '50% 88%' }}
+              />
             </motion.div>
           </div>
         </div>

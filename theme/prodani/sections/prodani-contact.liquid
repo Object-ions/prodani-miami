@@ -1,0 +1,135 @@
+{%- comment -%}
+  Contact — the live page body is empty in the database too, so the details and
+  intro copy are section settings. The form uses Shopify's native {% form 'contact' %},
+  which posts to Shopify and is unaffected by the theme swap.
+{%- endcomment -%}
+
+{{ 'prodani-baker.css' | asset_url | stylesheet_tag }}
+{{ 'prodani-contact.css' | asset_url | stylesheet_tag }}
+
+<section class="pd-contact"{% if section.settings.anchor != blank %} id="{{ section.settings.anchor }}"{% endif %}>
+  <div class="pd-wrap">
+    <div class="pd-sec-head">
+      <div>
+        <{{ section.settings.heading_tag | default: 'h1' }} class="pd-sec-title">{{ section.settings.heading | escape }}</{{ section.settings.heading_tag | default: 'h1' }}>
+        {% render 'prodani-squiggle' %}
+      </div>
+    </div>
+
+    <div class="pd-contact__in">
+      <div class="pd-contact__aside">
+        {%- if section.settings.description != blank -%}
+          <div class="pd-rte">{{ section.settings.description }}</div>
+        {%- endif -%}
+        <ul class="pd-contact__details">
+          {%- for block in section.blocks -%}
+            <li {{ block.shopify_attributes }}>
+              <b>{{ block.settings.label | escape }}</b>
+              {%- if block.settings.link != blank -%}
+                <a href="{{ block.settings.link }}">{{ block.settings.value | escape }}</a>
+              {%- else -%}
+                <span>{{ block.settings.value | escape }}</span>
+              {%- endif -%}
+            </li>
+          {%- endfor -%}
+        </ul>
+      </div>
+
+      {%- if section.settings.map_query != blank -%}
+        {%- comment -%}
+          Plain Google Maps embed — the ?output=embed form needs no API key, so
+          there is no credential to leak or expire in the theme.
+        {%- endcomment -%}
+        <div class="pd-contact__map">
+          <iframe
+            src="https://www.google.com/maps?q={{ section.settings.map_query | url_encode }}&output=embed"
+            title="Map showing {{ section.settings.map_query | escape }}"
+            loading="lazy" referrerpolicy="no-referrer-when-downgrade"
+            width="600" height="450"></iframe>
+        </div>
+      {%- endif -%}
+
+      <div class="pd-contact__form">
+        {%- form 'contact', class: 'pd-form' -%}
+          {%- if form.posted_successfully? -%}
+            <p class="pd-form__ok">{{ section.settings.success_text | escape }}</p>
+          {%- elsif form.errors -%}
+            <p class="pd-form__err">{{ form.errors | default_errors }}</p>
+          {%- endif -%}
+
+          <label class="pd-field">
+            <span>Name</span>
+            <input type="text" name="contact[name]" value="{{ form.name }}" autocomplete="name" required>
+          </label>
+          <label class="pd-field">
+            <span>Email</span>
+            <input type="email" name="contact[email]" value="{{ form.email }}" autocomplete="email" required>
+          </label>
+          <label class="pd-field">
+            <span>Phone</span>
+            <input type="tel" name="contact[phone]" value="{{ form.phone }}"
+                   autocomplete="tel" inputmode="tel" placeholder="+1 305 000 0000">
+          </label>
+          {%- if section.settings.topics != blank -%}
+            <label class="pd-field">
+              <span>What is this about?</span>
+              <select name="contact[topic]">
+                {%- assign topics = section.settings.topics | split: ',' -%}
+                {%- for t in topics -%}
+                  <option value="{{ t | strip | escape }}">{{ t | strip }}</option>
+                {%- endfor -%}
+              </select>
+            </label>
+          {%- endif -%}
+          <label class="pd-field pd-field--grow">
+            <span>Message</span>
+            <textarea name="contact[body]" rows="6" required>{{ form.body }}</textarea>
+          </label>
+          <button type="submit" class="pd-btn pd-btn--pink">{{ section.settings.button_label | escape }}</button>
+        {%- endform -%}
+      </div>
+    </div>
+  </div>
+</section>
+
+{% schema %}
+{
+  "name": "Contact",
+  "tag": "section",
+  "class": "pd-section",
+  "settings": [
+    { "type": "text", "id": "heading", "label": "Heading", "default": "Contact" },
+    {
+      "type": "select", "id": "heading_tag", "label": "Heading level",
+      "options": [{ "value": "h1", "label": "h1 (page)" }, { "value": "h2", "label": "h2 (section)" }],
+      "default": "h1"
+    },
+    { "type": "text", "id": "anchor", "label": "Anchor id" },
+    {
+      "type": "text", "id": "map_query", "label": "Map address",
+      "info": "Leave blank to hide the map."
+    },
+    { "type": "richtext", "id": "description", "label": "Intro copy" },
+    { "type": "text", "id": "button_label", "label": "Button label", "default": "Send message" },
+    {
+      "type": "textarea", "id": "topics", "label": "Topic options",
+      "info": "Comma separated. Leave blank to hide the dropdown.",
+      "default": "General enquiry, Catering for an event, Bigger / bulk order, Wholesale, Allergens and ingredients, Something else"
+    },
+    { "type": "text", "id": "success_text", "label": "Success message", "default": "Thanks — we'll be in touch shortly." }
+  ],
+  "blocks": [
+    {
+      "type": "detail",
+      "name": "Detail",
+      "limit": 6,
+      "settings": [
+        { "type": "text", "id": "label", "label": "Label" },
+        { "type": "text", "id": "value", "label": "Value" },
+        { "type": "text", "id": "link", "label": "Link (optional)" }
+      ]
+    }
+  ],
+  "presets": [{ "name": "Contact" }]
+}
+{% endschema %}

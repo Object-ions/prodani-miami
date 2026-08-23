@@ -1,0 +1,104 @@
+/* Contact block.
+   The detail rows and the form both sit on cocoa. Every pair below was measured
+   against the real hex values, not judged by eye:
+     cream     #FBF5E8 on cocoa      #48312A  -> 11.06:1  (values, input text)
+     pink-deep #F79CBB on cocoa               ->  5.96:1  (labels)
+     cream@70% on cocoa-deep #3A2721          ->  7.13:1  (placeholders)
+     cocoa     on pink #FDC3D4                ->  7.97:1  (submit)
+   berry #C4587E was the label colour on cream and only reaches 2.89:1 on cocoa,
+   so it is replaced by pink-deep rather than carried across. */
+
+.pd-contact{ background:var(--cream); color:var(--ink); padding-block:clamp(56px,7vw,110px); }
+
+/* The form stretches the full height of the left column (details + map) rather
+   than sitting short against it. */
+.pd-contact__in{
+  display:grid;
+  grid-template-columns:minmax(0,1fr) minmax(0,520px);
+  grid-template-areas:"aside form" "map form";
+  grid-template-rows:auto 1fr;
+  gap:clamp(28px,5vw,72px);
+  align-items:stretch;
+}
+.pd-contact__aside{ grid-area:aside; }
+.pd-contact__map{ grid-area:map; margin-top:18px; align-self:stretch; }
+.pd-contact__form{ grid-area:form; display:flex; }
+@media (max-width:900px){
+  .pd-contact__in{ grid-template-columns:1fr; grid-template-areas:"aside" "map" "form"; grid-template-rows:auto; }
+}
+
+/* ---- details ---- */
+.pd-contact__details{ list-style:none; padding:0; margin:26px 0 0; display:grid; gap:11px; }
+.pd-contact__details li{
+  display:flex; gap:16px; align-items:baseline;
+  background:var(--cocoa); color:var(--on-dark);
+  border-radius:16px; padding:16px 20px;
+}
+.pd-contact__details b{
+  font-weight:700; font-size:11.5px; letter-spacing:.1em; text-transform:uppercase;
+  color:var(--pink-deep); flex:0 0 72px;
+}
+.pd-contact__details span,
+.pd-contact__details a{ color:var(--cream); font-size:14.5px; font-weight:500; }
+.pd-contact__details a{ text-decoration:underline; text-underline-offset:3px; }
+.pd-contact__details a:hover{ color:var(--pink); }
+
+.pd-contact__map iframe{
+  width:100%; height:100%; min-height:clamp(220px,26vw,330px); border:0; display:block;
+  border-radius:calc(var(--r) + 6px);
+  /* The stock Google tile is bright and cold beside the cream page. */
+  filter:sepia(.18) saturate(.85) contrast(1.02);
+}
+
+/* ---- form ---- */
+.pd-form{
+  display:flex; flex-direction:column; gap:14px; width:100%;
+  background:var(--cocoa); color:var(--on-dark);
+  border-radius:calc(var(--r) + 6px);
+  padding:clamp(22px,2.6vw,34px);
+}
+.pd-field{ display:grid; gap:7px; }
+/* The message box absorbs the leftover height so the form ends flush with the map. */
+.pd-field--grow{ flex:1 1 auto; min-height:120px; }
+.pd-field--grow textarea{ height:100%; }
+.pd-field span{
+  font-size:11.5px; font-weight:700; letter-spacing:.1em; text-transform:uppercase;
+  color:var(--pink-deep);
+}
+.pd-field input,
+.pd-field select,
+.pd-field textarea{
+  font:inherit; font-size:15px; width:100%;
+  color:var(--cream); background:var(--cocoa-deep);
+  border:2px solid rgba(251,245,232,.18); border-radius:14px; padding:12px 15px;
+}
+.pd-field textarea{ resize:vertical; min-height:120px; }
+.pd-field input::placeholder{ color:rgba(251,245,232,.70); }
+.pd-field select{
+  appearance:none;
+  /* Chevron drawn in the border colour so it reads on the dark field. */
+  background-image:linear-gradient(45deg,transparent 50%,rgba(251,245,232,.7) 50%),
+                   linear-gradient(135deg,rgba(251,245,232,.7) 50%,transparent 50%);
+  background-position:calc(100% - 20px) center, calc(100% - 14px) center;
+  background-size:6px 6px, 6px 6px;
+  background-repeat:no-repeat;
+  padding-right:42px; cursor:pointer;
+}
+.pd-field select option{ color:var(--ink); background:var(--cream); }
+.pd-field input:focus-visible,
+.pd-field select:focus-visible,
+.pd-field textarea:focus-visible{ outline:none; border-color:var(--pink); }
+
+.pd-btn{
+  display:inline-flex; align-items:center; gap:10px; height:50px; padding:0 26px;
+  border-radius:999px; background:var(--cocoa); color:var(--cream); border:0;
+  font-weight:700; font-size:15px; cursor:pointer; justify-self:start; align-self:flex-start;
+  transition:transform .4s var(--bounce), background .3s;
+}
+.pd-btn:hover{ transform:translateY(-2px); }
+/* Submit sits on cocoa, so it inverts to pink to stay the one clear action. */
+.pd-btn--pink{ background:var(--pink); color:var(--cocoa); }
+.pd-btn--pink:hover{ background:var(--pink-deep); }
+
+.pd-form__ok{ margin:0; color:var(--pink); font-weight:700; }
+.pd-form__err{ margin:0; color:var(--pink-deep); font-weight:700; }

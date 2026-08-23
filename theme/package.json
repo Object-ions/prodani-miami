@@ -1,0 +1,19 @@
+{
+  "name": "prodani-theme",
+  "private": true,
+  "version": "0.1.0",
+  "scripts": {
+    "dev": "dotenv -- sh -c 'SHOPIFY_CLI_THEME_TOKEN=$PRODANI_PASSWORD shopify theme dev --path prodani --store dani-pro-miami'",
+    "pull:reference": "dotenv -- sh -c 'SHOPIFY_CLI_THEME_TOKEN=$PRODANI_PASSWORD shopify theme pull --store dani-pro-miami --theme 154419691830 --path reference-minimog'",
+    "push:preview": "dotenv -- sh -c 'SHOPIFY_CLI_THEME_TOKEN=$PRODANI_PASSWORD shopify theme push --path prodani --store dani-pro-miami --theme 187797995830'",
+    "list": "dotenv -- sh -c 'SHOPIFY_CLI_THEME_TOKEN=$PRODANI_PASSWORD shopify theme list --store dani-pro-miami'",
+    "check": "shopify theme check --path prodani",
+    "verify": "node scripts/verify-token.mjs",
+    "set-token": "node scripts/set-token.mjs",
+    "preflight": "node scripts/preflight.mjs"
+  },
+  "devDependencies": {
+    "@shopify/cli": "^3.87.0",
+    "dotenv-cli": "^7.4.4"
+  }
+}

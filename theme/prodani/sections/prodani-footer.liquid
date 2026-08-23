@@ -1,0 +1,154 @@
+{%- comment -%}
+  Footer — nav columns on the left, a rail with signup + follow bar on the right,
+  then the oversized wordmark and a legal strip. Ported from the prototype.
+
+  The wordmark is an SVG, not styled text: a script face's glyph box is far taller
+  than its line box, so at full width the descender of the "p" punched straight
+  through the legal strip. The viewBox IS the glyph box, measured from Damion at
+  font-size 100 (ink runs x -11.8..306.4, y -64.6..24.8), plus a unit of slack.
+{%- endcomment -%}
+
+{{ 'prodani-footer.css' | asset_url | stylesheet_tag }}
+
+<footer class="pd-foot" id="contact">
+  <div class="pd-wrap">
+    <div class="pd-foot__grid">
+      {%- comment -%} 1. brand {%- endcomment -%}
+      <div class="pd-foot__brand">
+        <img src="{{ 'prodani-badge-logo.png' | asset_url }}" alt="{{ shop.name | escape }}"
+             width="871" height="819" loading="lazy">
+      </div>
+
+      {%- comment -%} 2. the three menus {%- endcomment -%}
+      <div class="pd-foot__cols">
+        {%- for block in section.blocks -%}
+          {%- if block.type == 'menu' -%}
+            <nav aria-label="{{ block.settings.heading | escape }}" {{ block.shopify_attributes }}>
+              <h2 class="pd-foot__colhead">{{ block.settings.heading | escape }}</h2>
+              <ul>
+                {%- if block.settings.menu != blank -%}
+                  {%- for link in block.settings.menu.links -%}
+                    <li><a href="{{ link.url }}">{{ link.title }}</a></li>
+                  {%- endfor -%}
+                {%- else -%}
+                  {%- assign rows = block.settings.links | newline_to_br | split: '<br />' -%}
+                  {%- for row in rows -%}
+                    {%- assign parts = row | strip | split: '|' -%}
+                    {%- if parts.size > 0 and parts[0] != blank -%}
+                      <li><a href="{{ parts[1] | default: '#' | strip }}">{{ parts[0] | strip }}</a></li>
+                    {%- endif -%}
+                  {%- endfor -%}
+                {%- endif -%}
+              </ul>
+            </nav>
+          {%- endif -%}
+        {%- endfor -%}
+      </div>
+
+      {%- comment -%} 3. subscribe + follow {%- endcomment -%}
+      <div class="pd-foot__rail">
+        <div class="pd-foot__card">
+          {%- assign card_img = section.settings.signup_image -%}
+          {%- if card_img == blank and section.settings.signup_product != blank -%}
+            {%- assign card_img = section.settings.signup_product.featured_image -%}
+          {%- endif -%}
+          {%- if card_img != blank -%}
+            <div class="pd-foot__card-media">
+              {{ card_img | image_url: width: 800 | image_tag: loading: 'lazy', alt: '' }}
+            </div>
+          {%- endif -%}
+          <h2 class="pd-foot__card-title">{{ section.settings.signup_title | escape }}</h2>
+          <p class="pd-foot__card-copy">{{ section.settings.signup_copy | escape }}</p>
+          {%- form 'customer', class: 'pd-foot__form' -%}
+            <input type="hidden" name="contact[tags]" value="newsletter">
+            <label for="pd-foot-email" class="pd-sr-only">Email address</label>
+            <input id="pd-foot-email" type="email" name="contact[email]"
+                   placeholder="Enter your email" autocomplete="email" required>
+            <button type="submit">{{ section.settings.signup_button | escape }}</button>
+            {%- if form.posted_successfully? -%}
+              <p class="pd-foot__ok">Thanks — you're on the list.</p>
+            {%- endif -%}
+          {%- endform -%}
+        </div>
+
+        <div class="pd-foot__social">
+          <span class="pd-foot__social-label">{{ section.settings.follow_label | escape }}</span>
+          <div class="pd-foot__social-links">
+            {%- if section.settings.instagram != blank -%}
+              <a href="{{ section.settings.instagram }}" aria-label="Instagram" target="_blank" rel="noopener noreferrer">
+                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round">
+                  <rect x="3" y="3" width="18" height="18" rx="5.2"/><circle cx="12" cy="12" r="4.1"/>
+                  <circle cx="17.3" cy="6.7" r="1.15" fill="currentColor" stroke="none"/>
+                </svg>
+              </a>
+            {%- endif -%}
+            {%- if section.settings.facebook != blank -%}
+              <a href="{{ section.settings.facebook }}" aria-label="Facebook" target="_blank" rel="noopener noreferrer">
+                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round">
+                  <path d="M14.8 3.2h-2.3a4.6 4.6 0 0 0-4.6 4.6v2.4H5.6v3.9h2.3v6.7h4v-6.7h2.6l.6-3.9h-3.2V7.8c0-.4.3-.7.7-.7h2.2V3.2Z"/>
+                </svg>
+              </a>
+            {%- endif -%}
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <div class="pd-foot__bar">
+      <span>&copy; {{ 'now' | date: '%Y' }} {{ shop.name | escape }}</span>
+      {%- if section.settings.policy_menu != blank -%}
+        <nav class="pd-foot__legal" aria-label="Legal">
+          {%- for link in section.settings.policy_menu.links -%}
+            <a href="{{ link.url }}">{{ link.title }}</a>
+          {%- endfor -%}
+        </nav>
+      {%- endif -%}
+      {%- if section.settings.credit_label != blank -%}
+        <span class="pd-foot__credit">
+          {{ section.settings.credit_label | escape }}
+          <a href="{{ section.settings.credit_link }}" target="_blank" rel="noopener noreferrer">
+            {{ section.settings.credit_name | escape }}
+          </a>
+        </span>
+      {%- endif -%}
+    </div>
+  </div>
+</footer>
+
+{% schema %}
+{
+  "name": "Footer",
+  "class": "pd-footer-group",
+  "settings": [
+    { "type": "header", "content": "Signup card" },
+    { "type": "image_picker", "id": "signup_image", "label": "Card image" },
+    { "type": "product", "id": "signup_product", "label": "Card product (photo used if no image)" },
+    { "type": "text", "id": "signup_title", "label": "Title", "default": "First dibs on new bakes" },
+    { "type": "text", "id": "signup_copy", "label": "Copy", "default": "New flavours, restocks and the odd Miami pop-up. Once a month, nothing else." },
+    { "type": "text", "id": "signup_button", "label": "Button", "default": "Subscribe" },
+    { "type": "header", "content": "Follow" },
+    { "type": "text", "id": "follow_label", "label": "Label", "default": "Follow us" },
+    { "type": "url", "id": "instagram", "label": "Instagram" },
+    { "type": "url", "id": "facebook", "label": "Facebook" },
+    { "type": "header", "content": "Legal strip" },
+    { "type": "link_list", "id": "policy_menu", "label": "Legal menu" },
+    { "type": "text", "id": "credit_label", "label": "Credit prefix", "default": "Designed and developed by" },
+    { "type": "text", "id": "credit_name", "label": "Credit name", "default": "Switch Case Studio" },
+    { "type": "url", "id": "credit_link", "label": "Credit link" }
+  ],
+  "blocks": [
+    {
+      "type": "menu",
+      "name": "Menu column",
+      "limit": 4,
+      "settings": [
+        { "type": "text", "id": "heading", "label": "Heading" },
+        { "type": "link_list", "id": "menu", "label": "Menu (optional)" },
+        { "type": "textarea", "id": "links", "label": "Manual links",
+          "info": "One per line as  Label|/url  — used when no menu is chosen." }
+      ]
+    }
+  ],
+  "enabled_on": { "groups": ["footer"] }
+}
+{% endschema %}

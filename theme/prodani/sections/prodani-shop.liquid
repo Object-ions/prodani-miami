@@ -1,0 +1,100 @@
+{%- comment -%}
+  Product grid with collection filter pills — ported from the prototype's Shop.
+
+  The pills filter client-side over one rendered set rather than navigating, so
+  switching is instant. Each card carries the handles of every collection it
+  belongs to, which is what the pills match against.
+{%- endcomment -%}
+
+{{ 'prodani-shop.css' | asset_url | stylesheet_tag }}
+
+{%- comment -%} On a collection page `collection` is the page's own; on the
+   homepage it is nil, so we fall back to the whole catalogue. {%- endcomment -%}
+{%- assign source = section.settings.collection | default: collection | default: collections['all-products'] -%}
+{%- assign limit = section.settings.limit | default: 24 -%}
+
+<section class="pd-shop" {% if section.settings.anchor != blank %}id="{{ section.settings.anchor }}"{% endif %}>
+  <div class="pd-wrap">
+    <div class="pd-sec-head">
+      <div>
+        <{{ section.settings.heading_tag | default: 'h2' }} class="pd-sec-title">{{ section.settings.heading | default: source.title | escape }}</{{ section.settings.heading_tag | default: 'h2' }}>
+        {% render 'prodani-squiggle' %}
+      </div>
+      <span class="pd-eyebrow">
+        {{ source.products_count }}&nbsp;recipes&nbsp;·&nbsp;{{ section.settings.eyebrow | escape }}
+      </span>
+    </div>
+
+    {%- if section.blocks.size > 0 -%}
+      <div class="pd-filters" role="group" aria-label="Filter products">
+        <button class="pd-filter" data-pd-filter="*" data-on="true" type="button">
+          All <sup>{{ source.products_count }}</sup>
+        </button>
+        {%- for block in section.blocks -%}
+          {%- assign c = block.settings.collection -%}
+          {%- if c != blank -%}
+            <button class="pd-filter" type="button" data-pd-filter="{{ c.handle }}" {{ block.shopify_attributes }}>
+              {{ block.settings.label | default: c.title | escape }} <sup>{{ c.products_count }}</sup>
+            </button>
+          {%- endif -%}
+        {%- endfor -%}
+      </div>
+    {%- endif -%}
+
+    <p class="pd-count" data-pd-count aria-live="polite"></p>
+
+    <div class="pd-grid" data-pd-grid>
+      {%- for product in source.products limit: limit -%}
+        {% render 'prodani-card', product: product %}
+      {%- endfor -%}
+    </div>
+
+    {%- if section.settings.cta_label != blank -%}
+      <div class="pd-shop__foot">
+        <a class="pd-btn" href="{{ source.url | default: routes.all_products_collection_url }}">
+          {{ section.settings.cta_label | escape }}
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6"
+               stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+            <path d="M5 12h13M12 5l7 7-7 7"/>
+          </svg>
+        </a>
+      </div>
+    {%- endif -%}
+  </div>
+</section>
+
+<script src="{{ 'prodani-shop.js' | asset_url }}" defer></script>
+
+{% schema %}
+{
+  "name": "Shop grid",
+  "tag": "section",
+  "class": "pd-section",
+  "settings": [
+    { "type": "text", "id": "heading", "label": "Heading", "default": "The prodani collection" },
+    {
+      "type": "select", "id": "heading_tag", "label": "Heading level",
+      "info": "h1 on a collection page, h2 when used as a section elsewhere.",
+      "options": [{ "value": "h1", "label": "h1" }, { "value": "h2", "label": "h2" }],
+      "default": "h2"
+    },
+    { "type": "text", "id": "eyebrow", "label": "Eyebrow suffix", "default": "baked to order" },
+    { "type": "text", "id": "anchor", "label": "Anchor id", "default": "shop" },
+    { "type": "collection", "id": "collection", "label": "Source collection" },
+    { "type": "range", "id": "limit", "label": "Products to show", "min": 4, "max": 40, "step": 4, "default": 24 },
+    { "type": "text", "id": "cta_label", "label": "Button label", "default": "View everything" }
+  ],
+  "blocks": [
+    {
+      "type": "filter",
+      "name": "Filter pill",
+      "limit": 6,
+      "settings": [
+        { "type": "collection", "id": "collection", "label": "Collection" },
+        { "type": "text", "id": "label", "label": "Label (defaults to collection title)" }
+      ]
+    }
+  ],
+  "presets": [{ "name": "Shop grid" }]
+}
+{% endschema %}

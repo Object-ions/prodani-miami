@@ -1,0 +1,38 @@
+/* Meet Your Baker — ported from the prototype's .story rules. Prefixed pd- so
+   nothing here can collide with Dawn's own class names. */
+.pd-story{ background:var(--cream); color:var(--ink); padding-block:clamp(44px,5vw,78px); }
+
+.pd-story__in{ display:grid; grid-template-columns:repeat(12,1fr); gap:clamp(24px,4vw,54px); align-items:start; }
+.pd-story__text{ grid-column:1 / span 6; }
+.pd-story__media{ grid-column:8 / span 5; position:relative; align-self:start; }
+@media (max-width:980px){
+  .pd-story__in{ grid-template-columns:1fr; }
+  .pd-story__text, .pd-story__media{ grid-column:1 / -1; }
+}
+/* height:auto is load-bearing. The <img> carries width/height attributes, which
+   map to presentational hints — with no CSS height, the 1500px attribute won and
+   aspect-ratio was ignored, so the photo rendered 1500px tall beside 563px of
+   text. Letting height resolve from the ratio fixes it, and the cap keeps the
+   section from towering on wide screens. */
+.pd-story__media img{
+  width:100%; height:auto; aspect-ratio:4/5; max-height:620px;
+  object-fit:cover; border-radius:var(--r); display:block;
+}
+
+.pd-story__stamp{
+  position:absolute; left:-26px; bottom:-22px; width:136px; height:136px; border-radius:50%;
+  display:grid; place-items:center; text-align:center; background:var(--pink); color:var(--cocoa);
+  font-weight:700; font-size:12px; line-height:1.5; text-transform:uppercase; letter-spacing:.06em;
+  box-shadow:0 14px 30px rgba(35,22,18,.2); transform:rotate(-9deg);
+}
+.pd-story__stamp p{ margin:0; }
+@media (max-width:620px){
+  .pd-story__stamp{ left:auto; right:10px; bottom:-16px; width:104px; height:104px; font-size:10px; }
+}
+
+.pd-story__list{ list-style:none; padding:0; margin:30px 0 0; display:grid; gap:11px; }
+.pd-story__list li{ display:flex; gap:14px; align-items:flex-start; background:var(--butter);
+  border-radius:16px; padding:15px 18px; }
+.pd-story__list b{ font-weight:700; font-size:11.5px; letter-spacing:.1em; text-transform:uppercase;
+  color:var(--berry); flex:0 0 68px; padding-top:2px; }
+.pd-story__list span{ color:var(--ink-soft); font-size:14.5px; font-weight:500; }

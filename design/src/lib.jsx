@@ -82,6 +82,18 @@ export const Icon = {
   arrow: () => <svg viewBox="0 0 24 24" {...s}><path d="M5 12h13M12 5l7 7-7 7"/></svg>,
   search:() => <svg viewBox="0 0 24 24" {...s}><circle cx="11" cy="11" r="7"/><path d="M20 20l-3.6-3.6"/></svg>,
   user:  () => <svg viewBox="0 0 24 24" {...s}><circle cx="12" cy="8" r="4"/><path d="M4 21c0-4 3.6-6 8-6s8 2 8 6"/></svg>,
+  instagram: () => (
+    <svg viewBox="0 0 24 24" {...s}>
+      <rect x="3" y="3" width="18" height="18" rx="5.2" />
+      <circle cx="12" cy="12" r="4.1" />
+      <circle cx="17.3" cy="6.7" r="1.15" fill="currentColor" stroke="none" />
+    </svg>
+  ),
+  facebook: () => (
+    <svg viewBox="0 0 24 24" {...s}>
+      <path d="M14.8 3.2h-2.3a4.6 4.6 0 0 0-4.6 4.6v2.4H5.6v3.9h2.3v6.7h4v-6.7h2.6l.6-3.9h-3.2V7.8c0-.4.3-.7.7-.7h2.2V3.2Z" />
+    </svg>
+  ),
 }
 
 /* ---------- money ---------- */
@@ -107,9 +119,55 @@ export function Squiggle({ width = 190 }) {
 }
 
 /* Rotating circular stamp — words chase their own tail around a circle.
-   The one piece of pure decoration on the page, and it earns its place. */
+   The one piece of pure decoration on the page, and it earns its place.
+
+   The ring has to CLOSE. A phrase set at a fixed size lands wherever its own width
+   puts it: too short and the circle ends in a gap, too long and the tail is dropped
+   where it overruns the path. So the phrase is measured against the circle's real
+   circumference and fitted to it — repeated as many whole times as fit best, then
+   size-corrected for the remainder. Correcting with size rather than tracking keeps
+   the letterspacing exactly as designed. */
 export function SpinBadge({ className = '', text = 'no added sugar ✦ high protein ✦ gluten free ✦ small batch ✦ ', speed = 22 }) {
   const reduce = useReducedMotion()
+  const pathRef = useRef(null)
+  const measureRef = useRef(null)
+  const [fit, setFit] = useState(null)
+
+  useEffect(() => {
+    const path = pathRef.current
+    const probe = measureRef.current
+    if (!path || !probe) return
+
+    const measure = () => {
+      const circumference = path.getTotalLength()
+      // Zero while the badge is display:none (it is, below 1100px) — measuring then
+      // would fit the ring to nothing, so wait for it to gain a box.
+      const once = probe.getComputedTextLength()
+      if (!once || !circumference) return
+      // Whole repeats only — a partial one would break the phrase mid-word at the seam.
+      const reps = Math.max(1, Math.round(circumference / once))
+      const base = parseFloat(getComputedStyle(probe).fontSize) || 17
+      setFit({
+        reps,
+        length: circumference,
+        fontSize: base * (circumference / (once * reps)),
+      })
+    }
+
+    measure()
+    // Konnect lands after first paint; measuring against fallback metrics would fit
+    // the ring to the wrong width and leave a gap once the real face swaps in.
+    if (document.fonts?.ready) document.fonts.ready.then(measure).catch(() => {})
+
+    // The badge is display:none below 1100px, where the measurement above can only
+    // have returned zero — so it has to be retaken when the viewport crosses back.
+    // A ResizeObserver looks like the tool for that but does not report a
+    // display:none -> visible transition (verified in Chrome); window resize does,
+    // and it is the same event that flips the breakpoint.
+    window.addEventListener('resize', measure)
+    return () => window.removeEventListener('resize', measure)
+  }, [text])
+
   return (
     <motion.div
       className={'spin-badge ' + className}
@@ -124,10 +182,25 @@ export function SpinBadge({ className = '', text = 'no added sugar ✦ high prot
         transition={{ duration: speed, repeat: Infinity, ease: 'linear' }}
       >
         <defs>
-          <path id="spin-badge-path" fill="none"
+          <path ref={pathRef} id="spin-badge-path" fill="none"
                 d="M100,100 m-74,0 a74,74 0 1,1 148,0 a74,74 0 1,1 -148,0" />
         </defs>
-        <text><textPath href="#spin-badge-path" startOffset="0">{text}</textPath></text>
+
+        {/* hidden, purely to measure one pass of the phrase at the CSS size */}
+        <text ref={measureRef} fill="none" stroke="none" visibility="hidden">{text}</text>
+
+        <text
+          style={{ fontSize: fit ? `${fit.fontSize}px` : undefined, opacity: fit ? 1 : 0 }}
+        >
+          <textPath
+            href="#spin-badge-path"
+            startOffset="0"
+            textLength={fit ? fit.length : undefined}
+            lengthAdjust="spacing"
+          >
+            {fit ? text.repeat(fit.reps) : text}
+          </textPath>
+        </text>
       </motion.svg>
       <span className="spin-badge__core">🧁</span>
     </motion.div>

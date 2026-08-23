@@ -1,0 +1,40 @@
+{%- comment -%}
+  Oversized word straddling the seam between two sections: the top half sits on
+  the section above's colour, the bottom half on the next one's. The letters look
+  like they are sinking into the following block.
+
+  Done with one element and a hard-stop gradient background, clipped to the text.
+  No duplicate markup, so the two halves can never drift out of register.
+{%- endcomment -%}
+
+{{ 'prodani-bleed.css' | asset_url | stylesheet_tag }}
+
+<div class="pd-bleed"
+     style="--pd-bleed-top:{{ section.settings.color_top }};
+            --pd-bleed-bottom:{{ section.settings.color_bottom }};
+            --pd-bleed-text:{{ section.settings.color_text }};
+            --pd-bleed-split:{{ section.settings.split }}%;
+            --pd-bleed-speed:{{ section.settings.speed }}s;"
+     aria-hidden="true">
+  <div class="pd-bleed__word" data-pd-bleed data-speed="{{ section.settings.speed }}">
+    {%- assign word = section.settings.text | strip -%}
+    {%- for i in (1..6) -%}<span>{{ word }}</span>{%- endfor -%}
+  </div>
+</div>
+
+{% schema %}
+{
+  "name": "Bleed word",
+  "tag": "section",
+  "class": "pd-section",
+  "settings": [
+    { "type": "text", "id": "text", "label": "Word", "default": "Delicious" },
+    { "type": "color", "id": "color_top", "label": "Colour above the split", "default": "#48312A" },
+    { "type": "color", "id": "color_bottom", "label": "Colour below the split", "default": "#FDC3D4" },
+    { "type": "color", "id": "color_text", "label": "Letter colour", "default": "#FDC3D4" },
+    { "type": "range", "id": "split", "label": "Split point (%)", "min": 20, "max": 80, "step": 5, "default": 55 },
+    { "type": "range", "id": "speed", "label": "Drift (seconds per loop)", "min": 10, "max": 90, "step": 5, "default": 40 }
+  ],
+  "presets": [{ "name": "Bleed word" }]
+}
+{% endschema %}

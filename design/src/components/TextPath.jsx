@@ -13,6 +13,12 @@ gsap.registerPlugin(useGSAP)
  *     can be used. It is applied to BOTH the visible text and the hidden measuring
  *     text — they must match or getComputedTextLength() lies and the fitting breaks.
  *   - Honours prefers-reduced-motion by not starting the timeline.
+ *
+ * A note on the ribbon's ends: it is a stroke, so `strokeLinecap="butt"` cuts each
+ * end perpendicular to the path's tangent there. On a sloping path that cut is a
+ * diagonal, which leaves a bare triangular wedge in the corner. The cure is to give
+ * the path more horizontal run than the viewBox shows, so both caps sit outside the
+ * visible window — see the WAVE/viewBox pair in Marquee.jsx.
  */
 export default function TextPath({
   text = 'Your text goes here',
@@ -35,10 +41,22 @@ export default function TextPath({
   // Optional solid fill covering everything ABOVE the ribbon. Lets the section
   // above end on the same wave the ribbon follows, instead of a straight edge.
   fillAbove,
+  // Same trick pointing the other way: fills everything BELOW the ribbon, so the
+  // ribbon can float over live footage and still hand off cleanly to the next section.
+  fillBelow,
 }) {
-  const viewBoxWidth = Number(viewBox.split(/[\s,]+/)[2]) || 0
+  // The fills close against the viewBox's real extents, not against 0/width — the
+  // viewBox may be inset (see below), in which case those are not the same thing.
+  const [minX, minY, vbWidth, vbHeight] = (() => {
+    const n = viewBox.split(/[\s,]+/).map(Number)
+    return [n[0] || 0, n[1] || 0, n[2] || 0, n[3] || 0]
+  })()
+  const maxX = minX + vbWidth
+  const maxY = minY + vbHeight
   // Sit the fill's lower edge exactly on the ribbon's top edge.
   const fillOffset = ribbonOffset - ribbonWidth / 2
+  // ...and the below-fill's upper edge on the ribbon's bottom edge.
+  const fillBelowOffset = ribbonOffset + ribbonWidth / 2
   const id = useId()
   const pathId = `text-path-curve-${id.replace(/:/g, '')}`
 
@@ -115,9 +133,18 @@ export default function TextPath({
         {fillAbove && (
           <path
             className="textpath__fill"
-            d={`${path} L${viewBoxWidth} 0 L0 0 Z`}
+            d={`${path} L${maxX} ${minY} L${minX} ${minY} Z`}
             transform={`translate(0 ${fillOffset})`}
             fill={fillAbove}
+          />
+        )}
+
+        {fillBelow && (
+          <path
+            className="textpath__fill"
+            d={`${path} L${maxX} ${maxY} L${minX} ${maxY} Z`}
+            transform={`translate(0 ${fillBelowOffset})`}
+            fill={fillBelow}
           />
         )}
 

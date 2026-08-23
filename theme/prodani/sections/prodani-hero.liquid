@@ -1,0 +1,108 @@
+{%- comment -%}
+  Hero — ported from the prototype. One 90vh block: video bed, scrim, type wall,
+  and the wave ribbon riding the bottom edge (the ribbon is part of the hero, not
+  a band stacked under it, so the footage runs unbroken down to the lettering).
+{%- endcomment -%}
+
+{{ 'prodani-hero.css' | asset_url | stylesheet_tag }}
+{{ 'prodani-marquee.css' | asset_url | stylesheet_tag }}
+
+<section class="pd-hero" id="pd-hero-{{ section.id }}">
+  <div class="pd-hero__video" aria-hidden="true">
+    {%- comment -%}
+      The theme asset is a 375KB re-encode. The store's original CDN file is 5.5MB
+      and stalled at readyState 0 behind the hero, so it is only the fallback.
+    {%- endcomment -%}
+    {%- assign src = section.settings.video_url -%}
+    {%- if section.settings.use_bundled_video -%}
+      {%- assign src = 'hero.mp4' | asset_url -%}
+    {%- endif -%}
+    {%- assign poster = 'hero-poster.jpg' | asset_url -%}
+    {%- if section.settings.poster != blank -%}
+      {%- assign poster = section.settings.poster | image_url: width: 1600 -%}
+    {%- endif -%}
+
+    {%- comment -%}
+      <source type> rather than <video src>: Shopify serves theme assets as
+      `application/mp4`, and Chrome will not decode that from a bare src — the
+      element sat at readyState 0 forever. Declaring video/mp4 settles it.
+    {%- endcomment -%}
+    {%- if src != blank -%}
+      <video poster="{{ poster }}" autoplay muted loop playsinline preload="auto" tabindex="-1">
+        <source src="{{ src }}" type="video/mp4">
+      </video>
+    {%- else -%}
+      <img src="{{ poster }}" alt="" loading="eager" width="1600" height="900">
+    {%- endif -%}
+  </div>
+
+  <div class="pd-hero__body">
+    <div class="pd-wrap pd-hero__in">
+      {%- if section.settings.kicker != blank -%}
+        <p class="pd-hero__kicker">{{ section.settings.kicker | escape }}</p>
+      {%- endif -%}
+
+      <h1 class="pd-giant">
+        <span class="pd-giant__line">{{ section.settings.line_one | escape }}</span>
+        <span class="pd-giant__line">{{ section.settings.line_two | escape }}</span>
+      </h1>
+
+      <div class="pd-hero__foot">
+        {%- if section.settings.cta_label != blank -%}
+          <a class="pd-btn pd-btn--pink" href="{{ section.settings.cta_link | default: routes.all_products_collection_url }}">
+            {{ section.settings.cta_label | escape }}
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6"
+                 stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+              <path d="M5 12h13M12 5l7 7-7 7"/>
+            </svg>
+          </a>
+        {%- endif -%}
+        {%- if section.settings.note != blank -%}
+          <p class="pd-hero__note">{{ section.settings.note | escape }}</p>
+        {%- endif -%}
+      </div>
+    </div>
+  </div>
+
+  {%- if section.settings.ribbon_items != blank -%}
+    {% render 'prodani-marquee',
+       items: section.settings.ribbon_items,
+       speed: section.settings.ribbon_speed,
+       fill_below: 'var(--cream)',
+       modifier: 'pd-marquee--hero' %}
+  {%- endif -%}
+</section>
+
+{% schema %}
+{
+  "name": "Hero",
+  "tag": "section",
+  "class": "pd-section",
+  "settings": [
+    {
+      "type": "checkbox", "id": "use_bundled_video", "label": "Use the bundled hero video",
+      "info": "375KB re-encode shipped with the theme. Turn off to use a URL from Content → Files.",
+      "default": true
+    },
+    {
+      "type": "url", "id": "video_url", "label": "Background video URL (MP4)",
+      "info": "Only used when the bundled video is turned off."
+    },
+    { "type": "image_picker", "id": "poster", "label": "Poster / fallback image" },
+    { "type": "text", "id": "kicker", "label": "Kicker", "default": "The power of protein. The joy of cake." },
+    { "type": "text", "id": "line_one", "label": "Headline line 1", "default": "Bite into" },
+    { "type": "text", "id": "line_two", "label": "Headline line 2", "default": "Balance" },
+    { "type": "text", "id": "cta_label", "label": "Button label", "default": "Shop the collection" },
+    { "type": "url", "id": "cta_link", "label": "Button link" },
+    { "type": "text", "id": "note", "label": "Note beside button", "default": "0g added sugar · 20g protein · gluten-free" },
+    { "type": "header", "content": "Wave ribbon" },
+    {
+      "type": "text", "id": "ribbon_items", "label": "Ribbon words",
+      "info": "Separated by commas.",
+      "default": "high protein, no sugar added, gluten free, small batch, miami made"
+    },
+    { "type": "range", "id": "ribbon_speed", "label": "Ribbon speed (seconds per loop)", "min": 10, "max": 60, "step": 2, "default": 26 }
+  ],
+  "presets": [{ "name": "Hero" }]
+}
+{% endschema %}

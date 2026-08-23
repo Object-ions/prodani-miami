@@ -1,0 +1,57 @@
+{
+  "sections": {
+    "baker": {
+      "type": "prodani-baker",
+      "blocks": {
+        "b1": {
+          "type": "pillar",
+          "settings": {
+            "label": "Batch",
+            "text": "Small batches, never mass-produced. Every cake is baked to order in Miami."
+          }
+        },
+        "b2": {
+          "type": "pillar",
+          "settings": {
+            "label": "Sugar",
+            "text": "None added. Sweetness comes from fruit and the ingredients themselves."
+          }
+        },
+        "b3": {
+          "type": "pillar",
+          "settings": {
+            "label": "Flour",
+            "text": "Gluten-free by design, not by substitution. Coconut flour, not filler."
+          }
+        },
+        "b4": {
+          "type": "pillar",
+          "settings": {
+            "label": "Protein",
+            "text": "Whey concentrate and isolate. Real macros, printed honestly."
+          }
+        }
+      },
+      "block_order": [
+        "b1",
+        "b2",
+        "b3",
+        "b4"
+      ],
+      "settings": {
+        "heading": "Meet your baker",
+        "eyebrow": "Miami · since 2023",
+        "use_page_content": false,
+        "lede": "<p>Hey there! I&#x27;m Daniel, the brain and brawn behind Pro Dani Miami. Let me give you the lowdown on how this sweet adventure began.</p>",
+        "body": "<p>As a personal trainer, I&#x27;ve always had one foot in the fitness world and the other in the world of tempting treats. I&#x27;d see my clients struggle to satisfy their sweet tooth while staying on track with their health and fitness goals. It got me thinking: why isn&#x27;t there a bakery that offers cakes and muffins that are not only delicious but also high in protein, gluten-free, and low in sugar?</p><p>That&#x27;s when the lightbulb moment struck, and Pro Dani Miami was born. I wanted to create a place where people like you and me could indulge our sweet cravings without feeling like we&#x27;re sacrificing our commitment to healthy eating.</p><p>At Pro Dani Miami, we&#x27;re all about striking that perfect balance. Our cakes and muffins are my labor of love, crafted with top-notch ingredients and a dash of passion. I&#x27;m a stickler for quality, so rest assured, each bite is a testament to our dedication to excellence.</p><p>Whether you&#x27;re a fitness fanatic, have dietary restrictions, or just appreciate a good treat, we&#x27;ve got something special in store for you. Join me on this journey where you can have your cake and eat it too, where indulgence meets wellness, and sweet cravings become a wholesome delight.</p><p>I invite you to dive into the world of Pro Dani Miami, where we&#x27;ve cracked the code on making dessert a guilt-free pleasure. Your satisfaction is my mission, and I can&#x27;t wait for you to experience the joy of our high-protein, gluten-free, and low-sugar creations.</p><p>Welcome to a place where taste and health go hand in hand. Welcome to Pro Dani Miami!</p>",
+        "image_alt": "Dani of ProDani Miami",
+        "stamp": "<p>Baked<br>in<br>Miami</p>",
+        "bundled_photo": "prodani-dani-1",
+        "photo_focus": "50% 8%"
+      }
+    }
+  },
+  "order": [
+    "baker"
+  ]
+}

@@ -1,0 +1,17 @@
+{
+  "type": "header",
+  "name": "Header",
+  "sections": {
+    "header": {
+      "type": "prodani-header",
+      "settings": {
+        "logo_text": "prodani",
+        "menu": "main-menu",
+        "claims": "Free local delivery in Miami over $75|Baked in small batches, never mass-produced|70+ five-star reviews|No added sugar. Ever."
+      }
+    }
+  },
+  "order": [
+    "header"
+  ]
+}
