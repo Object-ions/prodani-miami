@@ -1,12 +1,29 @@
 /* Contact block.
-   The detail rows and the form both sit on cocoa. Every pair below was measured
-   against the real hex values, not judged by eye:
-     cream     #FBF5E8 on cocoa      #48312A  -> 11.06:1  (values, input text)
-     pink-deep #F79CBB on cocoa               ->  5.96:1  (labels)
-     cream@70% on cocoa-deep #3A2721          ->  7.13:1  (placeholders)
-     cocoa     on pink #FDC3D4                ->  7.97:1  (submit)
-   berry #C4587E was the label colour on cream and only reaches 2.89:1 on cocoa,
-   so it is replaced by pink-deep rather than carried across. */
+   The panels are a milk-chocolate brown, not the near-black cocoa: #48312A sat at
+   22% lightness and read as a hole punched in the cream page.
+
+   How far it can lighten is set by the label colour, not by taste. Holding the old
+   pink-deep #F79CBB labels caps the panel at 28% lightness, which is barely a
+   change. Moving labels to the lighter pink #FDC3D4 buys 8 more points, so:
+
+     panel  #744F44  (36% lightness, was 22%)
+     field  #5A3D35  (28%, one step down so inputs read as inset)
+
+     label       pink  #FDC3D4 on panel  -> 4.73:1
+     value       cream #FBF5E8 on panel  -> 6.56:1
+     input text  cream on field          -> 8.97:1
+     placeholder cream@72% on field      -> 5.54:1
+     border      cream@55% on panel      -> 3.20:1
+     panel vs cream page                 -> 6.56:1
+
+   The border opacity is load-bearing: the field fill only reaches 1.37:1 against
+   the panel, so the outline is what makes the input a distinct target. 28% opacity
+   gave 1.89:1 and failed WCAG 1.4.11; 55% is the minimum that clears 3:1. */
+:root{
+  --pd-panel:#744F44;
+  --pd-field:#5A3D35;
+  --pd-panel-line:rgba(251,245,232,.55);
+}
 
 .pd-contact{ background:var(--cream); color:var(--ink); padding-block:clamp(56px,7vw,110px); }
 
@@ -31,12 +48,12 @@
 .pd-contact__details{ list-style:none; padding:0; margin:26px 0 0; display:grid; gap:11px; }
 .pd-contact__details li{
   display:flex; gap:16px; align-items:baseline;
-  background:var(--cocoa); color:var(--on-dark);
+  background:var(--pd-panel); color:var(--on-dark);
   border-radius:16px; padding:16px 20px;
 }
 .pd-contact__details b{
   font-weight:700; font-size:11.5px; letter-spacing:.1em; text-transform:uppercase;
-  color:var(--pink-deep); flex:0 0 72px;
+  color:var(--pink); flex:0 0 72px;
 }
 .pd-contact__details span,
 .pd-contact__details a{ color:var(--cream); font-size:14.5px; font-weight:500; }
@@ -53,7 +70,7 @@
 /* ---- form ---- */
 .pd-form{
   display:flex; flex-direction:column; gap:14px; width:100%;
-  background:var(--cocoa); color:var(--on-dark);
+  background:var(--pd-panel); color:var(--on-dark);
   border-radius:calc(var(--r) + 6px);
   padding:clamp(22px,2.6vw,34px);
 }
@@ -63,17 +80,17 @@
 .pd-field--grow textarea{ height:100%; }
 .pd-field span{
   font-size:11.5px; font-weight:700; letter-spacing:.1em; text-transform:uppercase;
-  color:var(--pink-deep);
+  color:var(--pink);
 }
 .pd-field input,
 .pd-field select,
 .pd-field textarea{
   font:inherit; font-size:15px; width:100%;
-  color:var(--cream); background:var(--cocoa-deep);
-  border:2px solid rgba(251,245,232,.18); border-radius:14px; padding:12px 15px;
+  color:var(--cream); background:var(--pd-field);
+  border:2px solid var(--pd-panel-line); border-radius:14px; padding:12px 15px;
 }
 .pd-field textarea{ resize:vertical; min-height:120px; }
-.pd-field input::placeholder{ color:rgba(251,245,232,.70); }
+.pd-field input::placeholder{ color:rgba(251,245,232,.72); }
 .pd-field select{
   appearance:none;
   /* Chevron drawn in the border colour so it reads on the dark field. */
@@ -101,4 +118,4 @@
 .pd-btn--pink:hover{ background:var(--pink-deep); }
 
 .pd-form__ok{ margin:0; color:var(--pink); font-weight:700; }
-.pd-form__err{ margin:0; color:var(--pink-deep); font-weight:700; }
+.pd-form__err{ margin:0; color:var(--pink); font-weight:700; }
