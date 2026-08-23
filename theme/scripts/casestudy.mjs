@@ -190,9 +190,14 @@ const median = (xs) => { const s = [...xs].filter(n => typeof n === 'number' && 
   return s.length ? (s.length % 2 ? s[(s.length - 1) / 2] : (s[s.length / 2 - 1] + s[s.length / 2]) / 2) : null }
 
 /* ---------- the two variants ---------- */
+/* The roles flipped when the rebuild was published on 23 Aug 2026. BEFORE is now
+   the old theme viewed through preview_theme_id; AFTER is simply the storefront.
+   That also means AFTER now gets Shopify's full page cache and BEFORE does not —
+   the reverse of how these were first measured, so TTFB is no longer comparable
+   between the two runs and is reported as measured, not as a win. */
 const VARIANTS = [
-  { key: 'before', label: 'Live theme (Minimog 3.5.0)', prime: null },
-  { key: 'after',  label: 'New theme (prodani, Dawn 16 base)', prime: 'https://prodanimiami.com/?preview_theme_id=187797995830&pb=0' },
+  { key: 'before', label: 'Old theme (Minimog 3.5.0)', prime: 'https://prodanimiami.com/?preview_theme_id=154419691830&pb=0' },
+  { key: 'after',  label: 'New theme (prodani, Dawn 16 base) — live', prime: null },
 ]
 /* pb=0 suppresses Shopify's preview bar, which is injected into the previewed
    theme only. It goes on BOTH variants so the measured URLs stay identical in
@@ -217,6 +222,8 @@ for (let i = 0; i < RUNS; i++) {
          it is set or cleared explicitly on every run. */
       if (v.prime) await load(sessionId, v.prime, { settle: 1500 })
       else await load(sessionId, 'https://prodanimiami.com/?preview_theme_id=&pb=0', { settle: 1500 })
+      /* markers below assert which theme actually answered, so a cookie that
+         failed to stick shows up as an abort rather than as a result */
       const m = await load(sessionId, p.url)
       bucket[`${v.key}/${p.key}`].push(m)
       if (i === 0) {

@@ -7,10 +7,12 @@ wrong, the measurement is wrong, which is the only kind of error worth having.
 """
 import base64, json, os, pathlib
 
-SHOTS = pathlib.Path('/tmp/prodani-casestudy')
+SHOTS = pathlib.Path('/tmp/prodani-casestudy2')   # post-launch run, against the real live site
+SHOTS_PRE = pathlib.Path('/tmp/prodani-casestudy')  # pre-launch run, kept for the reproducibility band
 ASSETS = pathlib.Path('/Users/imac/Desktop/prodani/theme/prodani/assets')
 OUT = pathlib.Path('/Users/imac/Desktop/prodani/casestudy/index.html')
 M = json.load(open(SHOTS / 'metrics.json'))
+M_PRE = json.load(open(SHOTS_PRE / 'metrics.json'))
 
 def b64(path, mime):
     return f"data:{mime};base64," + base64.b64encode(pathlib.Path(path).read_bytes()).decode()
@@ -57,8 +59,8 @@ NOTES = {
         'Longer on purpose: the collection rows, the stat deck, Meet Your Baker and '
         'the reviews all live on the homepage now.',
     ('product', 'transfer'):
-        'Effectively unchanged. The script savings are real, but the new gallery serves '
-        'larger photographs — images went from 482KB to 733KB and ate the difference.',
+        'Heavier, and on purpose. Scripts dropped, but the gallery serves larger photographs '
+        'and the page now carries a working reviews widget it did not have at all before.',
     ('contact', 'load'):
         'A wash. The embedded map costs about what the removed scripts saved.',
     ('contact', 'scrollHeight'):
@@ -463,11 +465,16 @@ footer{{border-top:1px solid var(--rule);padding-block:clamp(36px,5vw,60px) 44px
       <li><b>Instrument</b><span>Headless Chrome driven over the DevTools protocol. Paint and layout-shift
         figures come from PerformanceObserver hooks installed before the first byte of the document,
         because layout-shift and LCP entries cannot be recovered after the fact.</span></li>
-      <li><b>Same store</b><span>Identical products, prices, apps and pixels on both sides. The new theme runs
-        as an unpublished preview against the live catalogue, so the only variable is the theme.</span></li>
-      <li><b>One caveat</b><span>Time to first byte is server render time. A preview theme does not get the
-        full benefit of Shopify&rsquo;s page cache, so the new theme is measured at a disadvantage there
-        and still wins by two thirds.</span></li>
+      <li><b>Same store</b><span>Identical products, prices, apps and pixels on both sides &mdash; one
+        catalogue, two themes, so the theme is the only variable. Nothing here touched the store&rsquo;s
+        data: products, orders, customers and checkout are not part of a theme, and the previous theme
+        is still sitting in the library, one call away from being live again.</span></li>
+      <li><b>Measured twice</b><span>Once before launch, with the old theme live and the new one in
+        preview, and again after launch with those roles reversed. That matters for time to first byte,
+        because only a published theme gets Shopify&rsquo;s full page cache &mdash; so the cache bias ran
+        one way in the first run and the other way in the second. The figure came back at
+        &minus;68% and then &minus;69%. It is a real difference in render time, not a caching artefact.
+        Figures on this page are from the post-launch run, against the live storefront.</span></li>
     </ul>
   </div>
 </div>

@@ -676,3 +676,75 @@ on it is transcribed by hand.
 Also added `theme/scripts/crop.py`, the PNG cropper written when `sips` mangled
 the badge icons — its `--cropOffset` is measured from the centre of the image,
 not the top-left, which displaced every slice by ~1944px.
+
+## 2026-08-23 (later) — live
+
+Published. Theme 187797995830 is main, renamed `Prodani - v.1.0.0`. The old theme
+(154419691830, `Prodani - v.0.0.1`) is demoted to unpublished and still in the
+library. Rollback:
+
+    cd theme && node scripts/publish.mjs 154419691830 --yes
+
+`ROLLBACK.json` is written before the role swap, not after, so the undo
+instruction survives a run that dies halfway.
+
+**Three things only publishing revealed.**
+
+1. **`body` was still white.** The `body{background-color:var(--cream)}` rule in
+   the token sheet — added months ago in response to "the rest of the page is
+   still white" — never worked. Dawn renders `<body class="gradient">` and paints
+   it with `.gradient{background:var(--gradient-background)}`. A class selector
+   beats a bare element selector regardless of load order. It looked fixed on the
+   homepage only because our sections paint their own grounds edge to edge.
+
+   The fix is in `config/settings_data.json`, not CSS: Dawn's colour schemes now
+   carry the brand palette (scheme-1 cream/cocoa, scheme-2 butter, 3 and 4 the two
+   browns). One value feeds `--gradient-background` and every other Dawn surface,
+   which is why cart and search corrected themselves without being touched.
+
+2. **Product pages had no reviews at all.** Zero `jdgm` elements in the body. The
+   homepage renders the store-wide feed from `shop.metafields.judgeme.all_reviews_*`;
+   per-product needs its own widget. Added `sections/prodani-product-reviews.liquid`
+   using Judge.me's markup contract rather than an app block — an app-block URI
+   embeds the extension UUID and a wrong one is dropped *silently*, which for
+   something a shopper is meant to read is the worst available failure mode.
+
+   Related, and worth telling Daniel: **no product in this store has any reviews
+   attached.** All 70+ are store-wide only, so every product shows "Be the first
+   to write a review", and no product will ever show stars in Google results until
+   the reviews are associated in Judge.me.
+
+3. **`shopify theme push` to a live theme silently did nothing.** It needs
+   `--allow-live`, and refuses to prompt for it non-interactively. The command
+   errored, the tail of the output still looked like a success box, and I reported
+   it as pushed. What caught it was the new product-page check in preflight, not
+   me reading the output properly. `tail -3` on a deploy is not verification.
+
+**Also worth remembering:** two of the checks I wrote for that new section passed
+against a page with no widget on it, because Judge.me ships a settings stylesheet
+naming every `jdgm-*` class it owns and a substring search finds them there.
+Section 3b now strips `<style>` and `<script>` before searching for markup.
+
+And one change reverted: the review section briefly forced `display:flex` onto
+Judge.me's widget header to line the button up with the summary. It stacked the
+title on the summary text and clipped the button label. The file's own header
+comment already said restyle surfaces, never structure.
+
+**Measured again after launch**, which flipped which theme gets Shopify's page
+cache. The paint and weight results reproduce, and TTFB came back at -69% having
+been -68% when the bias ran the other way — so it is genuine render time, not
+caching. Post-launch data in `casestudy/metrics-post-launch.json`; the published
+case study now uses it.
+
+  homepage weight   6.95MB -> 1.83MB   -74%
+  homepage LCP        768ms -> 352ms   -54%
+  product CLS        0.0753 -> 0.0118  -84%
+  product DOM         2,021 -> 643     -68%
+  TTFB, all pages    ~151ms -> ~51ms   -66%
+
+The product page is now 5% *heavier* (1.91MB -> 2.01MB): larger gallery
+photography plus the reviews widget it previously did not have. The case study
+says so.
+
+Live checks: 89 passed, 0 failed against https://prodanimiami.com, add-to-cart
+included (added, verified, cleared).
