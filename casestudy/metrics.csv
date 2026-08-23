@@ -35,7 +35,7 @@ page,metric,before,after,change,lower_is_better,note
 "Contact","Time to first byte","152ms","50ms","−67%",yes,""
 "Contact","First contentful paint","444ms","356ms","−20%",yes,""
 "Contact","Largest contentful paint","480ms","356ms","−26%",yes,""
-"Contact","Load complete","1,028ms","1,119ms","+9%",yes,"A wash. The embedded map costs about what the removed scripts saved."
+"Contact","Load complete","1,028ms","1,119ms","+9%",yes,"Slower, and the only page where that is true. The embedded map costs more than the removed scripts saved. It buys a shopper who can see where the bakery is; paint is still 20% faster, so the page is usable sooner even though it finishes later."
 "Contact","Cumulative layout shift","0.0012","0.0005","−58%",yes,""
 "Contact","Page weight transferred","969KB","808KB","−17%",yes,""
 "Contact","Requests","194","179","−8%",yes,""

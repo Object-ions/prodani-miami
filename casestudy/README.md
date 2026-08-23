@@ -5,6 +5,7 @@ Everything needed to publish this as a case study on switchcasestudio.com.
 ## What's here
 
 ```
+HANDOFF.md                 brief for whoever publishes this — read this first
 copy.md                    the whole case study as text, ready to paste
 metrics.csv                every measurement as a flat table (opens in Sheets/Excel)
 page/index.html            the finished page — 53KB, loads images from ../images/

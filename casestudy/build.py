@@ -79,7 +79,9 @@ NOTES = {
         'Heavier, and on purpose. Scripts dropped, but the gallery serves larger photographs '
         'and the page now carries a working reviews widget it did not have at all before.',
     ('contact', 'load'):
-        'A wash. The embedded map costs about what the removed scripts saved.',
+        'Slower, and the only page where that is true. The embedded map costs more than the '
+        'removed scripts saved. It buys a shopper who can see where the bakery is; paint is '
+        'still 20% faster, so the page is usable sooner even though it finishes later.',
     ('contact', 'scrollHeight'):
         'Longer because the page gained a form worth filling in: phone, subject and a '
         'message field, plus the map.',

@@ -131,7 +131,7 @@ Two fields and a message box became a real enquiry form — name, email, phone, 
 | Deepest nesting level | 12 | 10 | −17% |
 | Full page height [^contact2] | 1,449px | 1,987px | +37% |
 
-[^contact1]: A wash. The embedded map costs about what the removed scripts saved.
+[^contact1]: Slower, and the only page where that is true. The embedded map costs more than the removed scripts saved. It buys a shopper who can see where the bakery is; paint is still 20% faster, so the page is usable sooner even though it finishes later.
 [^contact2]: Longer because the page gained a form worth filling in: phone, subject and a message field, plus the map.
 
 ---
