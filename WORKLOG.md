@@ -258,6 +258,21 @@ is pink and sinks into the now-pink Build Your Box section below (color_top stay
 match the baker section above). Widened `.pd-bleed__word span` gap .12em→.5em so it reads
 "DELICIOUS  DELICIOUS", not run together. Verified in-browser; 0 theme-check errors.
 
+## 2026-08-29 (cont. 11) — Section text swap, sticky deck title, box reorder
+
+- **Swapped shout ↔ baker text** so each design carries the right content: the section
+  with **Dani's photo** (shout) is now **"Meet your baker"** (condensed founder intro +
+  "Read my story" → /pages/meet-your-baker); the **cake-tray + facts** section (baker) is
+  now **"Where sweet meets balance"** (balance copy, keeping the BATCH/SUGAR/FLOUR/PROTEIN
+  pillars). Media/designs unchanged. Full founder story remains on /pages/meet-your-baker.
+- **Sticky deck title:** `prodani-stack` head is now `position:sticky` so "What makes
+  prodani different" stays visible while the 4 cards stack beneath it (cards pin below via a
+  JS-measured `--pd-stack-head-h`). Design unchanged. Runs even under reduced-motion.
+- **Reorder:** Build Your Box moved to immediately after the collection; DELICIOUS bleed
+  lower band set back to cream (no longer precedes the pink box), letters stay pink.
+- Verified in-browser on staging; 0 theme-check errors. Merged to main earlier; **not**
+  deployed to production.
+
 ---
 
 ## 2026-08-20 — Video hero, and the 5.6 MB problem solved on the way

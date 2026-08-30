@@ -18,9 +18,9 @@
       "type": "prodani-shout",
       "settings": {
         "anchor": "nutrition",
-        "heading": "Where sweet\nmeets balance",
-        "body": "<p>Desserts that support your lifestyle, not work against it. High-protein, low-sugar treats made to satisfy cravings while staying mindful of how your body feels. Indulgence should feel satisfying, not heavy.</p>",
-        "cta_label": "Meet your baker",
+        "heading": "Meet your baker",
+        "body": "<p>I'm Daniel — the brain and brawn behind ProDani. As a personal trainer, I couldn't find cakes and muffins that were high in protein, gluten-free, and low in sugar, so I baked my own.</p>",
+        "cta_label": "Read my story",
         "cta_link": "/pages/meet-your-baker",
         "image_alt": "Dani with a ProDani strawberry short cake",
         "badge_text": "dessert you can feel good about ✦ ",
@@ -216,11 +216,11 @@
         "b4"
       ],
       "settings": {
-        "heading": "Meet your baker",
+        "heading": "Where sweet meets balance",
         "eyebrow": "Miami · since 2023",
         "use_page_content": false,
-        "lede": "<p>I'm Daniel, the brain and brawn behind Pro Dani Miami. Let me give you the lowdown on how this sweet adventure began.</p>",
-        "body": "<p>As a personal trainer, I've always had one foot in the fitness world and the other in the world of tempting treats. I'd see my clients struggle to satisfy their sweet tooth while staying on track with their health and fitness goals. It got me thinking: why isn't there a bakery that offers cakes and muffins that are not only delicious but also high in protein, gluten-free, and low in sugar?</p><p>That's when the lightbulb moment struck, and Pro Dani Miami was born. Our cakes and muffins are my labor of love, crafted with top-notch ingredients and a dash of passion.</p>",
+        "lede": "<p>Desserts that support your lifestyle, not work against it.</p>",
+        "body": "<p>High-protein, low-sugar treats made to satisfy cravings while staying mindful of how your body feels. Indulgence should feel satisfying, not heavy.</p>",
         "bundled_photo": "prodani-trays",
         "image_alt": "A tray spread of ProDani protein cakes",
         "stamp": "<p>Baked<br>in<br>Miami</p>",
