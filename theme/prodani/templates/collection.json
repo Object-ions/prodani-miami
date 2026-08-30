@@ -2,6 +2,13 @@
   "sections": {
     "grid": {
       "type": "prodani-shop",
+      "blocks": {
+        "t1": { "type": "filter", "settings": { "collection": "personal-protein-cakes", "label": "Personal cakes" } },
+        "t2": { "type": "filter", "settings": { "collection": "family-cake", "label": "Family cakes" } },
+        "t3": { "type": "filter", "settings": { "collection": "protein-muffins", "label": "Muffins" } },
+        "t4": { "type": "filter", "settings": { "collection": "vegan", "label": "Vegan" } }
+      },
+      "block_order": ["t1", "t2", "t3", "t4"],
       "settings": {
         "heading": "",
         "eyebrow": "baked to order",

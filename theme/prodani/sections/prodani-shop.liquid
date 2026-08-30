@@ -25,20 +25,31 @@
       </span>
     </div>
 
+    {%- comment -%}
+      Category tabs. Each is a LINK to a real category collection, so every category is
+      a proper page (SEO-clean, shareable, correct from any collection page) while the bar
+      still lets shoppers switch category in one click and "All" shows everything — the
+      brief's "page per category" and the inline-switch UX at once. The current category is
+      highlighted. Configure the tabs by adding a "Category tab" block per collection.
+    {%- endcomment -%}
     {%- if section.blocks.size > 0 -%}
-      <div class="pd-filters" role="group" aria-label="Filter products">
-        <button class="pd-filter" data-pd-filter="*" data-on="true" type="button">
-          All <sup>{{ source.products_count }}</sup>
-        </button>
+      {%- assign on_all = false -%}
+      {%- if collection == blank or collection.handle == 'all-products' or collection.handle == 'all' -%}
+        {%- assign on_all = true -%}
+      {%- endif -%}
+      <nav class="pd-filters" aria-label="Shop by category">
+        <a class="pd-filter" href="{{ routes.all_products_collection_url }}"{% if on_all %} aria-current="page"{% endif %}>
+          All <sup>{{ collections['all-products'].products_count | default: collections.all.products_count }}</sup>
+        </a>
         {%- for block in section.blocks -%}
           {%- assign c = block.settings.collection -%}
           {%- if c != blank -%}
-            <button class="pd-filter" type="button" data-pd-filter="{{ c.handle }}" {{ block.shopify_attributes }}>
+            <a class="pd-filter" href="{{ c.url }}"{% if collection.handle == c.handle %} aria-current="page"{% endif %} {{ block.shopify_attributes }}>
               {{ block.settings.label | default: c.title | escape }} <sup>{{ c.products_count }}</sup>
-            </button>
+            </a>
           {%- endif -%}
         {%- endfor -%}
-      </div>
+      </nav>
     {%- endif -%}
 
     <p class="pd-count" data-pd-count aria-live="polite"></p>
@@ -87,10 +98,10 @@
   "blocks": [
     {
       "type": "filter",
-      "name": "Filter pill",
+      "name": "Category tab",
       "limit": 6,
       "settings": [
-        { "type": "collection", "id": "collection", "label": "Collection" },
+        { "type": "collection", "id": "collection", "label": "Category collection" },
         { "type": "text", "id": "label", "label": "Label (defaults to collection title)" }
       ]
     }

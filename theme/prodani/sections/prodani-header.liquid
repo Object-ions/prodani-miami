@@ -38,7 +38,21 @@
 
     <nav class="pd-nav__links" aria-label="Primary">
       {%- for link in section.settings.menu.links -%}
-        <a class="pd-nav__link" href="{{ link.url }}">{{ link.title }}</a>
+        {%- if link.links.size > 0 -%}
+          <div class="pd-nav__item pd-nav__item--has-sub">
+            <a class="pd-nav__link" href="{{ link.url }}" aria-haspopup="true">
+              {{ link.title }}
+              <svg class="pd-nav__caret" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" aria-hidden="true"><path d="M6 9l6 6 6-6"/></svg>
+            </a>
+            <div class="pd-nav__sub">
+              {%- for child in link.links -%}
+                <a class="pd-nav__sublink" href="{{ child.url }}">{{ child.title }}</a>
+              {%- endfor -%}
+            </div>
+          </div>
+        {%- else -%}
+          <a class="pd-nav__link" href="{{ link.url }}">{{ link.title }}</a>
+        {%- endif -%}
       {%- endfor -%}
     </nav>
 

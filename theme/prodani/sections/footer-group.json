@@ -9,7 +9,7 @@
           "type": "menu",
           "settings": {
             "heading": "Shop",
-            "links": "Personal cakes|/collections/all\nFamily cakes|/collections/all\nMuffins|/collections/all\nVegan range|/collections/all\nGift cards|/collections/all"
+            "links": "Personal cakes|/collections/personal-protein-cakes\nFamily cakes|/collections/family-cake\nMuffins|/collections/protein-muffins\nVegan range|/collections/vegan\nShop all|/collections/all"
           }
         },
         "c2": {

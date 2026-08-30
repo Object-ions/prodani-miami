@@ -10,6 +10,10 @@
 }
 .pd-filter:hover{ transform:translateY(-2px); color:var(--cocoa); box-shadow:inset 0 0 0 2px var(--ink-faint); }
 .pd-filter[data-on="true"]{ background:var(--cocoa); color:var(--cream); box-shadow:none; }
+/* Tabs render as links now (real category collections) — keep the pill look + active state. */
+a.pd-filter{ text-decoration:none; display:inline-flex; align-items:center; }
+.pd-filter[aria-current="page"]{ background:var(--cocoa); color:var(--cream); box-shadow:none; }
+.pd-filter:focus-visible{ outline:3px solid var(--pink-deep); outline-offset:2px; }
 .pd-filter sup{ font-size:10.5px; opacity:.6; margin-left:5px; }
 
 .pd-count{ color:var(--ink-faint); font-size:13px; font-weight:600; margin:0 0 18px; }

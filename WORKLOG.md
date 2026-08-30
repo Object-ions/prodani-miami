@@ -147,6 +147,34 @@ T8 reviews attach, T12 subscriptions app.
 
 ---
 
+## 2026-08-29 (cont. 4) — Category navigation (Option A)
+
+Client picked Option A for categories: real category **pages** + a tab bar to switch +
+"All", rather than a single `?filter=` view (weaker SEO/linking).
+
+Discovered the category **collections already exist** (`personal-protein-cakes` ×10,
+`family-cake` ×7, `vegan` ×7, `protein-muffins` ×2) — so no admin needed. Built the tab bar
+in `prodani-shop` as **links to those collections** with an active state (`aria-current`),
+so every category is a proper page (SEO-clean, shareable, correct on every collection page)
+while the bar still switches category in one click and "All" shows everything.
+
+- `sections/prodani-shop.liquid`: category tabs = collection links + active state; block
+  renamed "Category tab".
+- `templates/collection.json`: configured the 4 category tabs.
+- `sections/prodani-header.liquid` + `prodani-header.css`: header now renders **dropdown
+  submenus** when a nav item has children (hover + focus-within, caret, a11y focus rings).
+- `sections/footer-group.json`: footer Shop links now point to the real category collections
+  + "Shop all".
+- Reverted the interim client-side type-tab experiment (collections made it unnecessary).
+- Verified on staging: 0 Liquid errors; /collections/all shows 5 linked tabs; /collections/vegan
+  marks Vegan active and shows its 7 products.
+
+**New ticket — T14:** header dropdown needs Dani to add a **"Shop" menu with the 4 category
+child links** in admin → Navigation (themes-only token can't edit nav menus). The theme
+already renders the dropdown once those children exist.
+
+---
+
 ## 2026-08-20 — Video hero, and the 5.6 MB problem solved on the way
 
 **Brief:** drop the circular cake image from the hero, use the storefront's existing
