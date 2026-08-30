@@ -191,6 +191,22 @@ Two issues found + fixed:
 **Merged `feat/category-nav` → `main` and pushed** (public repo; code only, no confidential
 docs — verified clean). Everything from Dani's brief is now built, QA'd on staging, and on main.
 
+## 2026-08-29 (cont. 6) — Value strip reworked to ride the wave (client mockup)
+
+Client sent a before/after: the benefit-badge band should be **bookended by two wave
+marquees** (top + bottom) with the **icons laid along the same wave** instead of a flat row.
+
+- `prodani-hero.liquid`: top marquee `fill_below` cream → **pink**, so pink flows straight
+  from the top wave into the badge band (no cream gap).
+- `prodani-badges.liquid` (+css): added a **bottom wave marquee** (pink→cream), a
+  `--wave` row modifier that offsets the six icons along a valley (trough at Gluten Free,
+  edges high — matching the mockup; desktop ≥901px only, flat once the grid wraps), and a
+  `--wave-bottom` class that zeroes the section's bottom padding so no flat pink strip shows
+  below the wave. New settings: wave toggle, bottom-marquee toggle, marquee items/speed.
+- Verified in-browser on staging: both marquees ride the wave, icons follow the valley,
+  clean pink→cream, 0 theme-check errors. (Icons confirmed loaded via JS; automation
+  screenshots intermittently drop mix-blend-mode compositing, they render in a real browser.)
+
 ---
 
 ## 2026-08-20 — Video hero, and the 5.6 MB problem solved on the way

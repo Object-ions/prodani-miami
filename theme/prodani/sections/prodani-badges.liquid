@@ -7,12 +7,14 @@
 
 {{ 'prodani-badges.css' | asset_url | stylesheet_tag }}
 
-<section class="pd-badges" style="--pd-badges-bg:{{ section.settings.background }};">
+<section class="pd-badges{% if section.settings.bottom_marquee %} pd-badges--wave-bottom{% endif %}" style="--pd-badges-bg:{{ section.settings.background }};">
   <div class="pd-wrap">
     {%- if section.settings.heading != blank -%}
       <h2 class="pd-badges__heading">{{ section.settings.heading | escape }}</h2>
     {%- endif -%}
-    <ul class="pd-badges__row">
+    {%- comment -%} --wave lays the icons along the same wave the marquees ride (desktop
+       only; the grid stays flat once it wraps on tablet/phone). {%- endcomment -%}
+    <ul class="pd-badges__row{% if section.settings.wave_icons %} pd-badges__row--wave{% endif %}">
       {%- for block in section.blocks -%}
         <li class="pd-badge-item" {{ block.shopify_attributes }}>
           {%- if block.settings.image != blank -%}
@@ -28,6 +30,16 @@
       {%- endfor -%}
     </ul>
   </div>
+
+  {%- comment -%} Bottom wave marquee — mirrors the hero's top one, closing the pink band
+     with a wave into the cream section below. {%- endcomment -%}
+  {%- if section.settings.bottom_marquee and section.settings.marquee_items != blank -%}
+    {% render 'prodani-marquee',
+       items: section.settings.marquee_items,
+       speed: section.settings.marquee_speed,
+       fill_below: 'var(--cream)',
+       modifier: 'pd-marquee--badges' %}
+  {%- endif -%}
 </section>
 
 {% schema %}
@@ -37,7 +49,12 @@
   "class": "pd-section",
   "settings": [
     { "type": "text", "id": "heading", "label": "Heading (optional)" },
-    { "type": "color", "id": "background", "label": "Background", "default": "#FDC3D4" }
+    { "type": "color", "id": "background", "label": "Background", "default": "#FDC3D4" },
+    { "type": "checkbox", "id": "wave_icons", "label": "Lay icons along a wave (desktop)", "default": true },
+    { "type": "header", "content": "Bottom marquee" },
+    { "type": "checkbox", "id": "bottom_marquee", "label": "Show bottom wave marquee", "default": true },
+    { "type": "text", "id": "marquee_items", "label": "Marquee items (comma-separated)", "default": "high protein, no sugar added, gluten free, small batch, miami made" },
+    { "type": "range", "id": "marquee_speed", "label": "Marquee speed", "min": 10, "max": 60, "step": 2, "default": 26 }
   ],
   "blocks": [
     {
