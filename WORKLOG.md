@@ -250,6 +250,14 @@ token never touches the theme and we keep full control of the styling.
 **New ticket — T15:** Dani connects her IG (Business/Creator + FB Page) to a free Behold.so
 feed and gives us the feed id (or adds curated images) to turn on live posts.
 
+## 2026-08-29 (cont. 10) — DELICIOUS bleed word → pink
+
+Client: make the DELICIOUS marquee pink (matching the next section) and space the repeats.
+Homepage `bleed` settings: `color_text` and `color_bottom` cocoa→pink (#FDC3D4), so the word
+is pink and sinks into the now-pink Build Your Box section below (color_top stays cream to
+match the baker section above). Widened `.pd-bleed__word span` gap .12em→.5em so it reads
+"DELICIOUS  DELICIOUS", not run together. Verified in-browser; 0 theme-check errors.
+
 ---
 
 ## 2026-08-20 — Video hero, and the 5.6 MB problem solved on the way

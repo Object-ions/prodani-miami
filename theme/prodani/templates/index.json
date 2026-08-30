@@ -171,8 +171,8 @@
       "settings": {
         "text": "Delicious",
         "color_top": "#FBF5E8",
-        "color_bottom": "#48312A",
-        "color_text": "#48312A",
+        "color_bottom": "#FDC3D4",
+        "color_text": "#FDC3D4",
         "split": 80,
         "speed": 40
       }

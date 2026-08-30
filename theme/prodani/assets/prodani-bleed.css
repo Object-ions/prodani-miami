@@ -22,6 +22,7 @@
 
   animation:pd-bleed-drift var(--pd-bleed-speed, 40s) linear infinite;
 }
-.pd-bleed__word span{ padding-right:.12em; }
+/* Clear space between repeats so it reads "DELICIOUS  DELICIOUS", not run together. */
+.pd-bleed__word span{ padding-right:.5em; }
 @keyframes pd-bleed-drift{ to{ transform:translateX(-50%); } }
 @media (prefers-reduced-motion: reduce){ .pd-bleed__word{ animation:none; } }
