@@ -34,11 +34,14 @@
   grid-template-columns:minmax(0,1fr) minmax(0,520px);
   grid-template-areas:"aside form" "map form";
   grid-template-rows:auto 1fr;
-  gap:clamp(28px,5vw,72px);
+  /* Keep the big gap BETWEEN the two columns, but a tight gap between the details and
+     the map so the map stretches up to close the vertical gap under the email row. */
+  column-gap:clamp(28px,5vw,72px);
+  row-gap:14px;
   align-items:stretch;
 }
 .pd-contact__aside{ grid-area:aside; }
-.pd-contact__map{ grid-area:map; margin-top:18px; align-self:stretch; }
+.pd-contact__map{ grid-area:map; margin-top:0; align-self:stretch; }
 .pd-contact__form{ grid-area:form; display:flex; }
 @media (max-width:900px){
   .pd-contact__in{ grid-template-columns:1fr; grid-template-areas:"aside" "map" "form"; grid-template-rows:auto; }

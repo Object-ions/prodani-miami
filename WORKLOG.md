@@ -293,6 +293,19 @@ match the baker section above). Widened `.pd-bleed__word span` gap .12em→.5em 
   re-upload) needs Shopify admin — offer stands.
 - Verified in-browser on staging; 0 theme-check errors. Not deployed to production.
 
+## 2026-08-30 (cont.) — Fixes from review
+
+- **Bleed transition:** split 55→75 (step-5 valid) so the "Build Your Balance Box" letters
+  sit on cream and submerge into pink at their base, instead of being cut mid-glyph.
+- **Stack deck:** peek labels were hidden behind the card's top padding — reduced card
+  padding-top (clamp 14–20) and widened the stagger 52→60 so each label ("20g Protein…",
+  "0g Added sugar", "27 Recipes…") is fully visible in its sliver. Also reduced the slot/card
+  heights (72svh/560→58svh/460, 60svh/440→54svh/410) so the section isn't over-stretched.
+- **Contact map:** the big gap under the email row was the grid row-gap (up to 72px) + an
+  18px map margin. Split gap into column-gap (kept large) + row-gap 14px and dropped the map
+  margin, so the map stretches up to close it.
+- Verified in-browser on staging; 0 theme-check errors. Not deployed to production.
+
 ---
 
 ## 2026-08-20 — Video hero, and the 5.6 MB problem solved on the way

@@ -14,12 +14,14 @@
    sat above and below every card. The slot must also be CAPPED, not just reduced:
    the card maxes out at 440px, so a purely viewport-relative slot re-opens the gap
    on tall screens (72svh on a 1181px viewport is 850px, leaving 410px of air). */
-.pd-stack__slot{ height:min(72svh, 560px); display:flex; align-items:center; justify-content:center; position:sticky; top:var(--pd-stack-head-h, 132px); }
+.pd-stack__slot{ height:min(58svh, 460px); display:flex; align-items:center; justify-content:center; position:sticky; top:var(--pd-stack-head-h, 132px); }
 .pd-stack__card{
   position:relative; transform-origin:top;
-  width:min(1180px, 88%); height:min(60svh, 440px);
+  width:min(1180px, 88%); height:min(54svh, 410px);
   border-radius:calc(var(--r) + 10px);
-  padding:clamp(22px,3vw,44px);
+  /* Small top padding so the peek label sits right at the card's top edge and stays
+     fully visible in the sliver above the next card. */
+  padding:clamp(14px,1.6vw,20px) clamp(22px,3vw,44px) clamp(22px,3vw,44px);
   display:flex; flex-direction:column;
   box-shadow:0 24px 60px rgba(72,49,42,.16);
   overflow:hidden;
