@@ -1,0 +1,94 @@
+{%- comment -%}
+  Instagram feed (brief §09 UGC). On-brand, not a canned widget.
+
+  Auto-updating path (free): set a Behold.so feed id. Behold connects to Dani's IG
+  Business account, holds/refreshes the token, and serves a CORS-enabled JSON feed that
+  prodani-instagram.js fetches client-side and renders in our own markup — so the token
+  never touches the theme and the styling stays ours.
+
+  Fallback path: with no feed id (or if the fetch fails), the curated image blocks below
+  render instead. So it ships today and flips to live posts the moment Dani connects IG (T15).
+{%- endcomment -%}
+{{ 'prodani-instagram.css' | asset_url | stylesheet_tag }}
+
+<section class="pd-ig pd-section" {% if section.settings.anchor != blank %}id="{{ section.settings.anchor }}"{% endif %}>
+  <div class="pd-wrap">
+    <div class="pd-sec-head">
+      <div>
+        {%- if section.settings.eyebrow != blank -%}<p class="pd-eyebrow">{{ section.settings.eyebrow }}</p>{%- endif -%}
+        <h2 class="pd-sec-title">{{ section.settings.heading | escape }}</h2>
+        {% render 'prodani-squiggle' %}
+      </div>
+      {%- if section.settings.follow_url != blank -%}
+        <a class="pd-ig__follow" href="{{ section.settings.follow_url }}" target="_blank" rel="noopener">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" aria-hidden="true">
+            <rect x="3" y="3" width="18" height="18" rx="5"/><circle cx="12" cy="12" r="4"/><circle cx="17.5" cy="6.5" r="1"/>
+          </svg>
+          {{ section.settings.follow_label | default: 'Follow us' | escape }}
+        </a>
+      {%- endif -%}
+    </div>
+
+    {%- if section.blocks.size == 0 and section.settings.behold_feed_id == blank -%}
+      <p class="pd-ig__empty">
+        Add your latest posts here — paste a free <strong>Behold.so</strong> feed id in the
+        theme editor to pull them automatically, or add a few images by hand.
+      </p>
+    {%- else -%}
+    <div
+      class="pd-ig__grid"
+      data-pd-ig-grid
+      data-feed="{{ section.settings.behold_feed_id | strip }}"
+      data-count="{{ section.settings.count }}"
+    >
+      {%- for block in section.blocks -%}
+        {%- if block.settings.image != blank -%}
+          <a class="pd-ig__item" href="{{ block.settings.link | default: section.settings.follow_url }}"
+             target="_blank" rel="noopener" {{ block.shopify_attributes }}>
+            {{ block.settings.image | image_url: width: 600
+               | image_tag: loading: 'lazy', alt: 'Instagram post', class: 'pd-ig__img',
+                 widths: '300,600', sizes: '(min-width:750px) 22vw, 46vw' }}
+            <span class="pd-ig__glyph" aria-hidden="true">
+              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7">
+                <rect x="3" y="3" width="18" height="18" rx="5"/><circle cx="12" cy="12" r="4"/><circle cx="17.5" cy="6.5" r="1"/>
+              </svg>
+            </span>
+          </a>
+        {%- endif -%}
+      {%- endfor -%}
+    </div>
+    {%- endif -%}
+  </div>
+</section>
+
+<script src="{{ 'prodani-instagram.js' | asset_url }}" defer="defer"></script>
+
+{% schema %}
+{
+  "name": "Instagram feed",
+  "tag": "section",
+  "class": "pd-section",
+  "settings": [
+    { "type": "text", "id": "eyebrow", "label": "Eyebrow", "default": "Instagram" },
+    { "type": "text", "id": "heading", "label": "Heading", "default": "Follow the feed" },
+    { "type": "text", "id": "anchor", "label": "Anchor id", "default": "instagram" },
+    { "type": "url", "id": "follow_url", "label": "Instagram profile URL" },
+    { "type": "text", "id": "follow_label", "label": "Follow button label", "default": "Follow @prodanimiami" },
+    { "type": "range", "id": "count", "label": "Posts to show", "min": 3, "max": 12, "step": 1, "default": 6 },
+    { "type": "header", "content": "Auto-updating feed (free)" },
+    { "type": "text", "id": "behold_feed_id", "label": "Behold.so feed id", "info": "Free at behold.so — connect Dani's IG, paste the feed id here. Leave blank to use the curated images below." }
+  ],
+  "blocks": [
+    {
+      "type": "post",
+      "name": "Curated post",
+      "limit": 12,
+      "settings": [
+        { "type": "image_picker", "id": "image", "label": "Image" },
+        { "type": "url", "id": "link", "label": "Post link (optional)" }
+      ]
+    }
+  ],
+  "presets": [{ "name": "Instagram feed" }]
+}
+{% endschema %}

@@ -1,0 +1,31 @@
+/* Instagram feed. Tokens from prodani-tokens.css. */
+.pd-ig{ background:var(--cream); }
+
+.pd-ig__follow{ display:inline-flex; align-items:center; gap:9px; text-decoration:none;
+  background:var(--cocoa); color:var(--cream); font-family:var(--sans); font-weight:700; font-size:14px;
+  padding:12px 22px; border-radius:999px; transition:transform .4s var(--bounce), background .3s; white-space:nowrap; }
+.pd-ig__follow:hover{ transform:translateY(-2px); background:var(--cocoa-deep); }
+.pd-ig__follow svg{ width:18px; height:18px; }
+
+.pd-ig__empty{ color:var(--ink-faint); font-size:15px; line-height:1.6; max-width:520px; }
+.pd-ig__empty strong{ color:var(--berry); }
+
+.pd-ig__grid{ display:grid; grid-template-columns:repeat(6,1fr); gap:clamp(8px,1.2vw,16px); }
+@media (max-width:1180px){ .pd-ig__grid{ grid-template-columns:repeat(4,1fr); } }
+@media (max-width:640px){  .pd-ig__grid{ grid-template-columns:repeat(2,1fr); } }
+
+.pd-ig__item{ position:relative; display:block; aspect-ratio:1; border-radius:var(--r); overflow:hidden;
+  background:var(--butter); }
+.pd-ig__img{ width:100%; height:100%; object-fit:cover; display:block;
+  transition:transform .5s var(--ease); }
+.pd-ig__item:hover .pd-ig__img{ transform:scale(1.06); }
+.pd-ig__glyph{ position:absolute; inset:0; display:flex; align-items:center; justify-content:center;
+  background:rgba(72,49,42,.32); color:var(--cream); opacity:0; transition:opacity .3s var(--ease); }
+.pd-ig__glyph svg{ width:30px; height:30px; }
+.pd-ig__item:hover .pd-ig__glyph{ opacity:1; }
+.pd-ig__item:focus-visible{ outline:3px solid var(--pink-deep); outline-offset:2px; }
+
+@media (prefers-reduced-motion:reduce){
+  .pd-ig__img, .pd-ig__glyph, .pd-ig__follow{ transition:none; }
+  .pd-ig__item:hover .pd-ig__img{ transform:none; }
+}

@@ -232,6 +232,24 @@ pink→cocoa (cream text), upsell banner pink→butter, mobile sticky CTA bg cre
 stay light (butter) for contrast; Most Popular / Best Value tags and cocoa CTA unchanged.
 Verified in-browser on staging; 0 theme-check errors.
 
+## 2026-08-29 (cont. 9) — Instagram feed section (Behold.so, free)
+
+Client asked for a "follow us on IG + latest posts" section. Note on feasibility: IG killed
+unauthenticated access; live posts need the Graph API (Business account + FB Page) with a
+token that expires ~60 days and must refresh server-side — a theme can't hold that securely.
+
+Built an on-brand `prodani-instagram` section that consumes a **Behold.so** JSON feed (free;
+Behold connects to IG and holds/refreshes the token; CORS-enabled for client fetch), so the
+token never touches the theme and we keep full control of the styling.
+- `sections/prodani-instagram.liquid` + `prodani-instagram.css/js`: heading + follow CTA +
+  post grid. `prodani-instagram.js` fetches `feeds.behold.so/<feedId>` and renders the latest
+  N posts into our markup. Falls back to curated image blocks, then to an empty-state note —
+  so it ships today and flips to live posts when a feed id is set.
+- Added to the homepage after Reviews (brief §11 UGC). Verified on staging; 0 theme-check errors.
+
+**New ticket — T15:** Dani connects her IG (Business/Creator + FB Page) to a free Behold.so
+feed and gives us the feed id (or adds curated images) to turn on live posts.
+
 ---
 
 ## 2026-08-20 — Video hero, and the 5.6 MB problem solved on the way

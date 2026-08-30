@@ -459,6 +459,18 @@
         "value_count": 12,
         "upsell_enabled": true
       }
+    },
+    "instagram": {
+      "type": "prodani-instagram",
+      "settings": {
+        "eyebrow": "Instagram",
+        "heading": "Follow the feed",
+        "anchor": "instagram",
+        "follow_url": "https://instagram.com/prodanimiami",
+        "follow_label": "Follow @prodanimiami",
+        "count": 6,
+        "behold_feed_id": ""
+      }
     }
   },
   "order": [
@@ -471,6 +483,7 @@
     "box",
     "baker",
     "reviews",
+    "instagram",
     "contact"
   ]
 }
