@@ -52,8 +52,6 @@
       </nav>
     {%- endif -%}
 
-    <p class="pd-count" data-pd-count aria-live="polite"></p>
-
     <div class="pd-grid" data-pd-grid>
       {%- for product in source.products limit: limit -%}
         {% render 'prodani-card', product: product %}

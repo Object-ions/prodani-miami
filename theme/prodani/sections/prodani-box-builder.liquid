@@ -36,7 +36,8 @@
           {%- assign i = forloop.index0 -%}
           {%- assign count = s | strip | plus: 0 -%}
           {%- assign price = prices[i] | strip | plus: 0 -%}
-          {%- assign per = price | divided_by: count | round: 2 -%}
+          {%- comment -%} float math so 49/6 reads $8.17, not integer $8 {%- endcomment -%}
+          {%- assign per = price | times: 100.0 | divided_by: count | round: 0 | money_without_currency -%}
           <button
             type="button"
             class="pd-box__size"
