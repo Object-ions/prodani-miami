@@ -1,0 +1,69 @@
+{%- comment -%}
+  Purchase-option selector (brief §07B / §08): One-time vs Subscribe & save, with a
+  delivery-frequency picker. Uses Shopify's NATIVE subscriptions (selling plans).
+
+  - When the product has selling plans (created in the Shopify Subscriptions app), this
+    renders them for real and writes the chosen plan into the product form's
+    `selling_plan` field, so add-to-cart creates a real subscription.
+  - Until plans exist, it renders a flagged PREVIEW shell (brief's 15/30/45-day plans)
+    so the design is reviewable. The preview is disabled — it never fakes a subscription.
+
+  Rendered inside main-product via a custom_liquid block, so `section.id` resolves to the
+  product section and the hidden input can target `product-form-{{ section.id }}`.
+{%- endcomment -%}
+{%- liquid
+  assign has_plans = false
+  if product.selling_plan_groups.size > 0
+    assign has_plans = true
+  endif
+  assign onetime_price = product.selected_or_first_available_variant.price | money
+-%}
+
+<fieldset class="pd-sub" data-pd-sub>
+  <legend class="pd-sub__legend">Purchase options</legend>
+
+  <label class="pd-sub__opt">
+    <input type="radio" name="pd-sub-mode-{{ section.id }}" value="onetime" checked data-pd-sub-onetime>
+    <span class="pd-sub__opt-main">
+      <span class="pd-sub__opt-title">One-time purchase</span>
+      <span class="pd-sub__opt-price">{{ onetime_price }}</span>
+    </span>
+  </label>
+
+  <label class="pd-sub__opt pd-sub__opt--save{% unless has_plans %} is-preview{% endunless %}">
+    <input
+      type="radio"
+      name="pd-sub-mode-{{ section.id }}"
+      value="subscribe"
+      data-pd-sub-subscribe
+      {% unless has_plans %}disabled{% endunless %}
+    >
+    <span class="pd-sub__opt-main">
+      <span class="pd-sub__opt-title">Subscribe &amp; save <span class="pd-sub__badge">10%</span></span>
+      <span class="pd-sub__opt-sub">Delivered on your schedule. Skip, pause or cancel anytime.</span>
+    </span>
+  </label>
+
+  <div class="pd-sub__freq" data-pd-sub-freq hidden>
+    <label class="pd-sub__freq-label" for="pd-sub-select-{{ section.id }}">Deliver every</label>
+    <select id="pd-sub-select-{{ section.id }}" class="pd-sub__select" data-pd-sub-select {% unless has_plans %}disabled{% endunless %}>
+      {%- if has_plans -%}
+        {%- assign group = product.selling_plan_groups | first -%}
+        {%- for plan in group.selling_plans -%}
+          <option value="{{ plan.id }}">{{ plan.name }}</option>
+        {%- endfor -%}
+      {%- else -%}
+        <option>Every 15 days</option>
+        <option selected>Every 30 days</option>
+        <option>Every 45 days</option>
+      {%- endif -%}
+    </select>
+  </div>
+
+  {%- unless has_plans -%}
+    <p class="pd-sub__note">Preview — subscriptions activate once Shopify Subscriptions is set up and plans are attached (ticket T12).</p>
+  {%- endunless -%}
+
+  <input type="hidden" name="selling_plan" value="" form="product-form-{{ section.id }}" data-pd-sub-input>
+</fieldset>
+<script src="{{ 'prodani-subscribe.js' | asset_url }}" defer="defer"></script>

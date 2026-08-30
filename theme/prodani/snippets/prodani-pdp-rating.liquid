@@ -1,0 +1,9 @@
+{%- comment -%}
+  Above-the-fold star rating + count, from Judge.me.
+  Renders empty until reviews are attached to THIS product in Judge.me (ticket T8) —
+  store-wide reviews do not populate a per-product badge. Judge.me's script is loaded
+  by its app embed, so no extra script is needed here.
+{%- endcomment -%}
+<div class="pd-rating">
+  <div class="jdgm-widget jdgm-preview-badge" data-id="{{ product.id }}"></div>
+</div>

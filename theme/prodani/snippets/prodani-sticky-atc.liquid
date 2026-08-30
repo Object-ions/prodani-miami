@@ -1,0 +1,16 @@
+{%- comment -%}
+  Mobile sticky add-to-cart bar (brief §08 Mobile: "sticky purchase action").
+  Visual + accessibility shell only. It never re-implements the cart form — the JS
+  mirrors the real buy button and clicks it, so Shopify's cart/variant/selling-plan
+  logic runs untouched. Hidden entirely on desktop via CSS.
+{%- endcomment -%}
+<div class="pd-sticky-atc" data-pd-sticky aria-hidden="false">
+  <div class="pd-sticky-atc__info">
+    <span class="pd-sticky-atc__title">{{ product.title | escape }}</span>
+    <span class="pd-sticky-atc__price" data-pd-sticky-price>
+      {{- product.selected_or_first_available_variant.price | money -}}
+    </span>
+  </div>
+  <button type="button" class="pd-sticky-atc__btn" data-pd-sticky-add>Add to cart</button>
+</div>
+<script src="{{ 'prodani-pdp.js' | asset_url }}" defer="defer"></script>

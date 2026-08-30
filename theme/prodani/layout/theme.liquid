@@ -22,9 +22,16 @@
       {%- unless page_title contains shop.name %} &ndash; {{ shop.name }}{% endunless -%}
     </title>
 
-    {% if page_description %}
-      <meta name="description" content="{{ page_description | escape }}">
-    {% endif %}
+    {%- comment -%}
+      Every page must carry a meta description. The audit found the homepage and
+      collection pages had none (Dawn only emits the tag when page_description is set).
+      Order: per-resource SEO description (admin) → shop description → brand default.
+    {%- endcomment -%}
+    {%- assign meta_desc = page_description | default: shop.description -%}
+    {%- if meta_desc == blank -%}
+      {%- assign meta_desc = 'Prodani Miami — smart indulgence: high-protein dessert with the joy and texture of cake.' -%}
+    {%- endif -%}
+    <meta name="description" content="{{ meta_desc | escape }}">
 
     {% render 'meta-tags' %}
 

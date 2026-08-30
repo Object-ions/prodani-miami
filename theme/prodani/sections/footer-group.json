@@ -46,9 +46,16 @@
         "credit_link": "https://switchcasestudio.com",
         "signup_product": "strawberry-short-cake"
       }
+    },
+    "email_popup": {
+      "type": "prodani-email-popup",
+      "settings": {
+        "enable": true
+      }
     }
   },
   "order": [
-    "footer"
+    "footer",
+    "email_popup"
   ]
 }

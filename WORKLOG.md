@@ -4,6 +4,149 @@ Newest entries first. One entry per working session — what was done, what was 
 
 ---
 
+## 2026-08-29 — Dani's Web Design Brief received; v2 upgrade planned
+
+Dani (owner) sent a 12-page **Web Design Brief** after loving the launch. It is a
+forward-looking upgrade spec, not a critique — mostly the *ecommerce engine* the current
+live theme doesn't have yet.
+
+**Done this session**
+
+- Transcribed the PDF to `Prodani_Web_Design_Brief.md` (repo root) for easy future reading.
+- Loaded and aligned against installed skills: UI/UX Pro Max, SEO Audit, High-End Visual
+  Design, CRO.
+- Mapped the brief against the live theme's sections — the design/brand layer is largely
+  there; Build-a-Box, subscriptions, email popup, and the full product-page spec are not.
+- Branch `feat/brief-v2-upgrades` cut. Theme-access token re-verified (HTTP 200, staging
+  reachable). Working method unchanged from launch: `push:staging` (187797799222) →
+  `preflight` → Chrome verify → `push:live` only on approval.
+
+**Decisions locked with the client (agency supervisor)**
+
+1. **Box builder** — I spec custom-build vs app (concrete apps, monthly cost, limits) and
+   the client decides before Phase 2 is built. Deliverable owed: `theme/BOX-BUILDER-OPTIONS.md`.
+2. **Subscriptions** — **Shopify Subscriptions (native, free)**. Basic portal; flavor-swap
+   and VIP gating are custom work on top.
+3. **Sequencing** — the brief's own priority order: (1) conversion foundation / product
+   pages, (2) box builder, (3) subscription, (4) homepage flow + brand story.
+4. **Blockers** — build metafield-driven shells with placeholders on staging now; Dani
+   fills real data later; nothing publishes to live until approved.
+
+**Access constraint (important):** the theme-access token is **themes-only**. I can edit and
+push theme files but **cannot** create product metafield definitions, edit products, or
+attach reviews — those need Dani/Daniel's Shopify admin. Per-SKU macros will be read from
+metafields the theme references with fallbacks; Dani must define them in admin (ticket below).
+
+### Open tickets — waiting on Dani / Daniel
+
+Carried forward from launch + new from the brief. Nothing below is invented; each is a
+CONFIRM item in the brief or a known gap.
+
+| # | Ticket | Blocks | Source |
+|---|--------|--------|--------|
+| T1 | **Pricing/unit conflict**: the one-time vs subscription per-cake gap needs confirming — same cake size/unit? intentional discount? (figures in the private brief) | Box + subscription pricing display | Brief §06 critical check |
+| T2 | **Approve claims + substantiation** (high-protein & grams/SKU, gluten-free, non-GMO, amino acids, low-cal, no added sugar, digestion/absorption). | Publishing protein section, badges, PDP nutrition | Brief §04, §10 |
+| T3 | **Final SKU/flavor list, formats (personal/vegan/family), macros per SKU.** | PDP macros, box flavors, curated collections | Brief §05, §10, §11 |
+| T4 | **Define product metafields in admin** (protein_g, calories, sugar_g, ingredients, allergens, badges, taste_desc) — token can't create these. | CMS-driven PDP + shells | Access constraint |
+| T5 | **Shipping rule**: free shipping $99+ or strictly >$99? Do subscriptions ship free? Refrigerated / frozen / shelf-stable? | Announcement bar, cart progress, PDP shipping | Brief §06, §07, §11 |
+| T6 | **Brand casing**: Prodani or ProDani? Is "Dessert your guilt." final? | Copy, metadata, logo consistency | Brief §04, §11 |
+| T7 | **Founder verification**: Daniel's title, exact years, credentials, "sports therapy" accurate? | Meet-Daniel section | Brief §09 |
+| T8 | **Attach the 70+ Judge.me reviews to products** — none are attached; no star snippets in Google until they are. | aggregateRating schema, PDP proof | Launch note |
+| T9 | **Footer logo artwork reads "DESERTS"** (missing S) — needs new artwork. | Footer | Launch note |
+| T10 | **Conflicting contact details** (two phones, two addresses). | Contact section, footer, LocalBusiness schema | Launch note |
+| T11 | **Photography**: placeholder slots + reshoot personal range out of plastic containers. | Hero/PDP/lifestyle media | Launch note |
+| T12 | **Subscription per-plan detail**: which tier is "Most Popular"? Does every plan get 10% off add-ons? How is VIP access defined? | Subscription section + gating | Brief §07, §11 |
+| T13 | **Re-issue theme-access token** — appeared in plaintext previously; treat `theme/.env` as compromised. | Security | Launch note |
+
+**Next**
+
+- Deliver `BOX-BUILDER-OPTIONS.md` (decision doc) so the client can choose in parallel.
+- Phase 1: product-page rebuild to brief §08 on staging — metafield-driven macros with
+  fallbacks, one-time/subscribe shell, sticky mobile ATC, media set, nutrition/allergen/FAQ
+  tabs — without touching Dawn's cart/checkout wiring.
+
+---
+
+## 2026-08-29 (cont.) — Phase 1 PDP shipped to staging; email popup + SEO; client sheet
+
+**Product page (brief §08)** — all additive; Dawn's cart/checkout wiring untouched:
+- New snippets: `prodani-pdp-rating` (Judge.me preview badge), `prodani-pdp-macros`
+  (taste + macro strip + claim badges), `prodani-pdp-trust`, `prodani-pdp-info`
+  (nutrition/ingredients/allergens/storage/shipping/FAQ accordions), `prodani-sticky-atc`
+  (mobile bar that clicks the real buy button — never re-implements the cart).
+- `assets/prodani-pdp.css` + `prodani-pdp.js`; wired into `templates/product.json` via
+  `custom_liquid` blocks (no `main-product.liquid` schema change). Cross-sell relabelled
+  "Complete your box". Dropped the redundant Dawn `disclosures` section (accordions replace it).
+- All metafield-driven (`prodani` namespace). Missing macros show flagged **sample** values;
+  claim badges are **never** sampled (only show when the boolean is true in admin — T2).
+
+**Email popup (brief §07A)** — `sections/prodani-email-popup.liquid` in the footer group
+(site-wide, Dani-editable), `prodani-email-popup.css/js`. Native Shopify `customer` form,
+tagged `prodani-popup`; explicit consent + privacy link. Fires on delay/exit-intent; on
+mobile waits for the delay AND a scroll past 60% of the first viewport so it never covers
+the hero. Suppresses after close/signup (localStorage). Discount-code delivery is the
+store's email-platform job (unique/limited-use per brief) — theme only captures + tags.
+
+**SEO** — `layout/theme.liquid` now emits a `<meta name="description">` on every page
+(per-resource SEO → shop.description → brand default), fixing the audit's missing-description
+finding on the homepage and collection. Avoided duplicating Dawn's existing canonical.
+
+**Docs delivered:** `theme/BOX-BUILDER-OPTIONS.md` (custom-vs-app, client to choose —
+rec: custom/Option A), `theme/METAFIELDS.md` (CMS contract), `PRODANI_INPUT_REQUEST.md`
+(single client-facing sheet consolidating T1–T13 for Dani).
+
+**Verified on staging** (preview-cookie fetch, both templates): 0 Liquid errors; PDP macro
+strip shows 3 sample flags (no metafields yet) and 5 accordions; popup renders with form +
+consent; meta descriptions present on home + collection. theme-check: 0 errors, warnings are
+OrphanedSnippet only (theme-check can't trace `{% render %}` inside JSON `custom_liquid`).
+
+**Still unblocked / next:** announcement bar (neutral copy pending T5), homepage reorder
+(needs Phase 2/3 sections + T2 protein claims), then Phase 2 box builder (pending client's
+Option A/B choice + T1/T3).
+
+## 2026-08-29 (cont. 2) — Phase 2: box builder shell (Option A chosen)
+
+Client chose **Option A (custom, no app)**. Built the interactive shell:
+`sections/prodani-box-builder.liquid` + `prodani-box-builder.css/js`. Size select (4/6/12),
+mix-and-match flavor steppers, live X-of-N counter + progress bar, validation, sold-out
+states, and 4→6 / 6→12 upsell. Flavors are section blocks (placeholder catalog); each can
+link to a real product for inventory + cart. Added `templates/page.build-a-box.json` and
+placed the builder on the homepage (index.json §08) for review. Verified on staging: 0
+Liquid errors; 3 sizes (retail prices per the brief), 6 flavors (1 sold-out), all controls render.
+
+**Remaining to make it live-ready (blocked):** flavors as products w/ inventory (T3), box
+pricing via a Shopify cart-transform Function + confirmed prices (T1). Add-to-cart already
+posts real line items once variants exist; today it validates + explains what's needed.
+
+**Next:** Phase 3 subscriptions (Shopify Subscriptions setup + T12), then homepage reorder,
+announcement bar, and per-product review attachment (T8) for aggregateRating.
+
+## 2026-08-29 (cont. 3) — Phase 3 subscription selector + homepage reorder
+
+- **Subscription selector** (`snippets/prodani-subscribe.liquid` + `prodani-subscribe.js`,
+  styles in `prodani-pdp.css`): One-time vs Subscribe & save + delivery-frequency picker,
+  wired into `product.json` after the variant picker. Writes the chosen selling-plan id into
+  the product form's hidden `selling_plan` input → Shopify's **native** subscriptions handle
+  it on add-to-cart. Renders real plans when present; flagged preview shell (15/30/45-day)
+  until Shopify Subscriptions is installed + plans attached (**T12**).
+- **Homepage reordered** (`index.json`) to the brief flow: hero → badges (value strip) →
+  collection (featured choices) → shout (why) → deck (proof) → bleed (scroll stopper) →
+  box (build-a-box) → baker (meet Daniel) → reviews → contact. Protein (§06) and a homepage
+  subscription block (§09) intentionally omitted — protein is claims-gated (T2); subscribe
+  lives on the PDP for now.
+- **Announcement bar** already exists as `prodani-header` rotating claims. Left the shipping
+  line as-is: brief wants "$99 free shipping" but live shows "$75 local delivery" — different
+  promises, so unchanged pending **T5**.
+- Verified on staging: 0 Liquid errors; subscribe shell + reordered homepage confirmed.
+
+**Session summary — on staging (`feat/brief-v2-upgrades`), live untouched:** product-page
+rebuild, email popup, SEO meta fix, box builder (Phase 2), subscription selector (Phase 3),
+homepage reorder. Docs: BOX-BUILDER-OPTIONS, METAFIELDS, PRODANI_INPUT_REQUEST.
+**Biggest blockers to go live:** T1 pricing, T2 claims, T3 flavors-as-products, T4 metafields,
+T8 reviews attach, T12 subscriptions app.
+
+---
+
 ## 2026-08-20 — Video hero, and the 5.6 MB problem solved on the way
 
 **Brief:** drop the circular cake image from the hero, use the storefront's existing

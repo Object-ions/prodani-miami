@@ -13,6 +13,18 @@
         "title": {
           "type": "title"
         },
+        "pd_rating": {
+          "type": "custom_liquid",
+          "settings": {
+            "custom_liquid": "{% render 'prodani-pdp-rating' %}"
+          }
+        },
+        "pd_macros": {
+          "type": "custom_liquid",
+          "settings": {
+            "custom_liquid": "{% render 'prodani-pdp-macros' %}"
+          }
+        },
         "price": {
           "type": "price"
         },
@@ -21,6 +33,12 @@
           "settings": {
             "picker_type": "button",
             "swatch_shape": "circle"
+          }
+        },
+        "pd_subscribe": {
+          "type": "custom_liquid",
+          "settings": {
+            "custom_liquid": "{% render 'prodani-subscribe' %}"
           }
         },
         "quantity_selector": {
@@ -33,25 +51,49 @@
             "show_gift_card_recipient": true
           }
         },
+        "pd_trust": {
+          "type": "custom_liquid",
+          "settings": {
+            "custom_liquid": "{% render 'prodani-pdp-trust' %}"
+          }
+        },
         "description": {
           "type": "description"
+        },
+        "pd_info": {
+          "type": "custom_liquid",
+          "settings": {
+            "custom_liquid": "{% render 'prodani-pdp-info' %}"
+          }
         },
         "share": {
           "type": "share",
           "settings": {
             "share_label": "Share"
           }
+        },
+        "pd_sticky": {
+          "type": "custom_liquid",
+          "settings": {
+            "custom_liquid": "{% render 'prodani-sticky-atc' %}"
+          }
         }
       },
       "block_order": [
         "vendor",
         "title",
+        "pd_rating",
+        "pd_macros",
         "price",
         "variant_picker",
+        "pd_subscribe",
         "quantity_selector",
         "buy_buttons",
+        "pd_trust",
         "description",
-        "share"
+        "pd_info",
+        "share",
+        "pd_sticky"
       ],
       "settings": {
         "enable_sticky_info": true,
@@ -69,17 +111,20 @@
         "padding_bottom": 12
       }
     },
-    "disclosures": {
-      "type": "disclosures",
+    "reviews": {
+      "type": "prodani-product-reviews",
       "settings": {
-        "padding_top": 36,
-        "padding_bottom": 0
+        "heading": "What people said",
+        "eyebrow": "VERIFIED · JUDGE.ME",
+        "anchor": "reviews",
+        "all_reviews_url": "/#reviews",
+        "all_reviews_label": "Read all 70+ reviews"
       }
     },
     "related-products": {
       "type": "related-products",
       "settings": {
-        "heading": "You may also like",
+        "heading": "Complete your box",
         "heading_size": "h2",
         "products_to_show": 4,
         "columns_desktop": 4,
@@ -93,22 +138,11 @@
         "padding_top": 36,
         "padding_bottom": 28
       }
-    },
-    "reviews": {
-      "type": "prodani-product-reviews",
-      "settings": {
-        "heading": "What people said",
-        "eyebrow": "VERIFIED \u00b7 JUDGE.ME",
-        "anchor": "reviews",
-        "all_reviews_url": "/#reviews",
-        "all_reviews_label": "Read all 70+ reviews"
-      }
     }
   },
   "order": [
     "main",
     "reviews",
-    "disclosures",
     "related-products"
   ]
 }

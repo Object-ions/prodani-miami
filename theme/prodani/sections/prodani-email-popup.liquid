@@ -1,0 +1,114 @@
+{%- comment -%}
+  Email-capture popup (brief §07A). Separate from product subscription — this only
+  captures an email for a 10%-off first-order code. Trigger is delayed / exit-intent
+  and never covers the hero immediately on mobile (see prodani-email-popup.js).
+
+  The discount CODE itself is delivered by the store's email platform automation on
+  signup (unique/limited-use, per brief) — the theme captures the email + tags it
+  `prodani-popup`. Uses Shopify's native customer form, so opt-in is recorded by Shopify.
+{%- endcomment -%}
+{%- if section.settings.enable -%}
+  {{ 'prodani-email-popup.css' | asset_url | stylesheet_tag }}
+  {%- liquid
+    assign privacy_url = section.settings.privacy_page.url | default: '/policies/privacy-policy'
+    assign auto_open = false
+    if form.posted_successfully? or form.errors
+      assign auto_open = true
+    endif
+  -%}
+  <div
+    class="pd-pop"
+    data-pd-pop
+    data-delay="{{ section.settings.delay_seconds }}"
+    data-freq="{{ section.settings.suppress_days }}"
+    {% if auto_open %}data-open-now="true"{% endif %}
+    {% if request.design_mode %}data-design-mode="true"{% endif %}
+    hidden
+  >
+    <div class="pd-pop__scrim" data-pd-pop-close></div>
+    <div
+      class="pd-pop__card"
+      role="dialog"
+      aria-modal="true"
+      aria-labelledby="pd-pop-title"
+      tabindex="-1"
+    >
+      <button type="button" class="pd-pop__close" data-pd-pop-close aria-label="Close">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" aria-hidden="true">
+          <path d="M6 6l12 12M18 6L6 18"/>
+        </svg>
+      </button>
+
+      {%- if section.settings.image != blank -%}
+        <div class="pd-pop__media">
+          {{ section.settings.image | image_url: width: 720 | image_tag: loading: 'lazy', widths: '360,720', alt: '' }}
+        </div>
+      {%- endif -%}
+
+      <div class="pd-pop__body">
+        {%- if section.settings.eyebrow != blank -%}
+          <p class="pd-pop__eyebrow">{{ section.settings.eyebrow }}</p>
+        {%- endif -%}
+        <h2 id="pd-pop-title" class="pd-pop__title">{{ section.settings.heading }}</h2>
+        {%- if section.settings.subtext != blank -%}
+          <div class="pd-pop__text">{{ section.settings.subtext }}</div>
+        {%- endif -%}
+
+        {%- if form.posted_successfully? -%}
+          <p class="pd-pop__success" role="status">{{ section.settings.success_message }}</p>
+        {%- else -%}
+          {%- form 'customer', class: 'pd-pop__form' -%}
+            <input type="hidden" name="contact[tags]" value="newsletter, prodani-popup">
+            {%- if form.errors -%}
+              <p class="pd-pop__error" role="alert">
+                {{ form.errors.translated_fields.email | capitalize }} {{ form.errors.messages.email }}
+              </p>
+            {%- endif -%}
+            <div class="pd-pop__field">
+              <label class="visually-hidden" for="pd-pop-email">Email address</label>
+              <input
+                id="pd-pop-email"
+                type="email"
+                name="contact[email]"
+                placeholder="you@email.com"
+                autocomplete="email"
+                autocorrect="off"
+                autocapitalize="off"
+                required
+                aria-required="true"
+              >
+              <button type="submit" name="commit" class="pd-pop__submit">
+                {{ section.settings.button_label }}
+              </button>
+            </div>
+            <p class="pd-pop__consent">
+              {{ section.settings.consent_text }}
+              <a href="{{ privacy_url }}">Privacy Policy</a>.
+            </p>
+          {%- endform -%}
+        {%- endif -%}
+      </div>
+    </div>
+  </div>
+  <script src="{{ 'prodani-email-popup.js' | asset_url }}" defer="defer"></script>
+{%- endif -%}
+
+{% schema %}
+{
+  "name": "Email popup",
+  "settings": [
+    { "type": "checkbox", "id": "enable", "label": "Enable popup", "default": true },
+    { "type": "text", "id": "eyebrow", "label": "Eyebrow", "default": "Welcome to Prodani" },
+    { "type": "text", "id": "heading", "label": "Heading", "default": "Get 10% off your first box" },
+    { "type": "richtext", "id": "subtext", "label": "Text", "default": "<p>Join the list for your code, plus first dibs on new flavors and restocks.</p>" },
+    { "type": "text", "id": "button_label", "label": "Button label", "default": "Get my code" },
+    { "type": "text", "id": "success_message", "label": "Success message", "default": "You're in! Check your inbox for your 10% code." },
+    { "type": "text", "id": "consent_text", "label": "Consent text", "default": "By signing up you agree to receive marketing emails. Unsubscribe anytime. See our" },
+    { "type": "page", "id": "privacy_page", "label": "Privacy policy page", "info": "Defaults to /policies/privacy-policy" },
+    { "type": "image_picker", "id": "image", "label": "Image (optional)" },
+    { "type": "range", "id": "delay_seconds", "label": "Delay before showing (seconds)", "min": 0, "max": 30, "step": 1, "default": 8 },
+    { "type": "range", "id": "suppress_days", "label": "Days to hide after close/signup", "min": 1, "max": 90, "step": 1, "default": 14 }
+  ],
+  "presets": [{ "name": "Email popup" }]
+}
+{% endschema %}

@@ -1,0 +1,53 @@
+{%- comment -%}
+  Above-the-fold taste line, macro strip, and claim badges. Metafield-driven
+  (namespace `prodani` — see theme/METAFIELDS.md). This snippet renders once and
+  loads the PDP stylesheet for the whole page.
+
+  Macros: when a value is missing, a clearly-flagged SAMPLE number shows so the
+  layout is reviewable on staging. Dani sets real values before the store goes live.
+
+  Badges: NEVER sampled. Each badge is a nutrition/ingredient claim, so a badge only
+  appears when the matching boolean metafield is explicitly true in admin (ticket T2).
+{%- endcomment -%}
+{{ 'prodani-pdp.css' | asset_url | stylesheet_tag }}
+
+{%- liquid
+  assign mf = product.metafields.prodani
+  assign protein = mf.protein_g.value
+  assign calories = mf.calories.value
+  assign sugar = mf.sugar_g.value
+  assign taste = mf.taste.value
+-%}
+
+{%- if taste != blank -%}
+  <p class="pd-taste">{{ taste }}</p>
+{%- else -%}
+  <p class="pd-taste is-sample">A sample flavor description — set <code>prodani.taste</code> in admin.</p>
+{%- endif -%}
+
+<div class="pd-macros" role="list" aria-label="Nutrition per serving">
+  <div class="pd-macro{% if protein == blank %} is-sample{% endif %}" role="listitem">
+    {%- if protein == blank %}<span class="pd-sample-flag">sample</span>{% endif -%}
+    <span class="pd-macro__n">{{ protein | default: 20 }}g</span>
+    <span class="pd-macro__l">Protein</span>
+  </div>
+  <div class="pd-macro{% if calories == blank %} is-sample{% endif %}" role="listitem">
+    {%- if calories == blank %}<span class="pd-sample-flag">sample</span>{% endif -%}
+    <span class="pd-macro__n">{{ calories | default: 180 }}</span>
+    <span class="pd-macro__l">Calories</span>
+  </div>
+  <div class="pd-macro{% if sugar == blank %} is-sample{% endif %}" role="listitem">
+    {%- if sugar == blank %}<span class="pd-sample-flag">sample</span>{% endif -%}
+    <span class="pd-macro__n">{{ sugar | default: 2 }}g</span>
+    <span class="pd-macro__l">Sugar</span>
+  </div>
+</div>
+
+<div class="pd-badges">
+  {%- if mf.high_protein.value -%}<img src="{{ 'prodani-badge-high-protein.png' | asset_url }}" alt="High protein" width="46" height="46" loading="lazy">{%- endif -%}
+  {%- if mf.gluten_free.value -%}<img src="{{ 'prodani-badge-gluten-free.png' | asset_url }}" alt="Gluten free" width="46" height="46" loading="lazy">{%- endif -%}
+  {%- if mf.no_sugar_added.value -%}<img src="{{ 'prodani-badge-no-sugar-added.png' | asset_url }}" alt="No sugar added" width="46" height="46" loading="lazy">{%- endif -%}
+  {%- if mf.non_gmo.value -%}<img src="{{ 'prodani-badge-non-gmo.png' | asset_url }}" alt="Non-GMO" width="46" height="46" loading="lazy">{%- endif -%}
+  {%- if mf.low_calorie.value -%}<img src="{{ 'prodani-badge-low-calorie.png' | asset_url }}" alt="Low calorie" width="46" height="46" loading="lazy">{%- endif -%}
+  {%- if mf.high_fiber.value -%}<img src="{{ 'prodani-badge-high-fiber.png' | asset_url }}" alt="High fiber" width="46" height="46" loading="lazy">{%- endif -%}
+</div>

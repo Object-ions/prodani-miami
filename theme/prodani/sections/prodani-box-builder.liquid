@@ -1,0 +1,157 @@
+{%- comment -%}
+  Build Your Balance Box (brief §05). Option A — custom, no app, no monthly fee.
+
+  This is the interactive front-end shell: size select, mix-and-match flavors with
+  quantity steppers, live X-of-N counter + progress bar, validation, sold-out states,
+  and smart upsell. It runs on PLACEHOLDER flavors (section blocks) so it's reviewable
+  before the catalog is finalised.
+
+  Add-to-cart wiring: each flavor block can point at a real product. Once flavors exist
+  as products with their own inventory (ticket T3) and box pricing is set via a Shopify
+  cart-transform Function, "Add box" posts each flavor as a line item tagged to one box.
+  Until then it demonstrates the flow and explains what's needed (see prodani-box-builder.js).
+
+  Prices default to brief §06 ($36 / $49 / $89) but are editable — and are subject to the
+  pricing check in T1 before anything goes live.
+{%- endcomment -%}
+{{ 'prodani-box-builder.css' | asset_url | stylesheet_tag }}
+
+<section class="pd-box pd-section" data-pd-box aria-labelledby="pd-box-title">
+  <div class="pd-wrap">
+    <header class="pd-sec-head">
+      <div>
+        {%- if section.settings.eyebrow != blank -%}<p class="pd-eyebrow">{{ section.settings.eyebrow }}</p>{%- endif -%}
+        <h2 id="pd-box-title" class="pd-sec-title">{{ section.settings.heading }}</h2>
+        {%- if section.settings.subheading != blank -%}<p class="pd-lede pd-lede--intro">{{ section.settings.subheading }}</p>{%- endif -%}
+      </div>
+    </header>
+
+    {%- comment -%} Step 1 — size {%- endcomment -%}
+    <div class="pd-box__step">
+      <p class="pd-box__step-label"><span>1</span> Choose your size</p>
+      <div class="pd-box__sizes" role="radiogroup" aria-label="Box size">
+        {%- assign sizes = section.settings.sizes | split: ',' -%}
+        {%- assign prices = section.settings.prices | split: ',' -%}
+        {%- for s in sizes -%}
+          {%- assign i = forloop.index0 -%}
+          {%- assign count = s | strip | plus: 0 -%}
+          {%- assign price = prices[i] | strip | plus: 0 -%}
+          {%- assign per = price | divided_by: count | round: 2 -%}
+          <button
+            type="button"
+            class="pd-box__size"
+            role="radio"
+            aria-checked="{% if forloop.index == section.settings.default_size_index %}true{% else %}false{% endif %}"
+            data-size="{{ count }}"
+            data-price="{{ price }}"
+          >
+            {%- if count == section.settings.popular_count -%}<span class="pd-box__tag pd-box__tag--popular">Most Popular</span>{%- endif -%}
+            {%- if count == section.settings.value_count -%}<span class="pd-box__tag pd-box__tag--value">Best Value</span>{%- endif -%}
+            <span class="pd-box__size-count">{{ count }} cakes</span>
+            <span class="pd-box__size-price">${{ price }}</span>
+            <span class="pd-box__size-per">${{ per }}/cake</span>
+          </button>
+        {%- endfor -%}
+      </div>
+    </div>
+
+    {%- comment -%} Step 2 — flavors {%- endcomment -%}
+    <div class="pd-box__step">
+      <p class="pd-box__step-label"><span>2</span> Pick your flavors</p>
+      <div class="pd-box__flavors">
+        {%- for block in section.blocks -%}
+          {%- if block.type == 'flavor' -%}
+            {%- assign variant_id = block.settings.product.selected_or_first_available_variant.id -%}
+            <div
+              class="pd-box__flavor{% if block.settings.sold_out %} is-soldout{% endif %}"
+              data-flavor="{{ block.id }}"
+              data-name="{{ block.settings.name | escape }}"
+              data-variant="{{ variant_id }}"
+              data-soldout="{% if block.settings.sold_out %}true{% else %}false{% endif %}"
+              {{ block.shopify_attributes }}
+            >
+              <div class="pd-box__flavor-media" style="--chip:{{ block.settings.color }}">
+                {%- if block.settings.image != blank -%}
+                  {{ block.settings.image | image_url: width: 320 | image_tag: loading: 'lazy', widths: '160,320', alt: block.settings.name | escape }}
+                {%- endif -%}
+                {%- if block.settings.sold_out -%}<span class="pd-box__soldout">Sold out</span>{%- endif -%}
+              </div>
+              <div class="pd-box__flavor-info">
+                <span class="pd-box__flavor-name">{{ block.settings.name }}</span>
+                {%- if block.settings.macro != blank -%}<span class="pd-box__flavor-macro">{{ block.settings.macro }}</span>{%- endif -%}
+              </div>
+              <div class="pd-box__stepper" data-stepper>
+                <button type="button" class="pd-box__step-btn" data-minus aria-label="Remove one {{ block.settings.name | escape }}" disabled>&minus;</button>
+                <span class="pd-box__qty" data-qty aria-live="polite">0</span>
+                <button type="button" class="pd-box__step-btn" data-plus aria-label="Add one {{ block.settings.name | escape }}"{% if block.settings.sold_out %} disabled{% endif %}>+</button>
+              </div>
+            </div>
+          {%- endif -%}
+        {%- endfor -%}
+      </div>
+    </div>
+
+    {%- comment -%} Step 3 — progress {%- endcomment -%}
+    <div class="pd-box__tracker" data-pd-tracker>
+      <div class="pd-box__count"><strong data-pd-selected>0</strong> of <strong data-pd-total>0</strong> selected</div>
+      <div class="pd-box__bar"><span data-pd-bar style="width:0%"></span></div>
+      <div class="pd-box__upsell" data-pd-upsell hidden></div>
+    </div>
+
+    {%- comment -%} Step 4/7 — validate + add {%- endcomment -%}
+    <div class="pd-box__cta" data-pd-cta>
+      <div class="pd-box__cta-price">
+        <span class="pd-box__cta-total" data-pd-cta-total></span>
+        <span class="pd-box__cta-per" data-pd-cta-per></span>
+      </div>
+      <button type="button" class="pd-box__add" data-pd-add disabled>Choose a size to start</button>
+    </div>
+    <p class="pd-box__note" data-pd-note role="status"></p>
+  </div>
+</section>
+
+<script src="{{ 'prodani-box-builder.js' | asset_url }}" defer="defer"></script>
+
+{% schema %}
+{
+  "name": "Box builder",
+  "settings": [
+    { "type": "text", "id": "eyebrow", "label": "Eyebrow", "default": "Build Your Box" },
+    { "type": "text", "id": "heading", "label": "Heading", "default": "Build Your Balance Box" },
+    { "type": "text", "id": "subheading", "label": "Subheading", "default": "Choose your flavors. Own your indulgence." },
+    { "type": "text", "id": "sizes", "label": "Box sizes (comma-separated cake counts)", "default": "4,6,12" },
+    { "type": "text", "id": "prices", "label": "Prices (comma-separated, same order)", "info": "Subject to the pricing check (T1) before launch.", "default": "36,49,89" },
+    { "type": "range", "id": "default_size_index", "label": "Default size (1st/2nd/3rd)", "min": 1, "max": 3, "step": 1, "default": 2 },
+    { "type": "number", "id": "popular_count", "label": "\"Most Popular\" cake count", "default": 6 },
+    { "type": "number", "id": "value_count", "label": "\"Best Value\" cake count", "default": 12 },
+    { "type": "checkbox", "id": "upsell_enabled", "label": "Show upsell nudges", "default": true }
+  ],
+  "blocks": [
+    {
+      "type": "flavor",
+      "name": "Flavor",
+      "settings": [
+        { "type": "text", "id": "name", "label": "Name", "default": "New flavor" },
+        { "type": "text", "id": "macro", "label": "Macro label", "default": "20g protein" },
+        { "type": "image_picker", "id": "image", "label": "Image" },
+        { "type": "color", "id": "color", "label": "Chip accent", "default": "#FDC3D4" },
+        { "type": "product", "id": "product", "label": "Linked product", "info": "For real inventory + add-to-cart once flavors are products (T3)." },
+        { "type": "checkbox", "id": "sold_out", "label": "Sold out", "default": false }
+      ]
+    }
+  ],
+  "presets": [
+    {
+      "name": "Box builder",
+      "blocks": [
+        { "type": "flavor", "settings": { "name": "Chocolate Fudge", "macro": "21g protein · 180 cal", "color": "#48312A" } },
+        { "type": "flavor", "settings": { "name": "Vanilla Bean", "macro": "20g protein · 170 cal", "color": "#FFFBE5" } },
+        { "type": "flavor", "settings": { "name": "Strawberry", "macro": "19g protein · 175 cal", "color": "#FDC3D4" } },
+        { "type": "flavor", "settings": { "name": "Biscoff", "macro": "20g protein · 190 cal", "color": "#C4587E" } },
+        { "type": "flavor", "settings": { "name": "Matcha", "macro": "20g protein · 165 cal", "color": "#7FA86B" } },
+        { "type": "flavor", "settings": { "name": "Salted Caramel", "macro": "21g protein · 185 cal", "sold_out": true, "color": "#5C4239" } }
+      ]
+    }
+  ]
+}
+{% endschema %}

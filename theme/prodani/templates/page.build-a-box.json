@@ -1,0 +1,28 @@
+{
+  "sections": {
+    "box": {
+      "type": "prodani-box-builder",
+      "blocks": {
+        "f1": { "type": "flavor", "settings": { "name": "Chocolate Fudge", "macro": "21g protein · 180 cal", "color": "#48312A", "sold_out": false } },
+        "f2": { "type": "flavor", "settings": { "name": "Vanilla Bean", "macro": "20g protein · 170 cal", "color": "#FFFBE5", "sold_out": false } },
+        "f3": { "type": "flavor", "settings": { "name": "Strawberry", "macro": "19g protein · 175 cal", "color": "#FDC3D4", "sold_out": false } },
+        "f4": { "type": "flavor", "settings": { "name": "Biscoff", "macro": "20g protein · 190 cal", "color": "#C4587E", "sold_out": false } },
+        "f5": { "type": "flavor", "settings": { "name": "Matcha", "macro": "20g protein · 165 cal", "color": "#7FA86B", "sold_out": false } },
+        "f6": { "type": "flavor", "settings": { "name": "Salted Caramel", "macro": "21g protein · 185 cal", "color": "#5C4239", "sold_out": true } }
+      },
+      "block_order": ["f1", "f2", "f3", "f4", "f5", "f6"],
+      "settings": {
+        "eyebrow": "Build Your Box",
+        "heading": "Build Your Balance Box",
+        "subheading": "Choose your flavors. Own your indulgence.",
+        "sizes": "4,6,12",
+        "prices": "36,49,89",
+        "default_size_index": 2,
+        "popular_count": 6,
+        "value_count": 12,
+        "upsell_enabled": true
+      }
+    }
+  },
+  "order": ["box"]
+}

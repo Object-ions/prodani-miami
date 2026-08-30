@@ -1,0 +1,84 @@
+{%- comment -%}
+  Below-fold PDP proof accordions (brief §08 "Proof"): ingredients, nutrition,
+  allergens, storage/shelf life, shipping & returns, FAQ. Metafield-driven
+  (namespace `prodani`). Missing values show a flagged sample on staging; Dani sets
+  real content before launch. Shipping/returns fall back to the store's own policies.
+{%- endcomment -%}
+{%- liquid
+  assign mf = product.metafields.prodani
+-%}
+<div class="pd-info">
+
+  <details class="pd-acc" open>
+    <summary>Nutrition</summary>
+    <div class="pd-acc__body">
+      {%- if mf.nutrition_facts != blank -%}
+        {{ mf.nutrition_facts }}
+      {%- else -%}
+        <p class="is-sample">Sample — full nutrition facts per serving will appear here once
+          <code>prodani.nutrition_facts</code> is set in admin (ticket T4). Protein source:
+          {{ mf.protein_source.value | default: 'to be confirmed' }}.</p>
+      {%- endif -%}
+    </div>
+  </details>
+
+  <details class="pd-acc">
+    <summary>Ingredients</summary>
+    <div class="pd-acc__body">
+      {%- if mf.ingredients != blank -%}
+        <p>{{ mf.ingredients.value | newline_to_br }}</p>
+      {%- else -%}
+        <p class="is-sample">Sample — the full ingredient list will appear here once
+          <code>prodani.ingredients</code> is set in admin.</p>
+      {%- endif -%}
+    </div>
+  </details>
+
+  <details class="pd-acc">
+    <summary>Allergens</summary>
+    <div class="pd-acc__body">
+      {%- if mf.allergens != blank -%}
+        <p>{{ mf.allergens.value }}</p>
+      {%- else -%}
+        <p class="is-sample">Sample — allergen statement appears here once
+          <code>prodani.allergens</code> is set in admin (ticket T2/T4).</p>
+      {%- endif -%}
+    </div>
+  </details>
+
+  <details class="pd-acc">
+    <summary>Storage &amp; shelf life</summary>
+    <div class="pd-acc__body">
+      {%- if mf.storage != blank or mf.shelf_life != blank -%}
+        {%- if mf.storage != blank %}<p>{{ mf.storage.value }}</p>{% endif -%}
+        {%- if mf.shelf_life != blank %}<p>{{ mf.shelf_life.value }}</p>{% endif -%}
+      {%- else -%}
+        <p class="is-sample">Sample — storage and shelf-life guidance appears here once set in
+          admin. Whether items are refrigerated, frozen, or shelf-stable is pending (ticket T5).</p>
+      {%- endif -%}
+    </div>
+  </details>
+
+  <details class="pd-acc">
+    <summary>Shipping &amp; returns</summary>
+    <div class="pd-acc__body">
+      {%- if shop.shipping_policy.body != blank -%}
+        {{ shop.shipping_policy.body }}
+      {%- else -%}
+        <p class="is-sample">Sample — U.S. shipping details and the free-shipping threshold
+          appear here once confirmed (ticket T5).</p>
+      {%- endif -%}
+      {%- if shop.refund_policy.body != blank -%}
+        <p><a href="{{ shop.refund_policy.url }}">Read our full returns policy</a></p>
+      {%- endif -%}
+    </div>
+  </details>
+
+  {%- if mf.faq != blank -%}
+    <details class="pd-acc">
+      <summary>FAQ</summary>
+      <div class="pd-acc__body">{{ mf.faq }}</div>
+    </details>
+  {%- endif -%}
+
+</div>
