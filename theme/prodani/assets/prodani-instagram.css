@@ -7,8 +7,10 @@
 .pd-ig__follow:hover{ transform:translateY(-2px); background:var(--cocoa-deep); }
 .pd-ig__follow svg{ width:18px; height:18px; }
 
-.pd-ig__empty{ color:var(--ink-faint); font-size:15px; line-height:1.6; max-width:520px; }
-.pd-ig__empty strong{ color:var(--berry); }
+/* Placeholder tiles (shown until a feed id or images are added) */
+.pd-ig__item--ph{ background:var(--butter); cursor:default; }
+.pd-ig__glyph--ph{ opacity:1; background:transparent; color:var(--ink-faint); }
+.pd-ig__glyph--ph svg{ width:34px; height:34px; }
 
 .pd-ig__grid{ display:grid; grid-template-columns:repeat(6,1fr); gap:clamp(8px,1.2vw,16px); }
 @media (max-width:1180px){ .pd-ig__grid{ grid-template-columns:repeat(4,1fr); } }

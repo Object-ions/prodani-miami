@@ -273,6 +273,26 @@ match the baker section above). Widened `.pd-bleed__word span` gap .12em→.5em 
 - Verified in-browser on staging; 0 theme-check errors. Merged to main earlier; **not**
   deployed to production.
 
+## 2026-08-30 — Homepage polish batch (client review)
+
+- **Build Your Balance Box transition:** repurposed the bleed word — text "Build Your
+  Balance Box", moved between collection (cream) and box (pink), colours cream→pink, pink
+  letters, split 55. This replaces the DELICIOUS marquee (removed per request).
+- **Stack cards:** each card now carries a peek label (`figure + title`) and the stagger
+  widened to 52px, so every "prodani difference" stays readable in the sliver while cards
+  stack (brief §image #18). Body switched to flex so the label fits.
+- **Instagram feed:** shows `count` branded placeholder tiles until a Behold feed id / images
+  are added, instead of the empty-state note.
+- **Contact map:** taller (`min-height` clamp 220→300 / 26→34vw / 330→470).
+- **Footer:** link row gap 10→3px (+line-height 1.35); signup card image switched to the
+  chocolate cake (`signup_product` → vegan-personal-chocolate-banana-cake-copy).
+- **Meet your baker (shout):** added a second short paragraph in her own words.
+- **Product card images:** `object-fit` cover→contain on a light studio-grey ground, so the
+  landscape personal-cake pack shots show 100% in the square (backdrop extended, not cropped).
+  NOTE: this is the no-admin fix; truly replacing the product images (generative-expand +
+  re-upload) needs Shopify admin — offer stands.
+- Verified in-browser on staging; 0 theme-check errors. Not deployed to production.
+
 ---
 
 ## 2026-08-20 — Video hero, and the 5.6 MB problem solved on the way

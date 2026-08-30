@@ -29,8 +29,14 @@
       <div class="pd-stack__card"
            style="background-color:{{ block.settings.color }};
                   color:{{ block.settings.text_color }};
-                  top:calc(-3vh + {{ forloop.index0 | times: 22 }}px);"
+                  top:calc(-3vh + {{ forloop.index0 | times: 52 }}px);"
            data-pd-card data-index="{{ forloop.index0 }}" data-total="{{ section.blocks.size }}">
+        {%- comment -%} Peek label — stays visible in the sliver above each stacked card, so
+           every "prodani difference" is readable even when the card is behind others. {%- endcomment -%}
+        <div class="pd-stack__peek">
+          <b>{{ block.settings.figure | escape }}</b>
+          <span>{{ block.settings.title | escape }}</span>
+        </div>
         <div class="pd-stack__body">
           <div class="pd-stack__text">
             <span class="pd-stack__figure">{{ block.settings.figure | escape }}</span>

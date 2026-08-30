@@ -33,10 +33,13 @@ a.pd-filter{ text-decoration:none; display:inline-flex; align-items:center; }
 .pd-card:hover{ transform:translateY(-7px) rotate(-.7deg); box-shadow:0 20px 38px rgba(72,49,42,.16); }
 .pd-card__media{
   position:relative; aspect-ratio:1/1; overflow:hidden;
-  border-radius:calc(var(--r) - 8px); margin-bottom:15px; background:var(--cream);
+  border-radius:calc(var(--r) - 8px); margin-bottom:15px;
+  /* Light studio-grey ground so the landscape pack shots sit in a square with the
+     backdrop extended, rather than being cropped. Matches the photos' own backdrop. */
+  background:#ecebe9;
 }
 .pd-card__img{
-  width:100%; height:100%; object-fit:cover;
+  width:100%; height:100%; object-fit:contain;
   transition:transform .8s var(--ease), opacity .5s ease;
 }
 .pd-card:hover .pd-card__img{ transform:scale(1.07); }
