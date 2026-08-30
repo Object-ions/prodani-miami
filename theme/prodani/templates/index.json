@@ -378,7 +378,8 @@
       ],
       "settings": {
         "heading": "",
-        "background": "#FDC3D4"
+        "background": "#FBF5E8",
+        "bottom_marquee": false
       }
     },
     "box": {

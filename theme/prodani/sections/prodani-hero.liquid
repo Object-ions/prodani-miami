@@ -65,12 +65,10 @@
   </div>
 
   {%- if section.settings.ribbon_items != blank -%}
-    {%- comment -%} fill_below is pink (not cream) so the pink flows straight from this
-       top wave into the benefit-badge band below it — no cream gap between them. {%- endcomment -%}
     {% render 'prodani-marquee',
        items: section.settings.ribbon_items,
        speed: section.settings.ribbon_speed,
-       fill_below: 'var(--pink)',
+       fill_below: 'var(--cream)',
        modifier: 'pd-marquee--hero' %}
   {%- endif -%}
 </section>

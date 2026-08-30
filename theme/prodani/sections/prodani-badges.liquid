@@ -17,14 +17,19 @@
     <ul class="pd-badges__row{% if section.settings.wave_icons %} pd-badges__row--wave{% endif %}">
       {%- for block in section.blocks -%}
         <li class="pd-badge-item" {{ block.shopify_attributes }}>
-          {%- if block.settings.image != blank -%}
-            {{ block.settings.image | image_url: width: 320
-               | image_tag: loading: 'lazy', alt: '', class: 'pd-badge-item__icon' }}
-          {%- else -%}
-            <img class="pd-badge-item__icon"
-                 src="{{ block.settings.icon | append: '.png' | asset_url }}"
-                 alt="" loading="lazy" width="340" height="245">
-          {%- endif -%}
+          {%- comment -%} The icon slices are cocoa circles clipped at the bottom edge. The
+             disc is a cocoa circle behind them (exact colour match, #48312A) that completes
+             the round shape; object-fit:contain keeps the whole symbol visible, never cut. {%- endcomment -%}
+          <span class="pd-badge-item__disc">
+            {%- if block.settings.image != blank -%}
+              {{ block.settings.image | image_url: width: 320
+                 | image_tag: loading: 'lazy', alt: '', class: 'pd-badge-item__icon' }}
+            {%- else -%}
+              <img class="pd-badge-item__icon"
+                   src="{{ block.settings.icon | append: '.png' | asset_url }}"
+                   alt="" loading="lazy" width="340" height="245">
+            {%- endif -%}
+          </span>
           <span class="pd-badge-item__label">{{ block.settings.label | escape }}</span>
         </li>
       {%- endfor -%}
@@ -52,7 +57,7 @@
     { "type": "color", "id": "background", "label": "Background", "default": "#FDC3D4" },
     { "type": "checkbox", "id": "wave_icons", "label": "Lay icons along a wave (desktop)", "default": true },
     { "type": "header", "content": "Bottom marquee" },
-    { "type": "checkbox", "id": "bottom_marquee", "label": "Show bottom wave marquee", "default": true },
+    { "type": "checkbox", "id": "bottom_marquee", "label": "Show bottom wave marquee", "default": false },
     { "type": "text", "id": "marquee_items", "label": "Marquee items (comma-separated)", "default": "high protein, no sugar added, gluten free, small batch, miami made" },
     { "type": "range", "id": "marquee_speed", "label": "Marquee speed", "min": 10, "max": 60, "step": 2, "default": 26 }
   ],

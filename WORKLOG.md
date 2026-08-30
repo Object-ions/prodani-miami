@@ -207,6 +207,23 @@ marquees** (top + bottom) with the **icons laid along the same wave** instead of
   clean pink→cream, 0 theme-check errors. (Icons confirmed loaded via JS; automation
   screenshots intermittently drop mix-blend-mode compositing, they render in a real browser.)
 
+## 2026-08-29 (cont. 7) — Value strip: cream bg, no bottom marquee, uncut icons
+
+Client revised: drop the bottom marquee, make the section **cream**, and stop the icons
+being cut.
+
+- Reverted hero top marquee `fill_below` back to cream (section is cream again).
+- Badges section default `bottom_marquee` → false; homepage instance set to cream bg,
+  no bottom marquee.
+- **Icon clipping fix without new assets:** the badge PNGs are RGBA cocoa circles clipped
+  at the *bottom* edge (circle exceeds the 340×245 slice). Confirmed the circle colour is
+  exactly #48312A = --cocoa. Wrapped each icon in a `.pd-badge-item__disc` — a cocoa CSS
+  circle (same colour) that completes the round silhouette — and switched the img to
+  `object-fit:contain` (whole symbol always visible), dropping the old mix-blend-mode hack.
+  Result: perfectly round badges with the original cream symbols, never cut.
+- Kept the icon wave (not asked to remove). Verified in-browser on staging; 0 theme-check
+  errors. (Note: badge imgs are lazy — they pop in a beat after scroll.)
+
 ---
 
 ## 2026-08-20 — Video hero, and the 5.6 MB problem solved on the way

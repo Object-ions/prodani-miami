@@ -19,21 +19,27 @@
 .pd-badge-item{
   display:flex; flex-direction:column; align-items:center; gap:12px; text-align:center;
 }
-.pd-badge-item__icon{
-  width:clamp(64px,7vw,104px); height:auto; display:block;
-  /* The slices carry a white ground from the source strip; multiply drops it onto
-     whatever colour this section is set to, so one asset works on pink or cream. */
-  mix-blend-mode:multiply;
+/* Cocoa disc completes the clipped circle and sets a perfectly round silhouette.
+   Its colour is the exact circle colour in the slices (#48312A = --cocoa), so the
+   slice's own cut edge disappears into it. */
+.pd-badge-item__disc{
+  width:clamp(72px,7.5vw,108px); aspect-ratio:1; border-radius:50%;
+  background:var(--cocoa); overflow:hidden; display:grid; place-items:center;
   transition:transform .45s var(--bounce);
 }
-.pd-badge-item:hover .pd-badge-item__icon{ transform:translateY(-4px) scale(1.04); }
+.pd-badge-item__icon{
+  /* contain keeps the whole symbol visible (never cut); transparent areas of the slice
+     fall through to the cocoa disc, so the badge reads as one clean circle. */
+  width:112%; height:112%; object-fit:contain; display:block;
+}
+.pd-badge-item:hover .pd-badge-item__disc{ transform:translateY(-4px) scale(1.04); }
 .pd-badge-item__label{
   font-weight:700; font-size:clamp(12.5px,1.05vw,15px); color:var(--cocoa);
   letter-spacing:-.01em; line-height:1.25;
 }
 @media (prefers-reduced-motion: reduce){
-  .pd-badge-item__icon{ transition:none; }
-  .pd-badge-item:hover .pd-badge-item__icon{ transform:none; }
+  .pd-badge-item__disc{ transition:none; }
+  .pd-badge-item:hover .pd-badge-item__disc{ transform:none; }
 }
 
 /* ---- icons riding the wave ----
