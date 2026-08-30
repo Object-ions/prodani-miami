@@ -173,6 +173,24 @@ while the bar still switches category in one click and "All" shows everything.
 child links** in admin → Navigation (themes-only token can't edit nav menus). The theme
 already renders the dropdown once those children exist.
 
+## 2026-08-29 (cont. 5) — In-browser QA + merged to main
+
+Drove Chrome against staging to QA the JS-driven pieces that HTML fetch can't test:
+- **Category tabs**: clicking Vegan navigates to `/collections/vegan`, marks the tab active,
+  shows only its 7 products. Confirmed visually.
+- **Box builder**: 0→"Add 6 more" (disabled) → 5/6 (bar 83%) → 6/6 "Add box to cart"
+  (enabled, bar 100%); can't exceed box size; sold-out flavor's stepper disabled; upsell
+  "Upgrade to 12" shows at size 6. All correct.
+
+Two issues found + fixed:
+1. Box-builder size cards showed integer per-cake ($9/$8/$7) — now accurate $9.00/$8.17/$7.42
+   (float math). CTA per-cake was already correct via JS.
+2. Removed a stale "Showing 0 treats" counter from `prodani-shop` (obsolete now that the
+   category tabs are links, not client-side filters).
+
+**Merged `feat/category-nav` → `main` and pushed** (public repo; code only, no confidential
+docs — verified clean). Everything from Dani's brief is now built, QA'd on staging, and on main.
+
 ---
 
 ## 2026-08-20 — Video hero, and the 5.6 MB problem solved on the way
