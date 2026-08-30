@@ -7,11 +7,24 @@
 (function () {
   if (window.__pdStack) return;
   window.__pdStack = true;
-  if (window.matchMedia('(prefers-reduced-motion: reduce)').matches) return;
 
+  var reduce = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
   var clamp = function (v, a, b) { return v < a ? a : v > b ? b : v; };
 
+  // Cards pin just below the sticky title — measure the title so the offset is exact.
+  // Runs regardless of reduced-motion (it positions the deck, it isn't animation).
+  function setHeadHeights() {
+    document.querySelectorAll('[data-pd-stack]').forEach(function (stack) {
+      var head = stack.querySelector('.pd-stack__head');
+      if (head) stack.style.setProperty('--pd-stack-head-h', head.offsetHeight + 'px');
+    });
+  }
+
   function init() {
+    setHeadHeights();
+    window.addEventListener('resize', setHeadHeights);
+    if (reduce) return;
+
     var stacks = document.querySelectorAll('[data-pd-stack]');
     if (!stacks.length) return;
 

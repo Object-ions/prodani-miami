@@ -3,14 +3,18 @@
 .pd-stack{ background:var(--cream); position:relative; padding-bottom:0; }
 .pd-stack__head{
   display:flex; align-items:flex-end; justify-content:space-between; gap:24px;
-  flex-wrap:wrap; padding-top:clamp(40px,4.5vw,72px); padding-bottom:clamp(4px,1vw,14px);
+  flex-wrap:wrap; padding-top:clamp(40px,4.5vw,72px); padding-bottom:clamp(12px,1.4vw,20px);
+  /* Stays pinned at the top while the cards stack beneath it, so the section title
+     is visible the whole way through the deck. Cream ground + z-index so the cards
+     slide under it cleanly. */
+  position:sticky; top:0; z-index:6; background:var(--cream);
 }
-/* one full-height slot per card; the card pins to the top of it */
+/* one full-height slot per card; the card pins just below the sticky title */
 /* The slot was a full 100svh around a ~470px card, so roughly 220px of dead air
    sat above and below every card. The slot must also be CAPPED, not just reduced:
    the card maxes out at 440px, so a purely viewport-relative slot re-opens the gap
    on tall screens (72svh on a 1181px viewport is 850px, leaving 410px of air). */
-.pd-stack__slot{ height:min(72svh, 560px); display:flex; align-items:center; justify-content:center; position:sticky; top:0; }
+.pd-stack__slot{ height:min(72svh, 560px); display:flex; align-items:center; justify-content:center; position:sticky; top:var(--pd-stack-head-h, 132px); }
 .pd-stack__card{
   position:relative; transform-origin:top;
   width:min(1180px, 88%); height:min(60svh, 440px);

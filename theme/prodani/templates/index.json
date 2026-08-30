@@ -171,7 +171,7 @@
       "settings": {
         "text": "Delicious",
         "color_top": "#FBF5E8",
-        "color_bottom": "#FDC3D4",
+        "color_bottom": "#FBF5E8",
         "color_text": "#FDC3D4",
         "split": 80,
         "speed": 40
@@ -477,10 +477,10 @@
     "hero",
     "badges",
     "collection",
+    "box",
     "shout",
     "deck",
     "bleed",
-    "box",
     "baker",
     "reviews",
     "instagram",
