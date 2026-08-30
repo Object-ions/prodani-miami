@@ -1137,40 +1137,64 @@ scripts saved. Paint is still 20% faster, which is the part a visitor feels.
 
 ## Where this stands
 
-**Live.** `Prodani - v.1.0.0` (theme 187797995830) is main on prodanimiami.com.
-`Prodani - v.0.0.1` (154419691830) is unpublished and still in the library.
+**As of 2026-08-30 — the v2 upgrade (Dani's brief) is built and QA'd on STAGING.
+Nothing has been deployed to production.**
 
-    cd theme && node scripts/publish.mjs 154419691830 --yes     # rollback
-    cd theme && npm run push:live                                # deploy local files
-    cd theme && npm run push:staging                             # 187797799222, test here first
+- **Live (untouched):** `Prodani - v.1.0.0` (theme 187797995830) on prodanimiami.com.
+  It is still the launch build — none of the v2 work is on it.
+- **Staging (all v2 work):** `prodani - staging` (187797799222).
+  Preview: `https://prodanimiami.com/?preview_theme_id=187797799222`
+- **GitHub main** is current with all v2 code (public repo — confidential docs are gitignored).
+
+`push:live` has never been run this cycle. Going live is an explicit, approved step.
+
+    cd theme && npm run push:staging                              # deploy to staging (default)
+    cd theme && npm run push:live                                 # PRODUCTION — only on approval
+    cd theme && node scripts/publish.mjs 154419691830 --yes       # rollback to v.0.0.1
     cd theme && LIVE=1 SHOP_URL=https://prodanimiami.com \
       PREVIEW_THEME_ID=187797995830 EXPECT_LIVE_ID=154419691830 \
-      node scripts/preflight.mjs                                 # 89 checks against live
+      node scripts/preflight.mjs                                  # 89 checks against live
 
-Last run: 89 passed, 0 failed, 1 warning (2 of 50 homepage images lack explicit
-width/height).
+### What v2 added (all on staging)
 
-### Waiting on Daniel
+Product page (metafield-driven macros, badges, trust row, info accordions, mobile sticky
+ATC), Build Your Balance Box builder (custom, Option A), subscription selector (native
+Shopify selling plans), email-capture popup, Instagram section (Behold.so), category
+navigation (collection-linked tabs + header dropdown support), SEO meta descriptions,
+reordered homepage, and a batch of client-directed visual work.
 
-  1. **None of the 70+ Judge.me reviews are attached to a product.** Every
-     product page shows "Be the first to write a review", and no product will
-     show stars in Google results until they are associated in Judge.me. The
-     integration works; the data behind it does not exist yet.
-  2. **Footer logo artwork reads "HIGH PROTEIN DESERTS"** — missing an S. Needs
-     original artwork, not a theme change.
-  3. **Conflicting contact details.** Phone: `+1 305 481 1441` vs
-     `+1 (786) 567-7077`. Address: `3131 NE 1st Ave` vs `125 NE 32nd St, apt 1115`.
-     The live site currently shows the first of each.
-  4. **Placeholder photography** in a few slots, pending real images.
-  5. **Re-issue the Theme Access token.** It appeared in plaintext in the working
-     transcript. Everything in `theme/.env` should be considered compromised.
+### Blocked on Daniel — these gate go-live
 
-### Approved but not done
+Full plain-language sheet: `PRODANI_INPUT_REQUEST.md` (gitignored, private).
 
-Product data cleanup — categories, vendor normalisation, review of the archived
-bundles. Blocked: the Theme Access token is scoped to themes only and returns
-302 for `products.json`. Needs either a different credential or doing it by hand
-in the admin.
+  1. **T1 Pricing/unit** — one-time vs subscription per-cake gap needs confirming.
+  2. **T2 Claims** — approve + substantiate every nutrition claim before publishing.
+  3. **T3 Flavors as products** with real inventory + per-SKU macros (unblocks box builder cart).
+  4. **T4 Product metafields** must be created in admin (token is themes-only).
+  5. **T5 Shipping rule** — $99+? refrigerated/frozen/shelf-stable?
+  6. **T6/T7 Brand casing + founder details** (Prodani vs ProDani; name/pronoun/title).
+  7. **T8 Reviews not attached to products.** Judge.me shows **132 reviews at 4.92★**
+     (122×5, 10×4) store-wide, but none linked to a product — so no Google star snippets.
+  8. **T9 Footer logo reads "HIGH PROTEIN DESERTS"** — missing an S; needs new artwork.
+  9. **T10 Conflicting contact details.** Phone `+1 305 481 1441` vs `+1 (786) 567-7077`;
+     address `3131 NE 1st Ave` vs `125 NE 32nd St, apt 1115`. Live shows the first of each.
+  10. **T11 Photography** — placeholders in a few slots; personal range still shot in
+      plastic meal-prep containers and should be re-shot on a plate.
+  11. **T12 Subscriptions** — install Shopify Subscriptions, define plans/VIP rules.
+  12. **T13 Re-issue the Theme Access token** — it appeared in plaintext; treat `theme/.env`
+      as compromised.
+  13. **T14 Header dropdown** — Dani must add a "Shop" menu with the 4 category child links
+      in admin → Navigation (theme already renders submenus).
+  14. **T15 Instagram** — connect IG to a free Behold.so feed; guide in `INSTAGRAM_FEED_SETUP.md`.
+
+### Open TODOs on our side
+
+  - Site copy still says "70+ reviews" / "4.9★" in several places (reviews heading, deck
+    card, "Read all 70+ reviews") — update to **132 / 4.92★**.
+  - **Product page mobile QA not completed** — the PDP's heavy third-party scripts hung the
+    headless mobile capture, so macros / sticky ATC / subscribe toggle are unverified at 390px.
+  - Product data cleanup (categories, vendor normalisation, archived bundles) — still blocked
+    on credentials; the themes-only token returns 302 for `products.json`.
 
 ### If the before/after ever needs re-running
 
