@@ -306,6 +306,27 @@ match the baker section above). Widened `.pd-bleed__word span` gap .12em→.5em 
   margin, so the map stretches up to close it.
 - Verified in-browser on staging; 0 theme-check errors. Not deployed to production.
 
+## 2026-08-30 (cont. 2) — Mobile bug sweep (iPhone 390px, headless CDP)
+
+Examined the storefront at an iPhone viewport via a headless-Chrome CDP rig
+(`/tmp/prodani-mobile-qa.mjs`, adapted from casestudy.mjs — window resize doesn't work on
+the automation tab). Found + fixed:
+
+- **Email popup (major):** iOS ignores `overflow:hidden` scroll-lock, so the popup stayed
+  fixed at the bottom covering ~40% of the screen and followed the page as it scrolled.
+  Fixed with a `position:fixed` body lock (save/restore scrollY) in `prodani-email-popup.js`.
+  Verified: with the popup open, `scrollTo(3000)` no longer moves the page.
+- **Stack deck (major):** on mobile the card height (70svh/560) exceeded the slot (58svh/460)
+  and the wrapped title inflated the pin offset, so cards overflowed and bled into the next
+  section with oversized media. Disabled scroll-stacking on ≤760px — cards now render as a
+  normal vertical list (static slots/cards, peek labels hidden, media aspect 16/10).
+- **Instagram placeholder tiles:** grid stretched them non-square on mobile — added
+  `align-items:start`.
+- Hero, badges, collection, box builder, baker, reviews all render fine on mobile.
+- Product-page mobile capture kept hanging on that page's heavy third-party scripts; PDP
+  mobile (macros / sticky ATC / subscribe) not yet fully verified — TODO.
+- Verified in-browser (headless mobile) on staging; 0 theme-check errors. Not deployed to production.
+
 ---
 
 ## 2026-08-20 — Video hero, and the 5.6 MB problem solved on the way

@@ -16,6 +16,20 @@
   var KEY = 'pdPopSeen';
   var lastFocus = null;
   var opened = false;
+  var lockedY = 0;
+
+  // iOS ignores overflow:hidden on <html>/<body> for scroll-locking, so the popup would
+  // otherwise stay fixed while the page scrolls behind it. Pin the body instead.
+  function lockScroll() {
+    lockedY = window.scrollY || window.pageYOffset || 0;
+    var b = document.body.style;
+    b.position = 'fixed'; b.top = (-lockedY) + 'px'; b.left = '0'; b.right = '0'; b.width = '100%';
+  }
+  function unlockScroll() {
+    var b = document.body.style;
+    b.position = ''; b.top = ''; b.left = ''; b.right = ''; b.width = '';
+    window.scrollTo(0, lockedY);
+  }
 
   function suppressed() {
     if (designMode) return false;
@@ -35,7 +49,7 @@
     // force reflow so the transition runs from the hidden state
     void pop.offsetWidth;
     pop.classList.add('is-open');
-    document.documentElement.style.overflow = 'hidden';
+    lockScroll();
     var focusTarget = pop.querySelector('#pd-pop-email') || card;
     if (focusTarget) focusTarget.focus();
     document.addEventListener('keydown', onKey);
@@ -45,7 +59,7 @@
     if (!opened) return;
     opened = false;
     pop.classList.remove('is-open');
-    document.documentElement.style.overflow = '';
+    unlockScroll();
     document.removeEventListener('keydown', onKey);
     remember();
     var done = function () { pop.hidden = true; card.removeEventListener('transitionend', done); };

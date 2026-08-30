@@ -12,7 +12,7 @@
 .pd-ig__glyph--ph{ opacity:1; background:transparent; color:var(--ink-faint); }
 .pd-ig__glyph--ph svg{ width:34px; height:34px; }
 
-.pd-ig__grid{ display:grid; grid-template-columns:repeat(6,1fr); gap:clamp(8px,1.2vw,16px); }
+.pd-ig__grid{ display:grid; grid-template-columns:repeat(6,1fr); gap:clamp(8px,1.2vw,16px); align-items:start; }
 @media (max-width:1180px){ .pd-ig__grid{ grid-template-columns:repeat(4,1fr); } }
 @media (max-width:640px){  .pd-ig__grid{ grid-template-columns:repeat(2,1fr); } }
 

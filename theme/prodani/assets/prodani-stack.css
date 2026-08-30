@@ -57,9 +57,16 @@
   object-position:var(--pd-focus, 50% 88%);
 }
 @media (max-width:760px){
-  .pd-stack__card{ height:min(70svh, 560px); }
+  /* No scroll-stacking on phones — the tall cards overflowed their slots and bled into the
+     next section. Render them as a normal vertical list instead. */
+  .pd-stack{ padding-bottom:clamp(24px,7vw,44px); }
+  .pd-stack__head{ position:static; }
+  .pd-stack__slot{ position:static; height:auto; display:block; }
+  .pd-stack__card{ position:static; height:auto; width:100%; top:auto !important; transform:none !important;
+    margin-bottom:16px; box-shadow:0 12px 30px rgba(72,49,42,.12); }
+  .pd-stack__peek{ display:none; }
   .pd-stack__body{ flex-direction:column; gap:16px; }
   .pd-stack__text{ width:100%; justify-content:flex-start; }
-  .pd-stack__media{ width:100%; flex:1; }
-  .pd-stack__desc{ display:none; }
+  .pd-stack__media{ width:100%; aspect-ratio:16/10; flex:none; }
+  .pd-stack__desc{ display:block; }
 }
