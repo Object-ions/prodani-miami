@@ -327,6 +327,25 @@ the automation tab). Found + fixed:
   mobile (macros / sticky ATC / subscribe) not yet fully verified — TODO.
 - Verified in-browser (headless mobile) on staging; 0 theme-check errors. Not deployed to production.
 
+## 2026-08-30 (cont. 3) — Client input sheet rewritten for the founder
+
+Rewrote `PRODANI_INPUT_REQUEST.md` (gitignored, private) in plain language for Daniel, with
+an **example answer under each question** so she knows the exact format we need (flavor +
+nutrition list template, a fill-in prompt for her "about me", pricing confirm, claims
+checklist, shipping, subscriptions, brand casing + founder name/pronoun/title, photos, the
+logo typo, contact details, token re-issue, admin access). ⭐ marks the four that unlock the
+most (prices, claims, flavors, bio).
+
+Corrected the review count everywhere it matters: **Judge.me shows 132 reviews at 4.92★**
+(122 five-star, 10 four-star) — not "70+/4.9". T8 now references the real numbers.
+
+**TODO (not done this turn):** the site still says "70+ reviews" / "4.9★" in a few places
+(reviews section heading, deck card "4.9★ From 70+ verified reviews", "Read all 70+ reviews")
+— update to 132 / 4.92★ on staging when approved.
+
+**Status:** still NOT in production. Live store = Prodani - v.1.0.0 (untouched). All work on
+the staging theme (187797799222) + GitHub main.
+
 ---
 
 ## 2026-08-20 — Video hero, and the 5.6 MB problem solved on the way
