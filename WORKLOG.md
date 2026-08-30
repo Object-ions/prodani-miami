@@ -224,6 +224,14 @@ being cut.
 - Kept the icon wave (not asked to remove). Verified in-browser on staging; 0 theme-check
   errors. (Note: badge imgs are lazy — they pop in a beat after scroll.)
 
+## 2026-08-29 (cont. 8) — Box builder on pink
+
+Client: make the Build Your Box section background pink. Switched `.pd-box` bg cream→pink
+and recoloured the elements that would otherwise vanish on pink: step-number circles
+pink→cocoa (cream text), upsell banner pink→butter, mobile sticky CTA bg cream→pink. Cards
+stay light (butter) for contrast; Most Popular / Best Value tags and cocoa CTA unchanged.
+Verified in-browser on staging; 0 theme-check errors.
+
 ---
 
 ## 2026-08-20 — Video hero, and the 5.6 MB problem solved on the way
