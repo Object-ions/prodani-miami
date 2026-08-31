@@ -13,9 +13,9 @@
    (WCAG 1.4.11 needs 3:1). Gold (#C9A66B) only reaches 2.7:1 on mocha — it is
    never used for text inside the panels, only on the chocolate CTA row. */
 :root{
-  --pd-panel:#7C5A3C;
-  --pd-field:#66452B;
-  --pd-panel-line:rgba(244,239,230,.55);
+  --pd-panel:#3A2E24;
+  --pd-field:#2A2019;
+  --pd-panel-line:rgba(248,245,239,.55);
 }
 
 .pd-contact{ background:var(--cream); color:var(--ink); padding-block:clamp(56px,7vw,110px); }
@@ -86,12 +86,12 @@
   border:2px solid var(--pd-panel-line); border-radius:14px; padding:12px 15px;
 }
 .pd-field textarea{ resize:vertical; min-height:120px; }
-.pd-field input::placeholder{ color:rgba(244,239,230,.72); }
+.pd-field input::placeholder{ color:rgba(248,245,239,.72); }
 .pd-field select{
   appearance:none;
   /* Chevron drawn in the border colour so it reads on the dark field. */
-  background-image:linear-gradient(45deg,transparent 50%,rgba(244,239,230,.7) 50%),
-                   linear-gradient(135deg,rgba(244,239,230,.7) 50%,transparent 50%);
+  background-image:linear-gradient(45deg,transparent 50%,rgba(248,245,239,.7) 50%),
+                   linear-gradient(135deg,rgba(248,245,239,.7) 50%,transparent 50%);
   background-position:calc(100% - 20px) center, calc(100% - 14px) center;
   background-size:6px 6px, 6px 6px;
   background-repeat:no-repeat;

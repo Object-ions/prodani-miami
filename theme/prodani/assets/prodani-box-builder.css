@@ -1,5 +1,5 @@
 /* Build Your Balance Box. Tokens from prodani-tokens.css. */
-.pd-box{ background:var(--butter); padding-block:clamp(40px,6vw,88px); }
+.pd-box{ background:var(--cream); padding-block:clamp(40px,6vw,88px); }
 
 .pd-box__step{ margin-bottom:clamp(26px,3.5vw,42px); }
 .pd-box__step-label{ display:flex; align-items:center; gap:12px; margin:0 0 16px; font-family:var(--sans);
@@ -10,7 +10,7 @@
 /* sizes */
 .pd-box__sizes{ display:grid; grid-template-columns:repeat(3,1fr); gap:12px; }
 .pd-box__size{ position:relative; display:flex; flex-direction:column; align-items:center; gap:3px;
-  padding:22px 14px 18px; background:var(--cream); border:2px solid var(--line); border-radius:var(--r);
+  padding:22px 14px 18px; background:var(--butter); border:2px solid var(--line); border-radius:var(--r);
   cursor:pointer; transition:transform .35s var(--bounce), border-color .25s, background .25s; text-align:center; }
 .pd-box__size:hover{ transform:translateY(-2px); border-color:var(--pink-deep); }
 .pd-box__size[aria-checked="true"]{ border-color:var(--cocoa); background:var(--cocoa); }
@@ -31,7 +31,7 @@
 .pd-box__flavors{ display:grid; grid-template-columns:repeat(auto-fill,minmax(150px,1fr)); gap:14px; }
 .pd-box__flavor{ background:var(--butter); border:1px solid var(--line); border-radius:var(--r); padding:10px;
   display:flex; flex-direction:column; gap:10px; transition:border-color .25s, box-shadow .25s; }
-.pd-box__flavor.is-active{ border-color:var(--cocoa); box-shadow:0 8px 22px rgba(44,31,24,.10); }
+.pd-box__flavor.is-active{ border-color:var(--cocoa); box-shadow:0 8px 22px rgba(33,25,19,.10); }
 .pd-box__flavor.is-soldout{ opacity:.55; }
 .pd-box__flavor-media{ position:relative; aspect-ratio:1; border-radius:calc(var(--r) - 6px); overflow:hidden;
   background:var(--chip,var(--pink)); }
@@ -72,7 +72,7 @@
   font-family:var(--sans); font-weight:700; font-size:16px; min-height:56px; cursor:pointer;
   transition:transform .4s var(--bounce), background .3s; }
 .pd-box__add:hover:not([disabled]){ transform:translateY(-2px); background:var(--cocoa-deep); }
-.pd-box__add[disabled]{ background:var(--cocoa-soft); color:rgba(244,239,230,.7); cursor:default; }
+.pd-box__add[disabled]{ background:var(--cocoa-soft); color:rgba(248,245,239,.7); cursor:default; }
 .pd-box__note{ margin:12px 0 0; font-size:13px; color:var(--ink-faint); }
 
 @media (max-width:749px){

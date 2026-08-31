@@ -43,8 +43,8 @@
             "cta_label": "Shop personal cakes",
             "product": "strawberry-short-cake",
             "focus": "50% 88%",
-            "color": "#C9A66B",
-            "text_color": "#2C1F18"
+            "color": "#EFEAE0",
+            "text_color": "#211913"
           }
         },
         "c2": {
@@ -56,8 +56,8 @@
             "cta_label": "See the ingredients",
             "product": "carrot-cake-copy",
             "focus": "50% 88%",
-            "color": "#EDE6D6",
-            "text_color": "#2C1F18"
+            "color": "#CFC8B8",
+            "text_color": "#211913"
           }
         },
         "c3": {
@@ -69,8 +69,8 @@
             "cta_label": "Browse all 27",
             "product": "vegan-personal-chocolate-banana-cake-copy",
             "focus": "50% 88%",
-            "color": "#2C1F18",
-            "text_color": "#F4EFE6"
+            "color": "#211913",
+            "text_color": "#F8F5EF"
           }
         },
         "c4": {
@@ -82,8 +82,8 @@
             "cta_label": "Read the reviews",
             "product": "vegan-family-banana-bread",
             "focus": "50% 88%",
-            "color": "#B08A4A",
-            "text_color": "#2C1F18"
+            "color": "#C0A472",
+            "text_color": "#211913"
           }
         }
       },
@@ -170,9 +170,9 @@
       "type": "prodani-bleed",
       "settings": {
         "text": "Build Your Balance Box",
-        "color_top": "#F4EFE6",
-        "color_bottom": "#EDE6D6",
-        "color_text": "#7C5A3C",
+        "color_top": "#F8F5EF",
+        "color_bottom": "#EFEAE0",
+        "color_text": "#CFC8B8",
         "split": 75,
         "speed": 40
       }
@@ -378,7 +378,7 @@
       ],
       "settings": {
         "heading": "",
-        "background": "#F4EFE6",
+        "background": "#F8F5EF",
         "bottom_marquee": false
       }
     },
@@ -390,7 +390,7 @@
           "settings": {
             "name": "Chocolate Fudge",
             "macro": "21g protein · 180 cal",
-            "color": "#2C1F18",
+            "color": "#211913",
             "sold_out": false
           }
         },
@@ -399,7 +399,7 @@
           "settings": {
             "name": "Vanilla Bean",
             "macro": "20g protein · 170 cal",
-            "color": "#EDE6D6",
+            "color": "#EFEAE0",
             "sold_out": false
           }
         },
@@ -408,7 +408,7 @@
           "settings": {
             "name": "Strawberry",
             "macro": "19g protein · 175 cal",
-            "color": "#C9A66B",
+            "color": "#C0A472",
             "sold_out": false
           }
         },
@@ -417,7 +417,7 @@
           "settings": {
             "name": "Biscoff",
             "macro": "20g protein · 190 cal",
-            "color": "#8A6534",
+            "color": "#7E6537",
             "sold_out": false
           }
         },
@@ -426,7 +426,7 @@
           "settings": {
             "name": "Matcha",
             "macro": "20g protein · 165 cal",
-            "color": "#A8B58A",
+            "color": "#CFC8B8",
             "sold_out": false
           }
         },
@@ -435,7 +435,7 @@
           "settings": {
             "name": "Salted Caramel",
             "macro": "21g protein · 185 cal",
-            "color": "#7C5A3C",
+            "color": "#3A2E24",
             "sold_out": true
           }
         }

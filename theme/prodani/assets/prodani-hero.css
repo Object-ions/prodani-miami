@@ -43,11 +43,11 @@
 
 .pd-giant{ margin:0; display:grid; gap:0; }
 .pd-giant__line{
-  display:block; font-family:var(--display); font-weight:340; text-transform:uppercase;
-  /* Fraunces light at wall scale: looser leading than the old 800-weight slab,
-     near-zero tracking — light serif caps close up badly when negative. */
-  line-height:.95; letter-spacing:.005em; word-spacing:.04em;
-  color:var(--pink); white-space:nowrap;
+  display:block; font-family:var(--display); font-weight:330;
+  /* Mixed case at wall scale — the caps went with the shouting. Line 2 turns
+     italic champagne: the one accent moment the whole viewport gets. */
+  line-height:1.02; letter-spacing:-.015em; word-spacing:.02em;
+  color:var(--cream); white-space:nowrap;
 }
 /* The vh term only bites on short, wide viewports, where width alone would size
    the type taller than the block can hold. */
@@ -60,7 +60,7 @@
 }
 .pd-hero__note{
   margin:0; font-weight:600; font-size:13.5px; letter-spacing:.02em;
-  color:rgba(244,239,230,.66);
+  color:rgba(248,245,239,.66);
 }
 
 .pd-btn{
@@ -70,6 +70,15 @@
   transition:transform .4s var(--bounce), background .3s;
 }
 .pd-btn svg{ width:16px; height:16px; flex:0 0 auto; }
-.pd-btn:hover{ transform:translateY(-3px) scale(1.03); }
+.pd-btn:hover{ transform:none; }
 .pd-btn--pink{ background:var(--pink); color:var(--cocoa); }
 .pd-btn--pink:hover{ background:var(--pink-deep); }
+
+.pd-giant__line:nth-child(2){ font-family:var(--script); color:var(--pink); letter-spacing:-.01em; }
+
+/* button-in-button: the arrow rides in its own disc, flush right */
+.pd-btn svg{ width:28px; height:28px; padding:7px; box-sizing:border-box; border-radius:50%;
+  background:rgba(248,245,239,.16); transition:transform .6s var(--ease); }
+.pd-btn--pink svg{ background:rgba(33,25,19,.14); }
+.pd-btn:hover svg{ transform:translate(2px,-1px); }
+.pd-btn:active{ transform:scale(.98); }

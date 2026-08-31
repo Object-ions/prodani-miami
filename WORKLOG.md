@@ -4,6 +4,60 @@ Newest entries first. One entry per working session — what was done, what was 
 
 ---
 
+## 2026-08-30 (night) — v4 "atelier" direction: my freehand luxury take
+
+Moses asked for a freehand push past v3 — "take it to the luxury, more clean and
+minimalist". Branch `design/luxe-v4` from `design/refined-v3`. Direction: **editorial
+luxury** (Aesop/Sakara register) — near-monochrome, porcelain carries ~80% of every
+screen, hairlines instead of fills, film grain instead of flat digital colour.
+
+**Tokens (same remap trick as v3 — one file re-skins all 18 sheets):**
+porcelain `#F8F5EF` / ecru `#EFEAE0` / espresso `#211913` / walnut `#3A2E24` /
+champagne `#C0A472` (accent slot; never text on light — bronze `#7E6537` is the
+text-safe accent) / stone `#CFC8B8`. Body font swapped Inter Tight → **Instrument
+Sans** (variable, OFL, self-hosted). One motion curve everywhere
+`cubic-bezier(.32,.72,0,1)`. Radius 18/26. A 3.5% SVG-turbulence **film grain**
+overlay (fixed, pointer-events:none) sits over the whole page.
+
+**Signature moves:**
+- **Hero**: mixed-case wall — "Bite into" cream Fraunces roman, "Balance" champagne
+  *italic* (nth-child swap via the `--script` alias). No uppercase anywhere big.
+- **Silent hem**: the hero wave marquee's stroke paints page-cream and its text is
+  hidden — the chocolate simply ends on the curve. The mid-page flavour ticker stays
+  but whispers: ecru band, espresso mono, tone-on-tone.
+- **Value strip**: cocoa-disc icons hidden; text-only mono caps in a hairline-ruled
+  six-cell row.
+- **Double-bezel media**: product-card photos sit in a machined tray (inset ring +
+  6px padding + concentric radii), never flat on the page.
+- **Cards**: serif names (Fraunces 380), mono tabular prices, ambient-only shadows,
+  no hover rotation. Deck sequence ecru → stone → espresso → champagne.
+- **Tone-on-tone bleed**: "Build Your Balance Box" giant word in stone on porcelain —
+  barely-there, reads as texture (decorative; the section heading below carries the
+  information).
+- **Button-in-button**: every `.pd-btn` arrow rides in its own translucent disc;
+  hover translates the disc, press scales the button .98.
+- Stamps: shout spinner hidden; baker stamp static, cream, mono, hairline.
+- Reviews: transparent hairline cards on the espresso band. Contact: walnut panels
+  `#3A2E24` / field `#2A2019`.
+
+**Deployed as a NEW unpublished theme: `prodani - luxe v4` (188025209142)** —
+`npm run push:v4` added. v3 (188023865654), v2 staging and live all untouched.
+Verified in Chrome end-to-end: hero, strip, collection, bleed, box builder, baker,
+ticker, deck, balance, reviews, IG, contact, footer — 0 Liquid errors, theme-check
+0 errors (same 20 Dawn-baseline warnings).
+
+  Preview: https://prodanimiami.com/?preview_theme_id=188025209142
+
+Note for the review with Dani: v4 intentionally departs from the correction note's
+locked body font (Inter Tight → Instrument Sans) — that's the one liberty taken and
+it's a one-line revert in tokens if she wants the letter of the note.
+
+One capture note: faint dash artifacts near the wave hems in automation screenshots
+are film-grain × JPEG compression, not page content (verified: no DOM elements in
+that band; grain is 3.5% opacity).
+
+---
+
 ## 2026-08-30 (evening) — v3 "refined" design direction on its own theme
 
 Dani sent a **brief correction note** (transcript in iMessage attachment; key points

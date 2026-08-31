@@ -21,9 +21,9 @@
 
 .pd-story__stamp{
   position:absolute; left:-26px; bottom:-22px; width:136px; height:136px; border-radius:50%;
-  display:grid; place-items:center; text-align:center; background:var(--pink); color:var(--cocoa);
-  font-weight:700; font-size:12px; line-height:1.5; text-transform:uppercase; letter-spacing:.06em;
-  box-shadow:0 14px 30px rgba(35,22,18,.2); transform:rotate(-9deg);
+  display:grid; place-items:center; text-align:center; background:var(--cream); color:var(--cocoa);
+  font-family:var(--mono); font-weight:500; font-size:10px; line-height:1.6; text-transform:uppercase; letter-spacing:.14em;
+  box-shadow:none; transform:none; border:1px solid rgba(33,25,19,.14);
 }
 .pd-story__stamp p{ margin:0; }
 @media (max-width:620px){
