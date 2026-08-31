@@ -1,0 +1,135 @@
+/* ============================================================
+   ProDani Miami — brand foundation
+   Ported from the React prototype (design/src/index.css). This is the
+   single source of truth for colour, type and motion in the theme; Dawn's
+   own settings are overridden from here rather than through the theme
+   editor, so the brand can't drift when someone touches a colour scheme.
+
+   Fonts: Damion and Fugaz One are Google/OFL. Konnect is ProDani's own
+   licensed face, already uploaded to this store's Files — so it is served
+   from the store's own CDN rather than committed here. No binaries are
+   redistributed through this repo, matching the policy in
+   design/scripts/build-fonts.mjs.
+   ============================================================ */
+
+/* Damion + Fugaz One, latin subset, self-hosted. Both are OFL, which permits
+   redistribution — so they ship with the theme instead of costing a round trip
+   to fonts.gstatic.com on every first paint. Shopify serves every theme asset
+   from one flat CDN directory, so a bare filename resolves from here. */
+@font-face {
+  font-family: 'Damion';
+  font-style: normal;
+  font-weight: 400;
+  font-display: swap;
+  src: url('damion-latin.woff2') format('woff2');
+}
+@font-face {
+  font-family: 'Fugaz One';
+  font-style: normal;
+  font-weight: 400;
+  font-display: swap;
+  src: url('fugaz-one-latin.woff2') format('woff2');
+}
+
+@font-face {
+  font-family: 'Konnect';
+  font-style: normal;
+  font-weight: 500;
+  font-display: swap;
+  src: url('https://cdn.shopify.com/s/files/1/0792/9475/9222/files/KonnectMedium.otf?v=1689183432') format('opentype');
+}
+@font-face {
+  font-family: 'Konnect';
+  font-style: normal;
+  font-weight: 600;
+  font-display: swap;
+  src: url('https://cdn.shopify.com/s/files/1/0792/9475/9222/files/KonnectSemiBold.otf?v=1689183432') format('opentype');
+}
+@font-face {
+  font-family: 'Konnect';
+  font-style: normal;
+  font-weight: 700;
+  font-display: swap;
+  src: url('https://cdn.shopify.com/s/files/1/0792/9475/9222/files/KonnectBold.otf?v=1689183432') format('opentype');
+}
+@font-face {
+  font-family: 'Konnect';
+  font-style: normal;
+  font-weight: 800;
+  font-display: swap;
+  src: url('https://cdn.shopify.com/s/files/1/0792/9475/9222/files/KonnectExtraBold.otf?v=1689100216') format('opentype');
+}
+
+:root {
+  /* ground */
+  --cream:      #FBF5E8;   /* page */
+  --butter:     #FFFBE5;   /* cards, raised surfaces */
+  --cocoa:      #48312A;   /* brand brown — statement bands */
+  --cocoa-deep: #3A2721;
+  --cocoa-soft: #5C4239;
+
+  /* joy */
+  --pink:       #FDC3D4;
+  --pink-deep:  #F79CBB;
+  --berry:      #C4587E;   /* readable pink for small text on cream */
+  --leaf:       #7FA86B;
+
+  /* ink */
+  --ink:          #48312A;              /* text on light */
+  --ink-soft:     rgba(72, 49, 42, .68);
+  --ink-faint:    rgba(72, 49, 42, .42);
+  --on-dark:      #FBF5E8;              /* text on cocoa */
+  --on-dark-soft: rgba(251, 245, 232, .72);
+  --line:         rgba(72, 49, 42, .14);
+  --line-dark:    rgba(251, 245, 232, .18);
+
+  /* type */
+  --display: 'Fugaz One', 'Trebuchet MS', sans-serif;
+  --script:  'Damion', 'Brush Script MT', cursive;
+  --sans:    'Konnect', -apple-system, 'Segoe UI', sans-serif;
+
+  /* motion — springy, not cinematic */
+  --bounce: cubic-bezier(.34, 1.56, .64, 1);
+  --ease:   cubic-bezier(.22, 1, .36, 1);
+
+  --pad: clamp(20px, 4vw, 56px);
+  --r:   22px;   /* the house radius — soft everywhere */
+}
+
+/* ---- shared primitives ----
+   These must live here, not in a per-section sheet: the hero loaded only
+   prodani-hero.css, so .pd-wrap resolved to nothing and its content sat flush
+   against the viewport edge. */
+.pd-wrap{ width:100%; margin:0 auto; padding-inline:var(--pad); max-width:1580px; }
+.pd-section{ display:block; }
+.pd-rte p{ color:var(--ink-soft); font-size:16.5px; line-height:1.7; margin:0 0 18px; }
+.pd-rte p:last-child{ margin-bottom:0; }
+
+/* Shared section-heading primitives. These MUST live here, not in a per-section
+   sheet — the stat deck loaded only prodani-stack.css, so its script heading fell
+   back to a plain sans and the squiggle lost its pink. Same class of bug that put
+   the hero content flush against the viewport edge. */
+.pd-sec-head{
+  display:flex; align-items:flex-end; justify-content:space-between; gap:24px;
+  flex-wrap:wrap; margin-bottom:clamp(30px,4vw,52px);
+}
+.pd-sec-title{ margin:0; color:var(--cocoa); font-family:var(--script); font-weight:400;
+  font-size:clamp(38.4px,5.4vw,70.4px); line-height:1.05; }
+.pd-squiggle{ display:block; width:100%; height:16px; margin:10px 0 0; color:var(--pink-deep); }
+.pd-eyebrow{ font-size:12px; font-weight:700; letter-spacing:.14em; text-transform:uppercase;
+  color:var(--ink-faint); }
+.pd-lede{ color:var(--ink-soft); font-size:16.5px; line-height:1.7; margin:0 0 18px; }
+.pd-lede--intro{ color:var(--cocoa); font-size:clamp(18.4px,1.7vw,22.4px); font-weight:600; line-height:1.5; }
+
+/* Dawn paints <body> from its own colour scheme, which left every page white
+   outside the content column.
+
+   This rule alone does NOT fix that, and it is worth saying why: Dawn renders
+   <body class="gradient"> and paints it with `.gradient{background:var(--gradient-background)}`.
+   A class selector outranks a bare `body`, so this loses however late it loads.
+   The actual fix is in config/settings_data.json, where scheme-1's background is
+   set to cream — that feeds --gradient-background and every other Dawn surface
+   from the same value.
+
+   This stays as the floor for any page that renders without the gradient class. */
+body{ background-color:var(--cream); }
