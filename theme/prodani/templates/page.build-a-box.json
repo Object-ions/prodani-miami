@@ -15,11 +15,11 @@
         "eyebrow": "Build Your Box",
         "heading": "Build Your Balance Box",
         "subheading": "Choose your flavors. Own your indulgence.",
-        "sizes": "4,6,12",
-        "prices": "36,49,89",
+        "sizes": "6,12,18",
+        "prices": "49,89,120",
         "default_size_index": 2,
-        "popular_count": 6,
-        "value_count": 12,
+        "popular_count": 12,
+        "value_count": 18,
         "upsell_enabled": true
       }
     }

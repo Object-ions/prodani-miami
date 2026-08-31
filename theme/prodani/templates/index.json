@@ -26,7 +26,7 @@
         "badge_text": "dessert you can feel good about ✦ ",
         "badge_speed": 26,
         "bundled_photo": "prodani-dani-2",
-        "ribbon_items": "carrot cake, banana bread, chocolate fudge, dubai dream, hazelnut",
+        "ribbon_items": "chocolate fudge, vanilla bean, strawberry, biscoff, matcha, salted caramel",
         "ribbon_speed": 38,
         "photo_focus": "50% 12%"
       }
@@ -63,10 +63,11 @@
         "c3": {
           "type": "card",
           "settings": {
-            "figure": "27",
-            "title": "Recipes in rotation",
-            "description": "Personal cakes, family cakes and muffins, including a full vegan line.",
-            "cta_label": "Browse all 27",
+            "figure": "6",
+            "title": "Core flavors, built to mix",
+            "description": "One hero product — the Personal Protein Cake — in a focused flavor lineup. Pick a box of 6, 12 or 18 and mix them however you like.",
+            "cta_label": "Build your box",
+            "cta_link": "/#box",
             "product": "vegan-personal-chocolate-banana-cake-copy",
             "focus": "50% 88%",
             "color": "#48312A",
@@ -154,12 +155,12 @@
         "p2",
         "p3",
         "p4",
-        "r1",
-        "r2"
+        "r2",
+        "r1"
       ],
       "settings": {
         "heading": "The prodani collection",
-        "eyebrow": "baked to order",
+        "eyebrow": "mix & match",
         "anchor": "shop",
         "collection": "all-products",
         "cta_label": "View everything",
@@ -183,8 +184,8 @@
         "b1": {
           "type": "pillar",
           "settings": {
-            "label": "Batch",
-            "text": "Small batches, never mass-produced. Every cake is baked to order in Miami."
+            "label": "Ingredients",
+            "text": "Minimal, quality ingredients. If it doesn't earn its place, it's not in the cake."
           }
         },
         "b2": {
@@ -452,11 +453,11 @@
         "eyebrow": "Build Your Box",
         "heading": "Build Your Balance Box",
         "subheading": "Choose your flavors. Own your indulgence.",
-        "sizes": "4,6,12",
-        "prices": "36,49,89",
+        "sizes": "6,12,18",
+        "prices": "49,89,120",
         "default_size_index": 2,
-        "popular_count": 6,
-        "value_count": 12,
+        "popular_count": 12,
+        "value_count": 18,
         "upsell_enabled": true
       }
     },

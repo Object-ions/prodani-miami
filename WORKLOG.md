@@ -4,6 +4,61 @@ Newest entries first. One entry per working session — what was done, what was 
 
 ---
 
+## 2026-08-31 (later) — Dani's pivot: hero-product model, phase 1 of 4
+
+**New direction from Dani (email, 2026-08-31).** ProDani is simplifying: away from
+"27 recipes · baked to order", toward one hero product — **Personal Protein Cakes**,
+5–6 core flavors max, ~20g protein, no added sugar, gluten free, minimal ingredients.
+Box tiers become **6 / 12 (Most Popular) / 18 (Best Value)**, mix-and-match, with
+curated boxes, one-time vs subscribe & save, and easy skip/pause/cancel. Long-term:
+DTC + Build Your Box → Subscriptions → Cafés/Gyms → Retail, plus a wholesale section
+and a distributor/affiliate section. Visual references: David Protein (strongest —
+clean, premium, product-forward, their lower product cards specifically) and
+Legendary Foods (instant benefit clarity, still indulgent). The site should read as a
+scalable packaged food brand, not a local/custom bakery. Flavors and pricing are NOT
+final — build the structure now, finalize numbers later.
+
+**Plan agreed with Moses: 4 phases, one branch each.**
+  1. Hero-product model reset (this session, `feat/v2-hero-product-model`) ✓
+  2. Box builder rebuild — curated boxes, subscribe-in-flow (`feat/v2-box-builder`)
+  3. Wholesale + distributor lead-capture pages (`feat/v2-wholesale-affiliate`)
+  4. Visual reskin to the David Protein bar + copy pass (`feat/v2-visual-direction`)
+Structure first, reskin after. Wholesale/affiliate ship as lightweight inquiry pages
+now (no commission logic or B2B pricing).
+
+**Phase 1 done, on staging, 13/13 + 3/3 checks pass.**
+  - Box tiers 4/6/12 @ $36/49/89 → **6/12/18 @ $49/89/120** (prices are placeholders
+    extrapolated from the launch price points — still gated on T1). "Most Popular"
+    moved to 12, "Best Value" to 18. Changed in section schema defaults,
+    `index.json`, and `page.build-a-box.json`.
+  - Box-builder upsell JS un-hard-coded (was 4→6→12): now nudges to the next size
+    up in whatever tier ladder is rendered.
+  - Homepage deck card 3: "27 / Recipes in rotation / Browse all 27" → "6 / Core
+    flavors, built to mix / Build your box" linking to `/#box` (new anchor setting
+    on the box-builder section).
+  - "N recipes · baked to order" eyebrow pattern removed from `prodani-shop` and
+    `prodani-collection` (count dropped, eyebrow now standalone; default
+    "mix & match"); `collection.json` updated.
+  - "Small batches, never mass-produced / baked to order" pillar → "Ingredients —
+    Minimal, quality ingredients" (homepage + about-us). Personal-cakes row now
+    renders before family cakes. Shout ribbon = the 6 placeholder core flavors.
+
+**Found while verifying: `/pages/build-a-box` is a 404** — the theme ships
+`page.build-a-box.json`, but the Page was never created in Shopify admin, and the
+themes-only token can't create it. Filed as **T16** below. Card CTA points at
+`/#box` until it exists.
+
+**Verification note:** the cookie-jar staging fetch needs `curl -L` — a fresh jar's
+second request still 302s, and without `-L` you get a 0-byte file and false FAILs.
+
+**Untracked `muffin_component/`** (two PNGs: "Chocolate chips", "dani muffin") —
+possibly new flavor photography; not filed anywhere yet, awaiting Moses.
+
+**Next:** phase 2 — box-builder rebuild (curated boxes, subscribe & save inside the
+box flow, frequency options, skip/pause/cancel messaging). Est. one full session.
+
+---
+
 ## 2026-08-31 — Theme color regression fix, branch cleanup, UI polish pass
 
 **Colour regression, root cause + fix.** Local `theme dev` was rendering the v5 NOIR
@@ -1230,8 +1285,9 @@ scripts saved. Paint is still 20% faster, which is the part a visitor feels.
 
 ## Where this stands
 
-**As of 2026-08-30 — the v2 upgrade (Dani's brief) is built and QA'd on STAGING.
-Nothing has been deployed to production.**
+**As of 2026-08-31 — Dani has pivoted the brand to one hero product (Personal
+Protein Cakes; see the 2026-08-31 "later" entry). Phase 1 of 4 of that pivot is on
+STAGING. Nothing has been deployed to production.**
 
 - **Live (untouched):** `Prodani - v.1.0.0` (theme 187797995830) on prodanimiami.com.
   It is still the launch build — none of the v2 work is on it.
@@ -1279,6 +1335,14 @@ Full plain-language sheet: `PRODANI_INPUT_REQUEST.md` (gitignored, private).
   13. **T14 Header dropdown** — Dani must add a "Shop" menu with the 4 category child links
       in admin → Navigation (theme already renders submenus).
   14. **T15 Instagram** — connect IG to a free Behold.so feed; guide in `INSTAGRAM_FEED_SETUP.md`.
+  15. **T16 Create the "Build a Box" page in admin** — theme ships
+      `page.build-a-box.json`, but no Page with handle `build-a-box` exists, so
+      `/pages/build-a-box` 404s (themes-only token can't create pages). Until then
+      all links target `/#box` on the homepage.
+  16. **T17 Final flavor lineup** — Dani's pivot fixes 5–6 core flavors max, but the
+      actual flavors are still in development. Current six on-site are placeholders.
+      Supersedes the flavor list side of T3; T3's "flavors as real products with
+      inventory + per-SKU macros" is now the critical path for the whole shopping flow.
 
 ### Open TODOs on our side
 

@@ -61,10 +61,22 @@
 
   function upsell() {
     if (!elUpsell) return;
-    var next = null, msg = '';
-    if (state.size === 4) { next = 6; msg = 'Add 2 more and save — switch to a 6-cake box.'; }
-    else if (state.size === 6) { next = 12; msg = 'Upgrade to 12 cakes for the best value.'; }
-    var target = next && sizeBtns.filter(function (b) { return parseInt(b.getAttribute('data-size'), 10) === next; })[0];
+    // Data-driven: nudge toward the next size up in the rendered tier ladder
+    // (6 -> 12 "Most Popular" -> 18 "Best Value"), whatever the tiers are set to.
+    var target = null, msg = '';
+    sizeBtns.forEach(function (b) {
+      var s = parseInt(b.getAttribute('data-size'), 10) || 0;
+      if (s > state.size && (!target || s < parseInt(target.getAttribute('data-size'), 10))) target = b;
+    });
+    if (target && state.size > 0) {
+      var nextSize = parseInt(target.getAttribute('data-size'), 10);
+      var isLast = sizeBtns.every(function (b) { return (parseInt(b.getAttribute('data-size'), 10) || 0) <= nextSize; });
+      msg = isLast
+        ? 'Upgrade to ' + nextSize + ' cakes for the best value.'
+        : 'Add ' + (nextSize - state.size) + ' more and save — switch to a ' + nextSize + '-cake box.';
+    } else {
+      target = null;
+    }
     if (target) {
       elUpsell.hidden = false;
       elUpsell.innerHTML = '<span></span><button type="button">Switch</button>';

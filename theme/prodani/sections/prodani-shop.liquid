@@ -21,7 +21,7 @@
         {% render 'prodani-squiggle' %}
       </div>
       <span class="pd-eyebrow">
-        {{ source.products_count }}&nbsp;recipes&nbsp;·&nbsp;{{ section.settings.eyebrow | escape }}
+        {{ section.settings.eyebrow | escape }}
       </span>
     </div>
 
@@ -87,7 +87,7 @@
       "options": [{ "value": "h1", "label": "h1" }, { "value": "h2", "label": "h2" }],
       "default": "h2"
     },
-    { "type": "text", "id": "eyebrow", "label": "Eyebrow suffix", "default": "baked to order" },
+    { "type": "text", "id": "eyebrow", "label": "Eyebrow", "default": "mix & match" },
     { "type": "text", "id": "anchor", "label": "Anchor id", "default": "shop" },
     { "type": "collection", "id": "collection", "label": "Source collection" },
     { "type": "range", "id": "limit", "label": "Products to show", "min": 4, "max": 40, "step": 4, "default": 24 },

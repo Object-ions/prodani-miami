@@ -11,12 +11,14 @@
   cart-transform Function, "Add box" posts each flavor as a line item tagged to one box.
   Until then it demonstrates the flow and explains what's needed (see prodani-box-builder.js).
 
-  Prices default to brief §06 ($36 / $49 / $89) but are editable — and are subject to the
-  pricing check in T1 before anything goes live.
+  Box tiers follow Dani's 2026-08-31 direction: 6 / 12 (Most Popular) / 18 (Best Value),
+  mix-and-match flavors. Prices are placeholders extrapolated from the launch price points
+  and are editable — subject to the pricing check in T1 before anything goes live.
 {%- endcomment -%}
 {{ 'prodani-box-builder.css' | asset_url | stylesheet_tag }}
 
-<section class="pd-box pd-section" data-pd-box aria-labelledby="pd-box-title">
+<section class="pd-box pd-section" data-pd-box aria-labelledby="pd-box-title"
+         {% if section.settings.anchor != blank %}id="{{ section.settings.anchor }}"{% endif %}>
   <div class="pd-wrap">
     <header class="pd-sec-head">
       <div>
@@ -125,14 +127,15 @@
 {
   "name": "Box builder",
   "settings": [
+    { "type": "text", "id": "anchor", "label": "Anchor id", "info": "Lets links target this section, e.g. /#box.", "default": "box" },
     { "type": "text", "id": "eyebrow", "label": "Eyebrow", "default": "Build Your Box" },
     { "type": "text", "id": "heading", "label": "Heading", "default": "Build Your Balance Box" },
     { "type": "text", "id": "subheading", "label": "Subheading", "default": "Choose your flavors. Own your indulgence." },
-    { "type": "text", "id": "sizes", "label": "Box sizes (comma-separated cake counts)", "default": "4,6,12" },
-    { "type": "text", "id": "prices", "label": "Prices (comma-separated, same order)", "info": "Subject to the pricing check (T1) before launch.", "default": "36,49,89" },
+    { "type": "text", "id": "sizes", "label": "Box sizes (comma-separated cake counts)", "default": "6,12,18" },
+    { "type": "text", "id": "prices", "label": "Prices (comma-separated, same order)", "info": "Placeholders extrapolated from the launch price points — subject to the pricing check (T1) before launch.", "default": "49,89,120" },
     { "type": "range", "id": "default_size_index", "label": "Default size (1st/2nd/3rd)", "min": 1, "max": 3, "step": 1, "default": 2 },
-    { "type": "number", "id": "popular_count", "label": "\"Most Popular\" cake count", "default": 6 },
-    { "type": "number", "id": "value_count", "label": "\"Best Value\" cake count", "default": 12 },
+    { "type": "number", "id": "popular_count", "label": "\"Most Popular\" cake count", "default": 12 },
+    { "type": "number", "id": "value_count", "label": "\"Best Value\" cake count", "default": 18 },
     { "type": "checkbox", "id": "upsell_enabled", "label": "Show upsell nudges", "default": true }
   ],
   "blocks": [
