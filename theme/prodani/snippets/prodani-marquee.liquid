@@ -9,7 +9,7 @@
 {%- endcomment -%}
 
 {%- assign uid = 'mq-' | append: section.id | append: modifier -%}
-{%- assign sep = '  ✦  ' -%}
+{%- assign sep = '  ·  ' -%}
 {%- assign words = items | split: ',' -%}
 {%- comment -%} Once only. Emitting the list twice made the two textPaths overlap. {%- endcomment -%}
 {%- capture text -%}
@@ -37,8 +37,8 @@
           transform="translate(0 -12)" fill="none"
           stroke="var(--pink)" stroke-width="78" stroke-linecap="butt"/>
 
-    <text fill="var(--cocoa)" font-family="Konnect, sans-serif" font-weight="700"
-          font-size="44" letter-spacing="0.01em">
+    <text fill="var(--cocoa)" font-family="'JetBrains Mono', monospace" font-weight="500"
+          font-size="34" letter-spacing="0.08em">
       <textPath data-pd-track href="#{{ uid }}" startOffset="0%">{{ text }}</textPath>
       <textPath data-pd-track href="#{{ uid }}" startOffset="-100%">{{ text }}</textPath>
     </text>

@@ -13,7 +13,7 @@
 /* Tabs render as links now (real category collections) — keep the pill look + active state. */
 a.pd-filter{ text-decoration:none; display:inline-flex; align-items:center; }
 .pd-filter[aria-current="page"]{ background:var(--cocoa); color:var(--cream); box-shadow:none; }
-.pd-filter:focus-visible{ outline:3px solid var(--pink-deep); outline-offset:2px; }
+.pd-filter:focus-visible{ outline:3px solid var(--berry); outline-offset:2px; }
 .pd-filter sup{ font-size:10.5px; opacity:.6; margin-left:5px; }
 
 .pd-count{ color:var(--ink-faint); font-size:13px; font-weight:600; margin:0 0 18px; }
@@ -26,11 +26,11 @@ a.pd-filter{ text-decoration:none; display:inline-flex; align-items:center; }
 .pd-card{
   background:var(--butter); border-radius:var(--r); padding:13px 13px 18px;
   display:flex; flex-direction:column; position:relative; text-decoration:none; color:inherit;
-  box-shadow:0 2px 0 rgba(72,49,42,.07);
+  box-shadow:0 2px 0 rgba(44,31,24,.07);
   transition:transform .5s var(--bounce), box-shadow .4s ease;
 }
 .pd-card[hidden]{ display:none; }
-.pd-card:hover{ transform:translateY(-7px) rotate(-.7deg); box-shadow:0 20px 38px rgba(72,49,42,.16); }
+.pd-card:hover{ transform:translateY(-7px) rotate(-.7deg); box-shadow:0 20px 38px rgba(44,31,24,.16); }
 .pd-card__media{
   position:relative; aspect-ratio:1/1; overflow:hidden;
   border-radius:calc(var(--r) - 8px); margin-bottom:15px;

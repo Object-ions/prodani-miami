@@ -22,7 +22,7 @@
 }
 .product__title h1,
 .product__title{
-  font-family:var(--sans); font-weight:800; letter-spacing:-.02em; line-height:1.05;
+  font-family:var(--sans); font-weight:700; letter-spacing:-.02em; line-height:1.05;
   color:var(--cocoa); font-size:clamp(30px,3.4vw,48px);
 }
 .product .price,
@@ -50,7 +50,7 @@
 }
 /* Focus must stay visible: keyboard users navigate variants with arrow keys. */
 .product-form__input input[type='radio']:focus-visible + label{
-  outline:3px solid var(--pink-deep); outline-offset:2px;
+  outline:3px solid var(--berry); outline-offset:2px;
 }
 
 /* ---- quantity ---- */
@@ -70,7 +70,7 @@
   transition:transform .4s var(--bounce), background .3s;
 }
 .product-form__submit:hover:not([disabled]){ transform:translateY(-2px); background:var(--cocoa-deep); }
-.product-form__submit[disabled]{ background:var(--cocoa-soft); color:rgba(251,245,232,.7); }
+.product-form__submit[disabled]{ background:var(--cocoa-soft); color:rgba(244,239,230,.7); }
 /* Shop Pay's own brand colour is left alone; only its shape is matched. */
 .shopify-payment-button__button--unbranded,
 .shopify-payment-button__button{ border-radius:999px !important; }

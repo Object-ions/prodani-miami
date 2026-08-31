@@ -22,10 +22,10 @@
   transition:transform .5s var(--ease); }
 .pd-ig__item:hover .pd-ig__img{ transform:scale(1.06); }
 .pd-ig__glyph{ position:absolute; inset:0; display:flex; align-items:center; justify-content:center;
-  background:rgba(72,49,42,.32); color:var(--cream); opacity:0; transition:opacity .3s var(--ease); }
+  background:rgba(44,31,24,.32); color:var(--cream); opacity:0; transition:opacity .3s var(--ease); }
 .pd-ig__glyph svg{ width:30px; height:30px; }
 .pd-ig__item:hover .pd-ig__glyph{ opacity:1; }
-.pd-ig__item:focus-visible{ outline:3px solid var(--pink-deep); outline-offset:2px; }
+.pd-ig__item:focus-visible{ outline:3px solid var(--berry); outline-offset:2px; }
 
 @media (prefers-reduced-motion:reduce){
   .pd-ig__img, .pd-ig__glyph, .pd-ig__follow{ transition:none; }
