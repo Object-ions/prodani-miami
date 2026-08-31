@@ -35,6 +35,18 @@
       var cards = stack.querySelectorAll('[data-pd-card]');
       if (!cards.length) return;
 
+      // The sticky title's own containing block is the whole section (head +
+      // slots + the hold spacer), so on its own it stays pinned long after
+      // the last card has released and scrolled away underneath it — title
+      // frozen at the top while the deck it's labelling is long gone below.
+      // Tying it to the last slot's OWN release (which the browser already
+      // computes correctly, per its constant sticky `top`) makes it move in
+      // lockstep with the deck instead of running on an independent, longer
+      // timer.
+      var head = stack.querySelector('.pd-stack__head');
+      var slots = stack.querySelectorAll('.pd-stack__slot');
+      var lastSlot = slots[slots.length - 1];
+
       var update = function () {
         var top = stack.getBoundingClientRect().top;
         var total = stack.offsetHeight - window.innerHeight;
@@ -55,6 +67,12 @@
             media.style.transform = 'scale(' + (1.25 - 0.25 * enter) + ')';
           }
         });
+
+        if (head && lastSlot) {
+          var stuckAt = parseFloat(getComputedStyle(lastSlot).top) || 0;
+          var released = stuckAt - lastSlot.getBoundingClientRect().top;
+          head.style.transform = released > 0 ? 'translateY(' + -released + 'px)' : '';
+        }
       };
 
       update();

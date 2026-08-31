@@ -71,14 +71,22 @@
               data-soldout="{% if block.settings.sold_out %}true{% else %}false{% endif %}"
               {{ block.shopify_attributes }}
             >
-              <div class="pd-box__flavor-media" style="--chip:{{ block.settings.color }}">
-                {%- if block.settings.image != blank -%}
+              {%- comment -%}
+                Media only renders with a real photo now — an empty aspect-ratio:1 box
+                (every placeholder flavor has no image yet) read as dead space and made
+                cards uneven height next to the one that did have content (the sold-out
+                swatch). Sold-out moves to a compact inline tag instead of a full block.
+              {%- endcomment -%}
+              {%- if block.settings.image != blank -%}
+                <div class="pd-box__flavor-media">
                   {{ block.settings.image | image_url: width: 320 | image_tag: loading: 'lazy', widths: '160,320', alt: block.settings.name | escape }}
-                {%- endif -%}
-                {%- if block.settings.sold_out -%}<span class="pd-box__soldout">Sold out</span>{%- endif -%}
-              </div>
+                </div>
+              {%- endif -%}
               <div class="pd-box__flavor-info">
-                <span class="pd-box__flavor-name">{{ block.settings.name }}</span>
+                <span class="pd-box__flavor-name">
+                  {{ block.settings.name }}
+                  {%- if block.settings.sold_out -%}<span class="pd-box__soldout-tag">Sold out</span>{%- endif -%}
+                </span>
                 {%- if block.settings.macro != blank -%}<span class="pd-box__flavor-macro">{{ block.settings.macro }}</span>{%- endif -%}
               </div>
               <div class="pd-box__stepper" data-stepper>

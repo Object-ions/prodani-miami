@@ -2,6 +2,15 @@
 .pd-shop{ background:var(--cream); color:var(--ink); padding-block:clamp(56px,7vw,110px); }
 
 .pd-filters{ display:flex; flex-wrap:wrap; gap:10px; margin:30px 0 26px; }
+@media (max-width:749px){
+  /* All 5 category pills wrapped to two rows and read as unfinished. One
+     scrollable row is the standard mobile-filter pattern and keeps every
+     pill reachable without eating a second line of vertical space. */
+  .pd-filters{ flex-wrap:nowrap; overflow-x:auto; scrollbar-width:none; margin-inline:calc(-1 * var(--pad));
+    padding-inline:var(--pad); padding-bottom:2px; }
+  .pd-filters::-webkit-scrollbar{ display:none; }
+  .pd-filter{ flex:none; white-space:nowrap; }
+}
 .pd-filter{
   font:inherit; font-weight:700; font-size:15px; padding:12px 22px; border-radius:999px;
   background:transparent; color:var(--ink-soft); border:0; cursor:pointer;
@@ -21,7 +30,19 @@ a.pd-filter{ text-decoration:none; display:inline-flex; align-items:center; }
 .pd-grid{ display:grid; grid-template-columns:repeat(4,1fr); gap:clamp(12px,1.4vw,20px); }
 @media (max-width:1180px){ .pd-grid{ grid-template-columns:repeat(3,1fr); } }
 @media (max-width:820px){  .pd-grid{ grid-template-columns:repeat(2,1fr); } }
-@media (max-width:440px){  .pd-grid{ grid-template-columns:1fr; } }
+@media (max-width:749px){
+  /* Two columns stay put all the way to phone width now — a 1-column list past
+     440px meant one endless vertical scroll per category. Instead: two full rows
+     (4 cards) up front, and anything past that becomes a horizontal carousel
+     rather than more vertical stacking. */
+  .pd-grid{
+    grid-template-columns:none; grid-auto-flow:column; grid-template-rows:repeat(2,1fr);
+    grid-auto-columns:calc(50% - 6px); overflow-x:auto; scroll-snap-type:x mandatory;
+    scrollbar-width:none; padding-bottom:2px;
+  }
+  .pd-grid::-webkit-scrollbar{ display:none; }
+  .pd-card{ scroll-snap-align:start; }
+}
 
 .pd-card{
   background:var(--butter); border-radius:var(--r); padding:13px 13px 18px;

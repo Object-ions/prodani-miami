@@ -33,11 +33,12 @@
   display:flex; flex-direction:column; gap:10px; transition:border-color .25s, box-shadow .25s; }
 .pd-box__flavor.is-active{ border-color:var(--cocoa); box-shadow:0 8px 22px rgba(72,49,42,.10); }
 .pd-box__flavor.is-soldout{ opacity:.55; }
-.pd-box__flavor-media{ position:relative; aspect-ratio:1; border-radius:calc(var(--r) - 6px); overflow:hidden;
-  background:var(--chip,var(--pink)); }
+.pd-box__flavor-media{ position:relative; width:100%; aspect-ratio:1; border-radius:calc(var(--r) - 6px); overflow:hidden;
+  background:var(--butter); margin-bottom:2px; }
 .pd-box__flavor-media img{ width:100%; height:100%; object-fit:cover; display:block; }
-.pd-box__soldout{ position:absolute; inset:auto 0 0 0; background:rgba(58,39,33,.8); color:var(--cream);
-  font-size:11px; font-weight:700; text-transform:uppercase; letter-spacing:.06em; text-align:center; padding:4px; }
+.pd-box__soldout-tag{ display:inline-block; margin-left:7px; padding:2px 8px; border-radius:999px;
+  background:var(--cocoa-soft); color:var(--cream); font-size:9.5px; font-weight:700; text-transform:uppercase;
+  letter-spacing:.05em; vertical-align:1px; }
 .pd-box__flavor-name{ display:block; font-family:var(--sans); font-weight:700; color:var(--cocoa); font-size:14px; }
 .pd-box__flavor-macro{ display:block; font-size:11.5px; color:var(--ink-faint); font-weight:600; margin-top:2px; }
 
@@ -79,6 +80,17 @@
   .pd-box__cta{ position:sticky; bottom:0; z-index:20; background:var(--pink); padding:12px 0
     calc(12px + env(safe-area-inset-bottom)); border-top:1px solid var(--line); margin-inline:calc(-1 * var(--pad));
     padding-inline:var(--pad); }
+
+  /* Two equal rows of two, then a horizontal carousel for anything past the first
+     four — matches the collection grid's mobile treatment (prodani-shop.css) so a
+     full 6-flavor set doesn't turn into a wall of scrolling. */
+  .pd-box__flavors{
+    grid-template-columns:none; grid-auto-flow:column; grid-template-rows:repeat(2,1fr);
+    grid-auto-columns:calc(50% - 7px); overflow-x:auto; scroll-snap-type:x mandatory;
+    scrollbar-width:none; padding-bottom:2px;
+  }
+  .pd-box__flavors::-webkit-scrollbar{ display:none; }
+  .pd-box__flavor{ scroll-snap-align:start; }
 }
 @media (prefers-reduced-motion:reduce){
   .pd-box__size, .pd-box__step-btn, .pd-box__add, .pd-box__bar span{ transition:none; }

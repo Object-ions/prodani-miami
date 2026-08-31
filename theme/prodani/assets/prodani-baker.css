@@ -1,6 +1,6 @@
 /* Meet Your Baker — ported from the prototype's .story rules. Prefixed pd- so
    nothing here can collide with Dawn's own class names. */
-.pd-story{ background:var(--cream); color:var(--ink); padding-block:clamp(44px,5vw,78px); }
+.pd-story{ background:var(--cream); color:var(--ink); padding-block:clamp(44px,5vw,78px); margin-top:100px; }
 
 .pd-story__in{ display:grid; grid-template-columns:repeat(12,1fr); gap:clamp(24px,4vw,54px); align-items:start; }
 .pd-story__text{ grid-column:1 / span 6; }

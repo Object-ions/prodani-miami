@@ -4,6 +4,99 @@ Newest entries first. One entry per working session — what was done, what was 
 
 ---
 
+## 2026-08-31 — Theme color regression fix, branch cleanup, UI polish pass
+
+**Colour regression, root cause + fix.** Local `theme dev` was rendering the v5 NOIR
+palette (dark ink ground, acid citrus) instead of the real cream/pink/cocoa brand.
+Root cause: `theme/prodani/assets/prodani-tokens.css` — the single source of truth
+for every colour in the theme — was gitignored by an over-broad `*TOKEN*` credential
+pattern (case-insensitive match on "tokens"), so it had **never actually been
+committed to `main`**. A stale copy from a different session's noir work was sitting
+on disk instead. Fixed by adding a precise `.gitignore` negation and pulling the
+correct file fresh from the live staging theme (187797799222), confirmed against
+its real rendered colours. Committed separately as `07ed41c` earlier today.
+
+**Local branch cleanup** (per explicit request): deleted `design/refined-v3`,
+`design/luxe-v4`, `design/noir-v5`, `design/cabana-v6` locally (kept on `origin`,
+recoverable via `git fetch`), and `feat/brief-v2-upgrades` / `feat/category-nav` /
+`feat/hero-wave-badges` (confirmed fully merged or superseded by `main` first — the
+first of those had 6 commits with no remote backup, checked ancestry before
+deleting). `main` is now the only local branch. Also discarded uncommitted
+`design/` prototype work (the Origin/muffin-scene component from an earlier
+session) at the user's explicit call — it was never part of the real site; will be
+rebuilt once the design direction is settled.
+
+**Local dev workflow clarified for the client:** `design/` (Vite/React) and
+`theme/` (the actual Shopify theme) are two disconnected apps — `design/` is a
+one-off concept prototype missing every real feature (box builder, Instagram feed,
+contact form, real cart) and was never updated after those got built into `theme/`.
+`cd theme && npm run dev` (Shopify CLI) is the only way to see/edit the real site
+locally; it spins up a throwaway preview theme seeded from local files, staging is
+never touched by it.
+
+**UI polish pass**, driven by a live screenshot review of `theme dev` at
+`127.0.0.1:9292`, verified against real rendered geometry (Playwright + devtools),
+not just visually:
+
+- **Build Your Balance Box**: flavor cards with no photo were reserving a full
+  empty aspect-ratio:1 square (only the sold-out card had real content), which
+  both wasted space and made same-row cards uneven height. Media block now only
+  renders with a real image; "Sold out" moved to a compact inline tag. Mobile grid
+  is now a genuine 2-row-then-horizontal-carousel (CSS `grid-auto-flow:column`, no
+  JS) instead of an unbounded 1-column list.
+- **"What makes prodani different" stat deck**: three real, verified bugs, not one —
+  (1) top of first card was cramped against the sticky header (a `-3vh` pull built
+  into every card's inline offset outran the buffer meant to prevent it — removed
+  the pull entirely); (2) peek labels for cards 2–3 were clipped mid-line (measured
+  the actual peek height in devtools — 69.8px — and set the stagger to 72px, up
+  from a too-tight 36px after an intermediate overcorrection); (3) the finished
+  deck released and scrolled away within a beat of assembling instead of holding —
+  root cause was that **the last card's slot has never been able to use
+  `position:sticky`, even before today's changes** (verified against the
+  untouched baseline: every other slot sticks correctly, only the last doesn't —
+  a sticky element with nothing after it in its containing block gets zero stick
+  range). Fixed with a trailing spacer so it's a middle child again; hit a second
+  bug along the way where Dawn's own `base.css` has a global `div:empty{display:
+  none}` rule that was silently collapsing the (deliberately empty) spacer to 0
+  height. Also: the section heading is *also* sticky across the whole section, so
+  once the last card released it stayed pinned at the top on its own, separately
+  from the deck it was labelling ("looks like a mistake" per the client). Fixed in
+  JS — the heading now tracks the last card's live release amount every scroll
+  tick and moves in lockstep with it (verified pixel-for-pixel through the release
+  window). Bottom padding and hold distance tuned down after an initial
+  overcorrection.
+- **Collection/shop grid**: mobile filter pills wrapped to 2 rows — now one
+  scrollable row. Product grid dropped to 1 column below 440px — now stays at 2
+  columns down to phone width, with the same 2-row-then-carousel treatment as the
+  box builder for anything past the first 4 items per category.
+- **Meet your baker / chocolate band photo**: `max-width` with no margin left the
+  mobile photo flush-left instead of centred under the (centred) copy above it —
+  added `margin-inline:auto`.
+- **Footer newsletter card image**: `object-position:50% 80%` was copy-pasted from
+  a different card style (tall square, product low in frame); this card's photo is
+  wide/landscape, so in a short 150px box that pushed the actual product almost
+  entirely out of frame. Centred.
+- **"70+ reviews" → "132" reviews**, everywhere: announcement bar claims (section
+  default + live config), the stat-deck card, the reviews section heading, the PDP
+  "read all" link. Also swapped adjacent "five-star" → "verified" where it
+  appeared next to the count — only 122 of 132 are actually five-star (10 are
+  four-star), a second small inaccuracy sitting next to the one flagged.
+- **"Where sweet meets balance" section**: added 100px top margin per client
+  request; reduced the stack's hold distance from 55vh to 35vh at the same time.
+
+All of the above verified live against `theme dev` (not just read from source) —
+Playwright screenshots at the relevant breakpoints/scroll positions, cross-checked
+against exact computed geometry (`getBoundingClientRect`, computed styles) before
+and after each fix, several rounds of client screenshot feedback → re-diagnose →
+re-verify.
+
+**Committed and pushed to `origin/main`.** Nothing touched on staging or live —
+this is all local `theme/prodani/` source, next step for the client is
+`npm run push:staging` (approval-gated per the standing method) whenever they're
+ready to see it on the real staging preview.
+
+---
+
 ## 2026-08-29 — Dani's Web Design Brief received; v2 upgrade planned
 
 Dani (owner) sent a 12-page **Web Design Brief** after loving the launch. It is a

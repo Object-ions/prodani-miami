@@ -72,8 +72,11 @@
   background:rgba(251,245,232,.05); border:2px solid var(--line-dark);
 }
 .pd-foot__card-media{ height:150px; border-radius:var(--r); overflow:hidden; background:rgba(251,245,232,.08); }
-/* Same lower-half framing as the stat cards — the cake sits low in these squares. */
-.pd-foot__card-media img{ width:100%; height:100%; object-fit:cover; object-position:50% 80%; display:block; }
+/* Was copied from the stat cards' "cake sits low in a tall square" framing
+   (object-position:50% 80%), but this card's photo is wide/landscape, not a
+   tall square — in a 150px-short box that bias pushed the actual product
+   almost entirely out of frame, leaving mostly bare table visible. Centered. */
+.pd-foot__card-media img{ width:100%; height:100%; object-fit:cover; object-position:50% 50%; display:block; }
 .pd-foot__card-title{ margin:18px 0 0; font-size:18px; font-weight:700; letter-spacing:-.01em; color:var(--on-dark); }
 .pd-foot__card-copy{ margin:7px 0 0; font-size:14px; line-height:1.55; color:var(--on-dark-soft); }
 .pd-foot__form{ display:flex; gap:8px; margin-top:16px; flex-wrap:wrap; }

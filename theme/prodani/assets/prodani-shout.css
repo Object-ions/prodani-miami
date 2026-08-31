@@ -20,7 +20,9 @@
 .pd-shout__frame img{ width:100%; height:100%; object-fit:cover; display:block; }
 @media (max-width:980px){
   .pd-shout__in{ grid-template-columns:1fr; }
-  .pd-shout__media{ max-width:330px; }
+  /* max-width without a margin left it flush against the wrap's left edge
+     instead of centered under the (also-centered) text above it. */
+  .pd-shout__media{ max-width:330px; margin-inline:auto; }
 }
 
 /* Hangs in the gap between the copy and the photo — filling the dead space that

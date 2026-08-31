@@ -26,10 +26,19 @@
   {%- for block in section.blocks -%}
     {%- assign product = block.settings.product -%}
     <div class="pd-stack__slot" {{ block.shopify_attributes }}>
+      {%- comment -%}
+        Measured, not guessed: the peek label + its own bottom margin is 69.8px
+        tall (devtools). 36px clipped it mid-line every time — the next card's
+        edge arrived before the label cleared. 72px is the smallest step that
+        lets every peek fully clear before the card behind it. The old base
+        `-3vh` pull is gone too — it shifted every card up from its slot's
+        centred rest position (correct for none of them), which is what made
+        card 1 crowd the sticky head even with a header buffer in place.
+      {%- endcomment -%}
       <div class="pd-stack__card"
            style="background-color:{{ block.settings.color }};
                   color:{{ block.settings.text_color }};
-                  top:calc(-3vh + {{ forloop.index0 | times: 60 }}px);"
+                  top:{{ forloop.index0 | times: 72 }}px;"
            data-pd-card data-index="{{ forloop.index0 }}" data-total="{{ section.blocks.size }}">
         {%- comment -%} Peek label — stays visible in the sliver above each stacked card, so
            every "prodani difference" is readable even when the card is behind others. {%- endcomment -%}
@@ -72,6 +81,16 @@
       </div>
     </div>
   {%- endfor -%}
+
+  {%- comment -%}
+    Verified in devtools: the LAST .pd-stack__slot never stuck at all, even
+    before any of today's changes — position:sticky on a final child measures
+    zero range to hold in (every other slot stuck correctly; only the last one
+    tracked scroll 1:1, static from the first pixel). Once this trailing spacer
+    makes it a middle child again, it regains the same sticky range as the
+    others — which is what actually holds the finished deck in view.
+  {%- endcomment -%}
+  <div class="pd-stack__tail" aria-hidden="true"></div>
 </section>
 
 <script src="{{ 'prodani-stack.js' | asset_url }}" defer></script>
