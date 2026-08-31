@@ -4,6 +4,52 @@ Newest entries first. One entry per working session — what was done, what was 
 
 ---
 
+## 2026-08-30 (evening) — v3 "refined" design direction on its own theme
+
+Dani sent a **brief correction note** (transcript in iMessage attachment; key points
+below) asking to try a premium quiet-luxury direction: "David's clarity + Sakara's
+warmth". Branch `design/refined-v3` cut from main (all v2 work); **design-only** —
+no content or structure changes. Applied with the UI/UX Pro Max rule set
+(contrast 4.5:1, semantic tokens, 150–300ms calm motion, focus rings, weight hierarchy).
+
+**The move that made it cheap:** kept every v2 token *name* and remapped values in
+`prodani-tokens.css`, so all 18 per-section sheets re-skinned from one file:
+cream `#F4EFE6` / sand `#EDE6D6` / chocolate `#2C1F18` / mocha `#7C5A3C` /
+gold `#C9A66B` (fills the old `--pink` slot) / sage. Fonts: **Fraunces** (light
+display; italic aliased into the old `--script` slot so every Damion heading became
+Fraunces italic for free), **Inter Tight** (body), **JetBrains Mono** (macros, specs,
+eyebrows, marquee). All OFL, self-hosted latin variable woff2 (4 files, ~225KB).
+Konnect/Damion/Fugaz no longer referenced; preloads swapped.
+
+Beyond tokens: Dawn colour schemes 1–4, hex sweep in templates/section schemas
+(9 old hexes → new, incl. stale rgba() components), hero wall → Fraunces 340 gold,
+bleed word → Fraunces mocha, marquee SVG → mono (`✦` → `·`), macro strip → mono,
+squiggles hidden, radius 22→4px, spring easing → calm ease-out.
+
+**Contrast work (WCAG):** gold is surface/accent only — it fails on cream (2.0:1).
+Text-safe accents: bronze `#8A6534` (4.6:1) and green `#656C52` (4.8:1). Reviews
+stars/captions → cream on mocha cards; contact labels → cream mono (panel retuned
+`#7C5A3C`/`#66452B`); PDP sample pill → chocolate-on-gold; focus rings → bronze.
+Box builder ground gold→sand, cards→cream. **Badge disc pinned to literal `#48312A`**
+— the PNG slices bake that brown in; the new token would show a two-tone circle.
+
+**Deployed as a NEW unpublished theme: `prodani - refined v3` (188023865654).**
+v2 staging (187797799222) untouched, live untouched. Verified in Chrome: home,
+collection, build-a-box all clean (0 Liquid errors, 0 old hexes, theme-check 0
+errors); PDP verified by fetch + deployed-asset check (its third-party scripts
+still hang screenshot injection — same as the mobile-QA session).
+
+  Preview: https://prodanimiami.com/?preview_theme_id=188023865654
+
+**Flags from the correction note (not design, parked):** note's pricing ($13/$46/$66/$120,
+BYB $72) conflicts with T1 and what's built; "25G PROTEIN" still claims-gated (T2);
+IG feed says pause (section shows placeholders anyway); marquee copy includes
+"dubai dream" — the note explicitly un-approves Dubai as a name (content fix, next
+session). Note is stamped "v1 · May 2026" and references pages we never briefed
+(Gift Box, Wholesale, Loyalty) — asked whether a fuller brief exists.
+
+---
+
 ## 2026-08-29 — Dani's Web Design Brief received; v2 upgrade planned
 
 Dani (owner) sent a 12-page **Web Design Brief** after loving the launch. It is a
