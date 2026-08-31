@@ -41,6 +41,9 @@ still hang screenshot injection — same as the mobile-QA session).
 
   Preview: https://prodanimiami.com/?preview_theme_id=188023865654
 
+Added `npm run push:v3` (targets 188023865654) so v3 pushes can't land on the v2
+staging theme — `push:staging` stays pointed at 187797799222 for the v2 branch.
+
 **Flags from the correction note (not design, parked):** note's pricing ($13/$46/$66/$120,
 BYB $72) conflicts with T1 and what's built; "25G PROTEIN" still claims-gated (T2);
 IG feed says pause (section shows placeholders anyway); marquee copy includes

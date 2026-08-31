@@ -11,7 +11,8 @@
     "check": "shopify theme check --path prodani",
     "verify": "node scripts/verify-token.mjs",
     "set-token": "node scripts/set-token.mjs",
-    "preflight": "node scripts/preflight.mjs"
+    "preflight": "node scripts/preflight.mjs",
+    "push:v3": "dotenv -- sh -c 'SHOPIFY_CLI_THEME_TOKEN=$PRODANI_PASSWORD shopify theme push --path prodani --store dani-pro-miami --theme 188023865654'"
   },
   "devDependencies": {
     "@shopify/cli": "^3.87.0",
