@@ -90,7 +90,31 @@ a.pd-filter{ text-decoration:none; display:inline-flex; align-items:center; }
 .pd-card__cat{ font-weight:700; font-size:11px; letter-spacing:.12em; text-transform:uppercase;
   color:var(--berry); margin:0 0 7px; }
 .pd-card__name{ font-size:17.5px; font-weight:700; margin:0 0 5px; color:var(--cocoa); letter-spacing:-.01em; }
-.pd-card__price{ font-size:17px; font-weight:700; color:var(--cocoa); margin:0; }
+
+/* Macro strip — the card's "why it's good for me". Tabular figures so the numbers
+   line up column to column across a grid of cards instead of jittering. */
+.pd-card__macros{
+  list-style:none; margin:8px 0 0; padding:8px 0 0; display:flex; gap:14px;
+  border-top:1px solid var(--line);
+}
+.pd-card__macros li{ display:flex; flex-direction:column; line-height:1.15; }
+.pd-card__macros b{
+  font-family:var(--sans); font-weight:800; font-size:15px; color:var(--cocoa);
+  font-variant-numeric:tabular-nums;
+}
+.pd-card__macros span{
+  font-size:10.5px; font-weight:700; letter-spacing:.07em; text-transform:uppercase;
+  color:var(--ink-faint);
+}
+
+/* Claim chips — capped at two in Liquid, so this never wraps to a second row. */
+.pd-card__chips{ list-style:none; margin:8px 0 0; padding:0; display:flex; flex-wrap:wrap; gap:5px; }
+.pd-card__chips li{
+  padding:3px 9px; border-radius:999px; background:var(--butter); border:1px solid var(--line);
+  font-size:10.5px; font-weight:700; letter-spacing:.04em; color:var(--cocoa); white-space:nowrap;
+}
+
+.pd-card__price{ font-size:17px; font-weight:700; color:var(--cocoa); margin:9px 0 0; }
 
 .pd-shop__foot{ display:flex; justify-content:center; margin-top:clamp(28px,4vw,52px); }
 

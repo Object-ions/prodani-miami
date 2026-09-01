@@ -2,6 +2,19 @@
   Product card. Shared by the shop grid and the collection rows so there is one
   implementation to fix, not two.
   Params: product (required)
+
+  v2 (Dani's 2026-08-31 direction). She called out David Protein's product cards
+  specifically: the card should answer "what is it and why is it good for me" before
+  you click. So the card now carries the macro strip (protein / calories / sugar) and
+  up to two claim chips, straight from the `prodani` metafields.
+
+  Two rules this snippet will not break:
+    - **Macros render only when the metafield is actually set.** No sample numbers on
+      a grid — the PDP can flag a sample in context, a card cannot, and a made-up
+      macro is a nutrition claim.
+    - **Claim chips are never inferred.** A chip appears only when its boolean is
+      explicitly true in admin (ticket T2). Nothing is derived from the title or
+      collection, because "it says gluten free in the name" is not substantiation.
 {%- endcomment -%}
 {%- capture handles -%}
   {%- for c in product.collections -%}{{ c.handle }} {% endfor -%}
@@ -10,6 +23,17 @@
 {%- for c in product.collections -%}
   {%- if cat == '' and c.handle != 'all-products' -%}{%- assign cat = c.title -%}{%- endif -%}
 {%- endfor -%}
+
+{%- liquid
+  assign mf = product.metafields.prodani
+  assign protein = mf.protein_g.value
+  assign calories = mf.calories.value
+  assign sugar = mf.sugar_g.value
+  assign has_macros = false
+  if protein != blank or calories != blank or sugar != blank
+    assign has_macros = true
+  endif
+-%}
 
 <a class="pd-card{% if product.images.size < 2 %} pd-card--single{% endif %}"
    href="{{ product.url }}" data-pd-item data-collections="{{ handles | strip }}">
@@ -31,7 +55,56 @@
     </div>
     <span class="pd-card__quick">View treat</span>
   </div>
+
   <p class="pd-card__cat">{{ cat | default: 'Treat' | escape }}</p>
   <h3 class="pd-card__name">{{ product.title | escape }}</h3>
+
+  {%- comment -%}
+    Macro strip — the "why it's good for me", on the card face. Each cell only
+    appears when its own value is set, so a half-filled product degrades to a
+    shorter strip rather than to zeroes.
+  {%- endcomment -%}
+  {%- if has_macros -%}
+    <ul class="pd-card__macros" aria-label="Nutrition per cake">
+      {%- if protein != blank -%}
+        <li><b>{{ protein }}g</b><span>protein</span></li>
+      {%- endif -%}
+      {%- if calories != blank -%}
+        <li><b>{{ calories }}</b><span>cal</span></li>
+      {%- endif -%}
+      {%- if sugar != blank -%}
+        <li><b>{{ sugar }}g</b><span>sugar</span></li>
+      {%- endif -%}
+    </ul>
+  {%- endif -%}
+
+  {%- comment -%}
+    Claim chips — capped at two so the card stays a card. Order is deliberate:
+    the two claims Dani leads the brand on come first.
+  {%- endcomment -%}
+  {%- liquid
+    assign chips = ''
+    if mf.no_sugar_added.value == true
+      assign chips = chips | append: 'No added sugar|'
+    endif
+    if mf.gluten_free.value == true
+      assign chips = chips | append: 'Gluten free|'
+    endif
+    if mf.high_protein.value == true
+      assign chips = chips | append: 'High protein|'
+    endif
+    if mf.high_fiber.value == true
+      assign chips = chips | append: 'High fiber|'
+    endif
+    assign chiplist = chips | split: '|'
+  -%}
+  {%- if chiplist.size > 0 -%}
+    <ul class="pd-card__chips">
+      {%- for chip in chiplist limit: 2 -%}
+        <li>{{ chip }}</li>
+      {%- endfor -%}
+    </ul>
+  {%- endif -%}
+
   <p class="pd-card__price">{{ product.price | money }}</p>
 </a>
