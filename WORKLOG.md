@@ -1525,12 +1525,23 @@ Full plain-language sheet: `PRODANI_INPUT_REQUEST.md` (gitignored, private).
 
 ### Open TODOs on our side
 
-  - Site copy still says "70+ reviews" / "4.9★" in several places (reviews heading, deck
-    card, "Read all 70+ reviews") — update to **132 / 4.92★**.
-  - **Product page mobile QA not completed** — the PDP's heavy third-party scripts hung the
-    headless mobile capture, so macros / sticky ATC / subscribe toggle are unverified at 390px.
-  - Product data cleanup (categories, vendor normalisation, archived bundles) — still blocked
-    on credentials; the themes-only token returns 302 for `products.json`.
+  - ~~Site copy still says "70+ reviews" / "4.9★"~~ — **DONE 2026-08-31.** Now 132 / 4.92★
+    everywhere; preflight confirms no stale counts remain.
+  - **Product page mobile QA — STILL BLOCKED, and now with three ruled-out approaches.**
+    Attempted again 2026-09-01 and failed again. What was tried, so nobody repeats it:
+      1. `Page.domContentEventFired` — never fires within 60s on the PDP.
+      2. Polling `document.readyState` instead of waiting on an event — hangs.
+      3. Fixed 20s wait, no load events at all, plus `Network.setBlockedURLs` on
+         Judge.me / GA / GTM / Klaviyo / Meta / TikTok / Clarity / monorail — the
+         subsequent `Runtime.evaluate` still hangs, so the renderer itself is wedged,
+         not merely the load event.
+    So macros / sticky ATC / subscribe toggle remain **unverified at 390px**. Next
+    ideas if someone picks this up: run against the local `theme dev` server rather
+    than the live domain (removes Shopify's own script injection), or use a real
+    device / BrowserStack. Do not report this as done without a render.
+  - Product data cleanup (categories, vendor normalisation, archived bundles) — the
+    themes-only token still 302s on `products.json`, but **browser admin access now
+    exists**, so this is doable through the admin UI when the catalog decision is made.
 
 ### If the before/after ever needs re-running
 
