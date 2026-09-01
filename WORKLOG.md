@@ -88,9 +88,53 @@ Also: the browser tool's classifier intermittently blocked typing strings contai
 em dash, so **Matcha and Salted Caramel use a hyphen** in their titles while the other
 four use "—". Cosmetic, worth normalising when the real flavor names land (T17).
 
-**Next:** phase 2 — box-builder rebuild (curated boxes, subscribe & save inside the
-box flow, frequency options, skip/pause/cancel messaging), now able to target the six
-draft products directly. Est. one full session.
+### Phase 2 done — box builder rebuilt (`feat/v2-box-builder`, 9979185)
+
+Flow is now **Choose Box → Choose Flavors → One-Time or Subscribe → Checkout**, on
+staging, desktop and 390px both driven and verified.
+
+  - **Curated boxes are presets, not a second cart path.** Best Sellers and Variety
+    live as `curated` blocks; choosing one sets the size and fills the flavor
+    quantities, then hands you to step 2 with every quantity editable. One
+    add-to-cart path means one place for bugs. Blank `mix` = even spread across
+    in-stock flavors; an explicit mix uses `"Chocolate Fudge:4, ..."` matched on
+    flavor name. Hand-editing a preset drops its highlight but keeps the quantities.
+  - **A curated mix that names a sold-out flavor under-fills and says so**
+    ("This box is 8 of 12 cakes — top it up below") rather than silently shipping
+    short. Found this for real: Salted Caramel still carried the old sold-out demo
+    flag, so Best Sellers came out 8/12. Flag cleared in both templates.
+  - **One-time vs Subscribe & save is now inside the box flow**, with a frequency
+    picker reading Shopify's **native selling plans** off the linked flavor products.
+    No plans exist yet (T12) so it renders **disabled and flagged as preview** — it
+    cannot fake a subscription. Once plans are attached, every line item carries
+    `selling_plan` and Shopify's own logic runs at checkout. The per-cake line says
+    savings apply at checkout rather than quoting a discounted number we'd be guessing.
+  - Flavor blocks now link the six draft products (handle pattern confirmed in admin:
+    `personal-protein-cake-cookie-butter`). `data-variant` is empty until Dani
+    publishes them, which correctly leaves the builder in preview mode.
+  - Biscoff → **Cookie Butter** everywhere; bleed marquee "Build Your Balance Box" →
+    "Build Your Box"; headings updated to the hero-product model.
+
+**Two bugs QA caught that reading the diff did not:**
+
+  1. **`[hidden]` lost to `.pd-box__sizes{display:grid}`** — the curated tab looked
+     selected while the size tiers stayed on screen. Broken at *every* width. Every
+     DOM assertion passed (`panel.hidden === true` was true); only the screenshot
+     showed it. Fixed with a scoped `.pd-box [hidden]{display:none !important}`.
+     The lesson: asserting on the property you just set proves nothing about paint.
+  2. **Touch targets under 44px** — the +/- steppers (34px), the control you tap most
+     in this whole flow, and the mode tabs (37px). Both bumped.
+
+**New rig: `theme/scripts/box-mobile-qa.mjs`** — headless Chrome + CDP at 390×844,
+`mobile:true`, iPhone UA. Drives the curated flow, screenshots it, and reports
+horizontal overflow, panel geometry and every sub-44px tap target. Waits on
+`Page.domContentEventFired` (not `load`) per the storefront's third-party scripts.
+Run: `node scripts/box-mobile-qa.mjs [url]`. Note it needs the Bash sandbox disabled,
+and kill stale debug-port processes first (`pkill -f "remote-debugging-port=9344"`).
+
+**Next:** phase 3 — wholesale ("Cafés & Gyms") and distributor/affiliate lead-capture
+pages, added to nav and footer. Lightweight inquiry forms only; no commission logic or
+B2B pricing tier. Est. half a session.
 
 ---
 
@@ -1321,7 +1365,7 @@ scripts saved. Paint is still 20% faster, which is the part a visitor feels.
 ## Where this stands
 
 **As of 2026-08-31 — Dani has pivoted the brand to one hero product (Personal
-Protein Cakes; see the 2026-08-31 "later" entry). Phase 1 of 4 of that pivot is on
+Protein Cakes; see the 2026-08-31 "later" entry). Phases 1 and 2 of 4 are on
 STAGING. Nothing has been deployed to production.**
 
 - **Live (untouched):** `Prodani - v.1.0.0` (theme 187797995830) on prodanimiami.com.
