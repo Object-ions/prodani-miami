@@ -4,6 +4,34 @@ Newest entries first. One entry per working session — what was done, what was 
 
 ---
 
+## 2026-09-01 — repo cleanup: stale prototype and duplicate assets removed
+
+Pruned everything superseded by the real theme. **`theme/` was not touched in any
+way** — no file changes, no Shopify CLI/API calls, staging (187797799222) and live
+(187797995830) untouched. Branch: `chore/prune-stale`.
+
+**Removed (tracked, recoverable from git history; disk copies in macOS Trash):**
+
+  - `design/` — the Vite/React concept prototype, disconnected from the real site
+    and never updated after box builder / Instagram / contact form / cart were
+    built into `theme/`.
+  - `assets/` (root) — `hero-video-optimised.mp4` and `hero-poster.jpg` were
+    md5-identical to `theme/prodani/assets/hero.mp4` / `hero-poster.jpg`; the
+    ffmpeg re-encode recipe lives on in git history.
+
+**Removed (untracked, moved to macOS Trash — restore from there if wrong):**
+
+  - `muffin_component/` — two PNGs from the discarded Origin/muffin-scene
+    prototype (see 2026-08-30 entry; to be rebuilt when design direction settles).
+  - root `package-lock.json` — empty 86-byte lockfile from a stray npm run;
+    there is no root package.json.
+
+**Kept deliberately:** `audit/` (pre-redesign baseline the case study cites) and
+`casestudy/` (its `images/before/` + `data/` are the only record if the before
+theme 154419691830 is ever deleted).
+
+---
+
 ## 2026-08-31 (session close) — where the pivot stands
 
 Long session. All four phases of Dani's pivot are on **staging**; production has not
