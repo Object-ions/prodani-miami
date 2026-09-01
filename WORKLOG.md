@@ -4,6 +4,47 @@ Newest entries first. One entry per working session — what was done, what was 
 
 ---
 
+## 2026-08-31 (session close) — where the pivot stands
+
+Long session. All four phases of Dani's pivot are on **staging**; production has not
+been touched and `push:live` has not been run. `main` is at `7151387` and pushed.
+Preflight is **90 passed / 0 failed / 0 warnings**.
+
+**Shipped today, in order:** hero-product model and 6/12/18 tiers → box builder
+rebuild with curated boxes and subscribe-in-flow → wholesale and distributor pages →
+product card v2 with macros and claim chips → Build a Box turned into a real landing
+page → preflight and copy-hygiene cleanup. Individual entries below have the detail.
+
+**In admin:** cleared T4 (19 metafield definitions) and T16 (Build a Box page),
+created six draft flavor products and two hidden partner pages.
+
+**Deliverable for the client:** `PRODANI_QUESTIONS_2026-08-31.md` at the repo root —
+14 questions in plain language, grouped by urgency, each with an example answer.
+**Gitignored** (public repo, contains pricing questions). **Not sent** — Moses wanted
+to review it first. Nothing has been emailed to Dani this session.
+
+**Three things to pick up next time:**
+
+  1. **PDP mobile QA is still not done** and has now defeated three approaches. Do not
+     re-run the same ones — see the ruled-out list under "Open TODOs on our side".
+     Try the local `theme dev` server or a real device instead.
+  2. **The catalog question is the real blocker on design**, more than any ticket.
+     The site says "one hero product" at the top and shows a full bakery menu below.
+     Question 6 in the client doc puts three options to her.
+  3. `muffin_component/` (two PNGs) is still untracked and unexplained, and
+     `package-lock.json` at the repo root is untracked too. Neither was ours to file.
+
+**Two mistakes worth remembering, both already fixed but both cost time:**
+
+  - `pkill -9 -f "Google Chrome"` killed the user's own browser and admin session, not
+    just the headless one. Scope kills to the debug port: `pkill -f "remote-debugging-port=9344"`.
+  - A product saved **Active instead of Draft** and was briefly live, because a
+    status-dropdown click did not register inside a batched sequence and it was saved
+    anyway. On this admin, never batch a click whose effect is not screenshotted, and
+    trust the **product header badge**, not the sidebar select, for saved status.
+
+---
+
 ## 2026-08-31 (later) — Dani's pivot: hero-product model, phase 1 of 4
 
 **New direction from Dani (email, 2026-08-31).** ProDani is simplifying: away from
