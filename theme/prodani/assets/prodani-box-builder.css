@@ -76,7 +76,71 @@
 .pd-box__add[disabled]{ background:var(--cocoa-soft); color:rgba(251,245,232,.7); cursor:default; }
 .pd-box__note{ margin:12px 0 0; font-size:13px; color:var(--ink-faint); }
 
+/* The UA stylesheet's [hidden]{display:none} loses to any author `display`, and both
+   panels set one (grid). Without this the curated tab appears selected while the size
+   tiers stay on screen — caught at 390px, but it was broken at every width. */
+.pd-box [hidden]{ display:none !important; }
+
+/* mode tabs — build your own vs curated */
+.pd-box__modes{ display:inline-flex; gap:4px; padding:4px; margin-bottom:16px;
+  background:var(--butter); border:1px solid var(--line); border-radius:999px; }
+.pd-box__mode{ border:0; background:transparent; border-radius:999px; padding:9px 18px; cursor:pointer;
+  font-family:var(--sans); font-weight:700; font-size:14px; color:var(--ink-faint);
+  transition:background .18s ease, color .18s ease; }
+.pd-box__mode[aria-selected="true"]{ background:var(--cocoa); color:var(--cream); }
+.pd-box__mode:focus-visible{ outline:3px solid var(--pink-deep); outline-offset:2px; }
+
+/* curated boxes */
+.pd-box__curated{ display:grid; grid-template-columns:repeat(auto-fit,minmax(240px,1fr)); gap:14px; }
+.pd-box__curated-card{ position:relative; display:flex; flex-direction:column; gap:10px; text-align:left;
+  padding:14px; background:var(--butter); border:1px solid var(--line); border-radius:var(--r);
+  cursor:pointer; transition:transform .18s ease, border-color .18s ease, box-shadow .18s ease; }
+.pd-box__curated-card:hover{ transform:translateY(-2px); border-color:var(--pink-deep); }
+.pd-box__curated-card.is-active{ border-color:var(--cocoa); box-shadow:0 8px 22px rgba(72,49,42,.10); }
+.pd-box__curated-card:focus-visible{ outline:3px solid var(--pink-deep); outline-offset:2px; }
+.pd-box__curated-media{ display:block; width:100%; aspect-ratio:16/10; border-radius:calc(var(--r) - 6px);
+  overflow:hidden; background:var(--cream); }
+.pd-box__curated-media img{ width:100%; height:100%; object-fit:cover; display:block; }
+.pd-box__curated-body{ display:flex; flex-direction:column; gap:3px; flex:1; }
+.pd-box__curated-name{ font-family:var(--sans); font-weight:800; color:var(--cocoa); font-size:16px; }
+.pd-box__curated-blurb{ font-size:13px; color:var(--ink-faint); line-height:1.45; }
+.pd-box__curated-meta{ margin-top:4px; font-family:var(--sans); font-weight:700; font-size:13px;
+  color:var(--cocoa); font-variant-numeric:tabular-nums; }
+.pd-box__curated-cta{ font-family:var(--sans); font-weight:700; font-size:13px; color:var(--berry); }
+
+/* purchase options — a scoped copy of the PDP selector (prodani-pdp.css), because that
+   stylesheet is PDP-only and loading it here would put the whole product page's CSS on
+   the homepage. Kept deliberately minimal; if these two drift, the PDP is the original. */
+.pd-box .pd-sub{ border:0; padding:0; margin:0; display:flex; flex-direction:column; gap:10px; max-width:560px; }
+.pd-box .pd-sub__opt{ display:flex; gap:12px; align-items:flex-start; padding:14px 16px; background:var(--butter);
+  border:1px solid var(--line); border-radius:var(--r); cursor:pointer; transition:border-color .18s ease; }
+.pd-box .pd-sub__opt:hover{ border-color:var(--pink-deep); }
+.pd-box .pd-sub__opt:has(input:checked){ border-color:var(--cocoa); }
+.pd-box .pd-sub__opt input{ margin-top:3px; accent-color:var(--cocoa); width:18px; height:18px; flex:none; }
+.pd-box .pd-sub__opt input:focus-visible{ outline:3px solid var(--pink-deep); outline-offset:2px; }
+.pd-box .pd-sub__opt--save.is-preview{ opacity:.7; }
+.pd-box .pd-sub__opt-main{ display:flex; flex-direction:column; gap:3px; flex:1; }
+.pd-box .pd-sub__opt-title{ font-family:var(--sans); font-weight:700; color:var(--cocoa); font-size:15px; }
+.pd-box .pd-sub__opt-sub{ font-size:13px; color:var(--ink-faint); line-height:1.45; }
+.pd-box .pd-sub__badge{ display:inline-block; margin-left:6px; padding:2px 9px; border-radius:999px;
+  background:var(--leaf); color:var(--cream); font-size:11px; font-weight:800; letter-spacing:.02em; }
+.pd-box .pd-sub__freq{ display:flex; align-items:center; gap:10px; padding-left:2px; }
+.pd-box .pd-sub__freq-label{ font-family:var(--sans); font-weight:700; font-size:13px; color:var(--cocoa); }
+.pd-box .pd-sub__select{ flex:1; max-width:240px; padding:9px 12px; border:1px solid var(--line);
+  border-radius:999px; background:var(--butter); font-family:var(--sans); font-size:14px; color:var(--cocoa); }
+.pd-box .pd-sub__select:focus-visible{ outline:3px solid var(--pink-deep); outline-offset:2px; }
+.pd-box .pd-sub__note{ margin:2px 0 0; font-size:12.5px; color:var(--ink-faint); }
+.pd-box .visually-hidden{ position:absolute; width:1px; height:1px; margin:-1px; padding:0; overflow:hidden;
+  clip:rect(0 0 0 0); white-space:nowrap; border:0; }
+
 @media (max-width:749px){
+  .pd-box__modes{ display:flex; width:100%; }
+  .pd-box__mode{ flex:1; text-align:center; min-height:44px; }
+  .pd-box__curated{ grid-template-columns:1fr; }
+  /* 34px steppers are under the 44px touch minimum — the one control in this flow
+     you tap over and over. */
+  .pd-box__step-btn{ width:44px; height:44px; }
+
   .pd-box__cta{ position:sticky; bottom:0; z-index:20; background:var(--pink); padding:12px 0
     calc(12px + env(safe-area-inset-bottom)); border-top:1px solid var(--line); margin-inline:calc(-1 * var(--pad));
     padding-inline:var(--pad); }
@@ -93,5 +157,6 @@
   .pd-box__flavor{ scroll-snap-align:start; }
 }
 @media (prefers-reduced-motion:reduce){
-  .pd-box__size, .pd-box__step-btn, .pd-box__add, .pd-box__bar span{ transition:none; }
+  .pd-box__size, .pd-box__step-btn, .pd-box__add, .pd-box__bar span,
+  .pd-box__mode, .pd-box__curated-card{ transition:none; }
 }

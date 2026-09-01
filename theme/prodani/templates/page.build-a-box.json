@@ -3,26 +3,117 @@
     "box": {
       "type": "prodani-box-builder",
       "blocks": {
-        "f1": { "type": "flavor", "settings": { "name": "Chocolate Fudge", "macro": "21g protein · 180 cal", "color": "#48312A", "sold_out": false } },
-        "f2": { "type": "flavor", "settings": { "name": "Vanilla Bean", "macro": "20g protein · 170 cal", "color": "#FFFBE5", "sold_out": false } },
-        "f3": { "type": "flavor", "settings": { "name": "Strawberry", "macro": "19g protein · 175 cal", "color": "#FDC3D4", "sold_out": false } },
-        "f4": { "type": "flavor", "settings": { "name": "Biscoff", "macro": "20g protein · 190 cal", "color": "#C4587E", "sold_out": false } },
-        "f5": { "type": "flavor", "settings": { "name": "Matcha", "macro": "20g protein · 165 cal", "color": "#7FA86B", "sold_out": false } },
-        "f6": { "type": "flavor", "settings": { "name": "Salted Caramel", "macro": "21g protein · 185 cal", "color": "#5C4239", "sold_out": true } }
+        "f1": {
+          "type": "flavor",
+          "settings": {
+            "name": "Chocolate Fudge",
+            "macro": "21g protein · 180 cal",
+            "color": "#48312A",
+            "sold_out": false,
+            "product": "personal-protein-cake-chocolate-fudge"
+          }
+        },
+        "f2": {
+          "type": "flavor",
+          "settings": {
+            "name": "Vanilla Bean",
+            "macro": "20g protein · 170 cal",
+            "color": "#FFFBE5",
+            "sold_out": false,
+            "product": "personal-protein-cake-vanilla-bean"
+          }
+        },
+        "f3": {
+          "type": "flavor",
+          "settings": {
+            "name": "Strawberry",
+            "macro": "19g protein · 175 cal",
+            "color": "#FDC3D4",
+            "sold_out": false,
+            "product": "personal-protein-cake-strawberry"
+          }
+        },
+        "f4": {
+          "type": "flavor",
+          "settings": {
+            "name": "Cookie Butter",
+            "macro": "20g protein · 190 cal",
+            "color": "#C4587E",
+            "sold_out": false,
+            "product": "personal-protein-cake-cookie-butter"
+          }
+        },
+        "f5": {
+          "type": "flavor",
+          "settings": {
+            "name": "Matcha",
+            "macro": "20g protein · 165 cal",
+            "color": "#7FA86B",
+            "sold_out": false,
+            "product": "personal-protein-cake-matcha"
+          }
+        },
+        "f6": {
+          "type": "flavor",
+          "settings": {
+            "name": "Salted Caramel",
+            "macro": "21g protein · 185 cal",
+            "color": "#5C4239",
+            "sold_out": false,
+            "product": "personal-protein-cake-salted-caramel"
+          }
+        },
+        "cb1": {
+          "type": "curated",
+          "settings": {
+            "name": "Best Sellers",
+            "blurb": "Our most-ordered flavors, in one box.",
+            "badge": "Most Popular",
+            "size": 12,
+            "price": 89,
+            "mix": "Chocolate Fudge:4, Cookie Butter:4, Salted Caramel:4"
+          }
+        },
+        "cb2": {
+          "type": "curated",
+          "settings": {
+            "name": "Variety Box",
+            "blurb": "A little of everything — the easiest way to find your favourite.",
+            "size": 12,
+            "price": 89,
+            "mix": ""
+          }
+        }
       },
-      "block_order": ["f1", "f2", "f3", "f4", "f5", "f6"],
+      "block_order": [
+        "f1",
+        "f2",
+        "f3",
+        "f4",
+        "f5",
+        "f6",
+        "cb1",
+        "cb2"
+      ],
       "settings": {
         "eyebrow": "Build Your Box",
-        "heading": "Build Your Balance Box",
-        "subheading": "Choose your flavors. Own your indulgence.",
+        "heading": "Build your box",
+        "subheading": "Pick a size, mix your flavors, and choose one-time or subscribe.",
         "sizes": "6,12,18",
         "prices": "49,89,120",
         "default_size_index": 2,
         "popular_count": 12,
         "value_count": 18,
-        "upsell_enabled": true
+        "upsell_enabled": true,
+        "sub_enabled": true,
+        "sub_badge": "Save 10%",
+        "sub_blurb": "Delivered on your schedule. Skip, pause, change or cancel anytime.",
+        "build_tab_label": "Build your own",
+        "curated_tab_label": "Curated boxes"
       }
     }
   },
-  "order": ["box"]
+  "order": [
+    "box"
+  ]
 }
