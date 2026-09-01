@@ -180,9 +180,53 @@ Once `push:live` is approved, in admin:
   - Attach subscription selling plans (T12) — the box builder's subscribe option stays
     disabled until then.
 
-**Next:** phase 4 — visual reskin to the David Protein / Legendary Foods bar
-(product-forward hero, redesigned product cards, benefits stated up front) plus the
-copy pass. Gated in part on T1/T2/T6/T7. Est. one full session.
+### Phase 4 (partial) — product card v2 and a copy audit (`feat/v2-visual-direction`)
+
+  - **Product card v2 (0dc29a0)** — the thing Dani named explicitly ("especially the
+    product cards toward the bottom"). The card now answers *what is it and why is it
+    good for me* before you click: a macro strip (protein / calories / sugar) and up
+    to two claim chips, read from the `prodani` metafields. Tabular figures so numbers
+    line up across a grid. Two rules the snippet holds:
+      - **Macros render only when the metafield is set.** No sample numbers in a grid
+        — the PDP can flag a sample in context, a card cannot, and an invented macro
+        is a nutrition claim. Each cell is independent, so a half-filled product
+        degrades to a shorter strip rather than to zeroes.
+      - **Claim chips are never inferred.** A chip appears only when its boolean is
+        explicitly true in admin (T2). Nothing is derived from the title or collection,
+        because "it says gluten free in the name" is not substantiation.
+    Verified by temporarily forcing values on staging (desktop + mobile screenshots),
+    then reverting and confirming the card renders with no strip and no chips while
+    values are absent — which is its state today.
+  - **Deck figure `4.9★` → `4.92★`** — the only objectively-wrong number found; the
+    same card's own description already said "From 132 verified reviews".
+
+**Copy audit — three findings, two of them deliberately NOT fixed:**
+
+  1. **The brand is spelled three ways in live copy.** `ProDani` (7×, including the
+     new partner pages), `Pro Dani Miami` (5×, all legacy about-us copy), and the
+     header/footer logo renders lowercase `prodani`. This is wrong under *any* answer
+     to T6, but normalising it means picking a winner, and picking a winner is Dani's
+     call. One word from her fixes all thirteen in a single pass. **Not touched.**
+  2. **Founder copy still reads "I'm Daniel" (T7)** in both `index.json` (shout) and
+     `page.about-us.json`. The user refers to her as "she". Unresolved and **not
+     touched** — guessing a person's name or pronouns in first-person brand copy is
+     not a thing to guess at.
+  3. Nutrition claims throughout remain **gated on T2**. The card is built to display
+     them and displays nothing until they are approved.
+
+**What phase 4 did NOT do, and why.** The remaining reskin — product-forward hero and
+the wider "premium packaged food brand" feel — is mostly **blocked on photography
+(T11), not on code.** The card work made this concrete: with real macros forced on,
+the grid still shows cakes in clear plastic meal-prep containers with pink plastic
+forks. That is the single biggest gap between this site and the David Protein bar
+Dani is aiming at, and no amount of CSS closes it. Recommend putting the next dollar
+on a product shoot (cakes plated, and packaging that looks like retail) before any
+further visual work.
+
+**Next:** get Dani's answers on T1/T2/T6/T7 and T11 photography — the remaining
+work is mostly gated on her, not on us. Phase 4's finishable remainder (hero
+treatment, benefit bar refinements) is best done once real product photography and
+final flavor names exist.
 
 ---
 
@@ -1413,8 +1457,9 @@ scripts saved. Paint is still 20% faster, which is the part a visitor feels.
 ## Where this stands
 
 **As of 2026-08-31 — Dani has pivoted the brand to one hero product (Personal
-Protein Cakes; see the 2026-08-31 "later" entry). Phases 1, 2 and 3 of 4 are on
-STAGING. Nothing has been deployed to production.**
+Protein Cakes; see the 2026-08-31 "later" entry). Phases 1-3 and part of phase 4
+are on STAGING. Nothing has been deployed to production. The remaining work is
+mostly gated on Dani (T1/T2/T6/T7 and T11 photography), not on us.**
 
 - **Live (untouched):** `Prodani - v.1.0.0` (theme 187797995830) on prodanimiami.com.
   It is still the launch build — none of the v2 work is on it.
