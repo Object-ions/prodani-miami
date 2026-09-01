@@ -14,7 +14,12 @@ const here = dirname(fileURLToPath(import.meta.url))
 const SHOP = process.env.SHOP_URL || 'https://dani-pro-miami.myshopify.com'
 const LIVE = process.env.LIVE === '1'
 const THEME = process.env.PREVIEW_THEME_ID || '187797995830'
-const EXPECT_LIVE_ID = Number(process.env.EXPECT_LIVE_ID || 154419691830)
+/* The theme that SHOULD be live right now. This was 154419691830 (v.0.0.1) before
+   launch; v.1.0.0 has been live since 2026-08-23. Leaving the old id here meant a
+   default run reported "LIVE THEME CHANGED" on a perfectly untouched store — a check
+   that cries wolf gets ignored, which is worse than not having it. Update this when
+   a new theme is published. */
+const EXPECT_LIVE_ID = Number(process.env.EXPECT_LIVE_ID || 187797995830)
 const UA = { 'User-Agent': 'Mozilla/5.0 (Macintosh; Intel Mac OS X 10_15_7) preflight' }
 
 let pass = 0, fail = 0, warn = 0
@@ -189,8 +194,15 @@ for (const [route, res] of Object.entries(pages)) {
 const imgs = [...home.matchAll(/<img\b[^>]*>/g)].map(m => m[0])
 const noAlt = imgs.filter(t => !/\balt\s*=/.test(t))
 noAlt.length === 0 ? ok(`all ${imgs.length} homepage <img> have alt`) : bad(`${noAlt.length}/${imgs.length} <img> missing alt`)
-const noDim = imgs.filter(t => !(/\bwidth\s*=/.test(t) && /\bheight\s*=/.test(t)))
-noDim.length === 0 ? ok('all homepage images declare width+height (CLS)') : note(`${noDim.length}/${imgs.length} images lack width/height`)
+/* Judge.me injects its own review-photo <img> tags, which carry no dimensions and are
+   not ours to rewrite — the house rule is restyle their surfaces, never their
+   structure. Counting them made this warning permanently non-zero and therefore
+   meaningless. Their CLS is handled with an aspect-ratio rule in
+   prodani-reviews.css instead; this check now measures only markup we control. */
+const ours = imgs.filter(t => !/jdgm-/.test(t))
+const noDim = ours.filter(t => !(/\bwidth\s*=/.test(t) && /\bheight\s*=/.test(t)))
+noDim.length === 0 ? ok(`all ${ours.length} of our homepage images declare width+height (CLS)`)
+                   : note(`${noDim.length}/${ours.length} of our images lack width/height`)
 
 /* ---------- 7. copy hygiene ---------- */
 head('7. Copy hygiene')

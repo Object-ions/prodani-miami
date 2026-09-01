@@ -86,3 +86,11 @@
 .pd-reviews__widget .jdgm-rev__buyer-badge{ color:var(--cream) !important; }
 .pd-reviews__widget .jdgm-rev{ border-color:rgba(251,245,232,.16) !important; }
 .pd-reviews__widget .jdgm-star{ color:var(--pink) !important; }
+
+/* Judge.me's review-photo <img> tags ship with no width/height, so each one reflows
+   the review list as it decodes. We cannot add the attributes — their markup is not
+   ours to rewrite — but reserving the box in CSS costs the same in layout stability.
+   Square because that is the ratio Judge.me requests from its own image CDN. */
+.pd-reviews__widget .jdgm-rev__pic-img{
+  aspect-ratio:1; width:100%; height:auto; object-fit:cover; display:block;
+}

@@ -8,7 +8,7 @@
           "settings": {
             "figure": "20g",
             "title": "Protein your members ask for",
-            "text": "A dessert that fits the way your customers already eat — no added sugar, gluten free, real macros."
+            "text": "A dessert that fits the way your customers already eat: no added sugar, gluten free, real macros."
           }
         },
         "p2": {
@@ -37,7 +37,7 @@
           "type": "step",
           "settings": {
             "title": "Tell us about your business",
-            "text": "Fill in the form below — what you run, where you are, and roughly what volume you're thinking."
+            "text": "Fill in the form below: what you run, where you are, and roughly what volume you're thinking."
           }
         },
         "s2": {
@@ -67,7 +67,7 @@
         "eyebrow": "Wholesale",
         "heading": "ProDani for cafés & gyms",
         "heading_tag": "h1",
-        "lede": "<p>Stock Personal Protein Cakes at your café, gym, studio or store. High protein, no added sugar, gluten free — a grab-and-go dessert that fits how your customers actually eat.</p><p>Tell us about your business below and we'll put together pricing and a first order together.</p>",
+        "lede": "<p>Stock Personal Protein Cakes at your café, gym, studio or store. High protein, no added sugar, gluten free, and a grab-and-go dessert that fits how your customers actually eat.</p><p>Tell us about your business below and we'll put together pricing and a first order together.</p>",
         "steps_heading": "How it works",
         "form_anchor": "apply",
         "form_heading": "Enquire about wholesale",
@@ -80,7 +80,7 @@
         "volume": "Not sure yet, Under 50 cakes, 50-200 cakes, 200-500 cakes, 500+ cakes",
         "message_label": "Tell us about your business",
         "button_label": "Send enquiry",
-        "success_text": "Thanks — we'll be in touch shortly."
+        "success_text": "Thanks, we'll be in touch shortly."
       }
     }
   },

@@ -14,7 +14,7 @@
           "type": "pillar",
           "settings": {
             "title": "Earn on what you sell",
-            "text": "Commission on every order you bring in. Rates are set per partner — we'll talk them through with you."
+            "text": "Commission on every order you bring in. Rates are set per partner, and we'll talk them through with you."
           }
         },
         "p3": {
@@ -65,7 +65,7 @@
         "eyebrow": "Partners",
         "heading": "Sell ProDani, earn commission",
         "heading_tag": "h1",
-        "lede": "<p>For distributors, trainers, studios and creators who want to sell Personal Protein Cakes to the people who already trust them.</p><p>You bring the audience — we handle baking, packing and shipping. Commission rates and terms are agreed per partner, so tell us what you have in mind.</p>",
+        "lede": "<p>For distributors, trainers, studios and creators who want to sell Personal Protein Cakes to the people who already trust them.</p><p>You bring the audience; we handle baking, packing and shipping. Commission rates and terms are agreed per partner, so tell us what you have in mind.</p>",
         "steps_heading": "How it works",
         "form_anchor": "apply",
         "form_heading": "Apply to become a partner",
@@ -78,7 +78,7 @@
         "volume": "Not sure yet, Under 1,000, 1,000-10,000, 10,000-50,000, 50,000+",
         "message_label": "How would you want to sell ProDani?",
         "button_label": "Send application",
-        "success_text": "Thanks — we'll read your application and come back to you."
+        "success_text": "Thanks, we'll read your application and come back to you."
       }
     }
   },

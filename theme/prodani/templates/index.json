@@ -19,7 +19,7 @@
       "settings": {
         "anchor": "nutrition",
         "heading": "Meet your baker",
-        "body": "<p>I'm Daniel — the brain and brawn behind ProDani. As a personal trainer, I couldn't find cakes and muffins that were high in protein, gluten-free and low in sugar, so I started baking my own.</p><p>Every cake is my labor of love — small batches, top-notch ingredients and a dash of passion. If I wouldn't give it to my own clients, it doesn't go in the box.</p>",
+        "body": "<p>I'm Daniel, the brain and brawn behind ProDani. As a personal trainer, I couldn't find cakes and muffins that were high in protein, gluten-free and low in sugar, so I started baking my own.</p><p>Every cake is my labor of love: small batches, top-notch ingredients and a dash of passion. If I wouldn't give it to my own clients, it doesn't go in the box.</p>",
         "cta_label": "Read my story",
         "cta_link": "/pages/meet-your-baker",
         "image_alt": "Dani with a ProDani strawberry short cake",
@@ -65,7 +65,7 @@
           "settings": {
             "figure": "6",
             "title": "Core flavors, built to mix",
-            "description": "One hero product — the Personal Protein Cake — in a focused flavor lineup. Pick a box of 6, 12 or 18 and mix them however you like.",
+            "description": "One hero product, the Personal Protein Cake, in a focused flavor lineup. Pick a box of 6, 12 or 18 and mix them however you like.",
             "cta_label": "Build your box",
             "cta_link": "/#box",
             "product": "vegan-personal-chocolate-banana-cake-copy",
@@ -461,7 +461,7 @@
           "type": "curated",
           "settings": {
             "name": "Variety Box",
-            "blurb": "A little of everything — the easiest way to find your favourite.",
+            "blurb": "A little of everything, and the easiest way to find your favorite.",
             "size": 12,
             "price": 89,
             "mix": ""
