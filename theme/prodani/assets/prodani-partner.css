@@ -1,0 +1,61 @@
+/* Partner programs (wholesale, distributors/affiliates). Tokens from prodani-tokens.css.
+   The enquiry form itself is .pd-form from prodani-contact.css — it carries its own dark
+   panel background, so nothing here restyles it. */
+
+.pd-partner{ background:var(--cream); padding-block:clamp(40px,6vw,88px); }
+
+.pd-partner__head{ max-width:760px; }
+.pd-partner__lede{ margin-top:14px; font-size:clamp(16px,1.7vw,19px); line-height:1.6; color:var(--ink); }
+.pd-partner__lede p{ margin:0 0 10px; }
+.pd-partner__lede p:last-child{ margin-bottom:0; }
+
+.pd-partner__sub{
+  font-family:var(--sans); font-weight:800; color:var(--cocoa);
+  font-size:clamp(20px,2.2vw,26px); margin:0 0 16px;
+}
+
+/* selling points */
+.pd-partner__pillars{
+  display:grid; grid-template-columns:repeat(auto-fit,minmax(210px,1fr)); gap:14px;
+  margin-top:clamp(30px,4vw,52px);
+}
+.pd-partner__pillar{
+  background:var(--butter); border:1px solid var(--line); border-radius:var(--r);
+  padding:clamp(16px,2vw,22px);
+}
+.pd-partner__figure{
+  display:block; font-family:var(--sans); font-weight:800; color:var(--berry);
+  font-size:clamp(26px,3.2vw,36px); line-height:1; margin-bottom:8px;
+  font-variant-numeric:tabular-nums;
+}
+.pd-partner__pillar-title{
+  font-family:var(--sans); font-weight:800; color:var(--cocoa); font-size:16px; margin:0 0 6px;
+}
+.pd-partner__pillar-text{ margin:0; font-size:14px; line-height:1.55; color:var(--ink-faint); }
+
+/* how it works */
+.pd-partner__steps{ margin-top:clamp(34px,4.5vw,60px); }
+.pd-partner__steplist{ list-style:none; margin:0; padding:0; display:grid; gap:12px; }
+.pd-partner__step{ display:flex; gap:14px; align-items:flex-start; }
+.pd-partner__step-n{
+  flex:none; display:inline-flex; align-items:center; justify-content:center;
+  width:32px; height:32px; border-radius:999px; background:var(--cocoa); color:var(--cream);
+  font-family:var(--sans); font-weight:800; font-size:14px;
+}
+.pd-partner__step-body{ display:flex; flex-direction:column; gap:3px; padding-top:4px; }
+.pd-partner__step-body b{ font-family:var(--sans); font-weight:800; color:var(--cocoa); font-size:16px; }
+.pd-partner__step-body span{ font-size:14.5px; line-height:1.55; color:var(--ink-faint); }
+
+/* enquiry form */
+.pd-partner__formwrap{ margin-top:clamp(36px,5vw,68px); scroll-margin-top:90px; }
+.pd-partner__formhead{ max-width:620px; margin-bottom:16px; }
+.pd-partner__formnote{ margin:0; font-size:14.5px; line-height:1.55; color:var(--ink-faint); }
+.pd-form--partner{ max-width:620px; }
+
+@media (max-width:749px){
+  .pd-partner__pillars{ grid-template-columns:1fr; }
+  /* Touch minimum — the same 44px floor the box builder needed. */
+  .pd-form--partner .pd-field input,
+  .pd-form--partner .pd-field select{ min-height:44px; }
+  .pd-form--partner .pd-btn{ min-height:48px; }
+}

@@ -1,0 +1,86 @@
+{
+  "sections": {
+    "partner": {
+      "type": "prodani-partner",
+      "blocks": {
+        "p1": {
+          "type": "pillar",
+          "settings": {
+            "title": "Sell a product people repeat on",
+            "text": "High protein, no added sugar, gluten free. The kind of thing customers reorder rather than try once."
+          }
+        },
+        "p2": {
+          "type": "pillar",
+          "settings": {
+            "title": "Earn on what you sell",
+            "text": "Commission on every order you bring in. Rates are set per partner — we'll talk them through with you."
+          }
+        },
+        "p3": {
+          "type": "pillar",
+          "settings": {
+            "title": "We handle fulfilment",
+            "text": "You introduce the product; baking, packing and shipping stay with us."
+          }
+        },
+        "p4": {
+          "type": "pillar",
+          "settings": {
+            "title": "Built for Miami and beyond",
+            "text": "Whether you have a local following or a wider audience, tell us where your people are."
+          }
+        },
+        "s1": {
+          "type": "step",
+          "settings": {
+            "title": "Apply below",
+            "text": "Tell us who you are, who you reach, and how you'd want to sell."
+          }
+        },
+        "s2": {
+          "type": "step",
+          "settings": {
+            "title": "We talk it through",
+            "text": "A short conversation about fit, commission and how orders would be tracked."
+          }
+        },
+        "s3": {
+          "type": "step",
+          "settings": {
+            "title": "You get your link and materials",
+            "text": "A trackable link plus photography and product facts you can actually use."
+          }
+        },
+        "s4": {
+          "type": "step",
+          "settings": {
+            "title": "Get paid on what sells",
+            "text": "Commission paid on completed orders, on a schedule we agree up front."
+          }
+        }
+      },
+      "block_order": ["p1", "p2", "p3", "p4", "s1", "s2", "s3", "s4"],
+      "settings": {
+        "eyebrow": "Partners",
+        "heading": "Sell ProDani, earn commission",
+        "heading_tag": "h1",
+        "lede": "<p>For distributors, trainers, studios and creators who want to sell Personal Protein Cakes to the people who already trust them.</p><p>You bring the audience — we handle baking, packing and shipping. Commission rates and terms are agreed per partner, so tell us what you have in mind.</p>",
+        "steps_heading": "How it works",
+        "form_anchor": "apply",
+        "form_heading": "Apply to become a partner",
+        "form_note": "Tell us who you reach and how you'd like to sell. We read every application ourselves.",
+        "program_label": "Distributor / affiliate",
+        "org_label": "Business or handle",
+        "types_label": "What best describes you?",
+        "types": "Personal trainer / coach, Gym or studio owner, Distributor / reseller, Creator / influencer, Nutritionist / dietitian, Something else",
+        "volume_label": "Roughly how many people do you reach?",
+        "volume": "Not sure yet, Under 1,000, 1,000-10,000, 10,000-50,000, 50,000+",
+        "message_label": "How would you want to sell ProDani?",
+        "button_label": "Send application",
+        "success_text": "Thanks — we'll read your application and come back to you."
+      }
+    }
+  },
+  "order": ["partner"]
+}

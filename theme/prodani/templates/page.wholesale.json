@@ -1,0 +1,88 @@
+{
+  "sections": {
+    "partner": {
+      "type": "prodani-partner",
+      "blocks": {
+        "p1": {
+          "type": "pillar",
+          "settings": {
+            "figure": "20g",
+            "title": "Protein your members ask for",
+            "text": "A dessert that fits the way your customers already eat — no added sugar, gluten free, real macros."
+          }
+        },
+        "p2": {
+          "type": "pillar",
+          "settings": {
+            "figure": "6",
+            "title": "One product, simple ordering",
+            "text": "A focused flavor lineup instead of a sprawling menu. Easy to stock, easy to reorder."
+          }
+        },
+        "p3": {
+          "type": "pillar",
+          "settings": {
+            "title": "Made in Miami",
+            "text": "Local production, short lead times, and a person on the other end of the email."
+          }
+        },
+        "p4": {
+          "type": "pillar",
+          "settings": {
+            "title": "Merchandising that helps",
+            "text": "We'll work with you on placement and signage so the product actually moves."
+          }
+        },
+        "s1": {
+          "type": "step",
+          "settings": {
+            "title": "Tell us about your business",
+            "text": "Fill in the form below — what you run, where you are, and roughly what volume you're thinking."
+          }
+        },
+        "s2": {
+          "type": "step",
+          "settings": {
+            "title": "We send pricing and lead times",
+            "text": "A short reply from us with wholesale pricing, minimums and how quickly we can deliver."
+          }
+        },
+        "s3": {
+          "type": "step",
+          "settings": {
+            "title": "Start with a trial order",
+            "text": "Most partners begin with a small mixed order to see which flavors move fastest for their customers."
+          }
+        },
+        "s4": {
+          "type": "step",
+          "settings": {
+            "title": "Reorder on your schedule",
+            "text": "Once you know what sells, we set a standing order so you're never caught short."
+          }
+        }
+      },
+      "block_order": ["p1", "p2", "p3", "p4", "s1", "s2", "s3", "s4"],
+      "settings": {
+        "eyebrow": "Wholesale",
+        "heading": "ProDani for cafés & gyms",
+        "heading_tag": "h1",
+        "lede": "<p>Stock Personal Protein Cakes at your café, gym, studio or store. High protein, no added sugar, gluten free — a grab-and-go dessert that fits how your customers actually eat.</p><p>Tell us about your business below and we'll put together pricing and a first order together.</p>",
+        "steps_heading": "How it works",
+        "form_anchor": "apply",
+        "form_heading": "Enquire about wholesale",
+        "form_note": "Tell us a little about your business and we'll come back to you personally with pricing and lead times.",
+        "program_label": "Wholesale",
+        "org_label": "Business name",
+        "types_label": "What kind of business?",
+        "types": "Café / coffee shop, Gym / studio, Health food store, Juice / smoothie bar, Office or corporate, Something else",
+        "volume_label": "Rough monthly volume",
+        "volume": "Not sure yet, Under 50 cakes, 50-200 cakes, 200-500 cakes, 500+ cakes",
+        "message_label": "Tell us about your business",
+        "button_label": "Send enquiry",
+        "success_text": "Thanks — we'll be in touch shortly."
+      }
+    }
+  },
+  "order": ["partner"]
+}

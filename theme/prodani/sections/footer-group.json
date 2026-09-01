@@ -16,7 +16,7 @@
           "type": "menu",
           "settings": {
             "heading": "Company",
-            "links": "Meet your baker|/pages/meet-your-baker\nNutrition|/#nutrition\nContact|/pages/contact"
+            "links": "Meet your baker|/pages/meet-your-baker\nNutrition|/#nutrition\nWholesale|/pages/wholesale\nBecome a partner|/pages/distributors\nContact|/pages/contact"
           }
         },
         "c3": {

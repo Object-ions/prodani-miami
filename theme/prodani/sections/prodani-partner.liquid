@@ -1,0 +1,229 @@
+{%- comment -%}
+  Partner programs — one section, two pages: Wholesale (cafés & gyms) and
+  Distributors / Affiliates. Dani's 2026-08-31 direction puts both on the roadmap
+  (DTC + Build Your Box -> Subscriptions -> Cafés/Gyms -> Retail), so the site should
+  already show the doors even though the programs behind them are not built yet.
+
+  Deliberately LEAD CAPTURE ONLY. There is no B2B pricing tier, no wholesale price
+  list, no commission rate and no affiliate tracking here — inventing any of those
+  would put numbers on the site that nobody has agreed to. The form asks the
+  qualifying questions and Dani replies by hand.
+
+  The form is Shopify's native {% form 'contact' %}, so submissions land in the
+  store's contact email with no app and no backend. A hidden `contact[program]`
+  field carries which page it came from, so wholesale and affiliate enquiries are
+  tellable apart in the inbox.
+{%- endcomment -%}
+
+{{ 'prodani-baker.css' | asset_url | stylesheet_tag }}
+{{ 'prodani-contact.css' | asset_url | stylesheet_tag }}
+{{ 'prodani-partner.css' | asset_url | stylesheet_tag }}
+
+<section class="pd-partner"{% if section.settings.anchor != blank %} id="{{ section.settings.anchor }}"{% endif %}>
+  <div class="pd-wrap">
+
+    <header class="pd-partner__head">
+      {%- if section.settings.eyebrow != blank -%}
+        <p class="pd-eyebrow">{{ section.settings.eyebrow | escape }}</p>
+      {%- endif -%}
+      <{{ section.settings.heading_tag | default: 'h1' }} class="pd-sec-title">{{ section.settings.heading | escape }}</{{ section.settings.heading_tag | default: 'h1' }}>
+      {% render 'prodani-squiggle' %}
+      {%- if section.settings.lede != blank -%}
+        <div class="pd-partner__lede pd-rte">{{ section.settings.lede }}</div>
+      {%- endif -%}
+    </header>
+
+    {%- comment -%} Why partner — short, checkable claims only {%- endcomment -%}
+    {%- assign pillars = 0 -%}
+    {%- for block in section.blocks -%}
+      {%- if block.type == 'pillar' -%}{%- assign pillars = pillars | plus: 1 -%}{%- endif -%}
+    {%- endfor -%}
+    {%- if pillars > 0 -%}
+      <div class="pd-partner__pillars">
+        {%- for block in section.blocks -%}
+          {%- if block.type == 'pillar' -%}
+            <div class="pd-partner__pillar" {{ block.shopify_attributes }}>
+              {%- if block.settings.figure != blank -%}
+                <span class="pd-partner__figure">{{ block.settings.figure | escape }}</span>
+              {%- endif -%}
+              <h3 class="pd-partner__pillar-title">{{ block.settings.title | escape }}</h3>
+              {%- if block.settings.text != blank -%}
+                <p class="pd-partner__pillar-text">{{ block.settings.text | escape }}</p>
+              {%- endif -%}
+            </div>
+          {%- endif -%}
+        {%- endfor -%}
+      </div>
+    {%- endif -%}
+
+    {%- comment -%} How it works {%- endcomment -%}
+    {%- assign steps = 0 -%}
+    {%- for block in section.blocks -%}
+      {%- if block.type == 'step' -%}{%- assign steps = steps | plus: 1 -%}{%- endif -%}
+    {%- endfor -%}
+    {%- if steps > 0 -%}
+      <div class="pd-partner__steps">
+        <h2 class="pd-partner__sub">{{ section.settings.steps_heading | escape }}</h2>
+        <ol class="pd-partner__steplist">
+          {%- assign n = 0 -%}
+          {%- for block in section.blocks -%}
+            {%- if block.type == 'step' -%}
+              {%- assign n = n | plus: 1 -%}
+              <li class="pd-partner__step" {{ block.shopify_attributes }}>
+                <span class="pd-partner__step-n">{{ n }}</span>
+                <span class="pd-partner__step-body">
+                  <b>{{ block.settings.title | escape }}</b>
+                  {%- if block.settings.text != blank -%}<span>{{ block.settings.text | escape }}</span>{%- endif -%}
+                </span>
+              </li>
+            {%- endif -%}
+          {%- endfor -%}
+        </ol>
+      </div>
+    {%- endif -%}
+
+    {%- comment -%} Enquiry form {%- endcomment -%}
+    <div class="pd-partner__formwrap" id="{{ section.settings.form_anchor | default: 'apply' }}">
+      <div class="pd-partner__formhead">
+        <h2 class="pd-partner__sub">{{ section.settings.form_heading | escape }}</h2>
+        {%- if section.settings.form_note != blank -%}
+          <p class="pd-partner__formnote">{{ section.settings.form_note | escape }}</p>
+        {%- endif -%}
+      </div>
+
+      {%- form 'contact', class: 'pd-form pd-form--partner' -%}
+        {%- if form.posted_successfully? -%}
+          <p class="pd-form__ok">{{ section.settings.success_text | escape }}</p>
+        {%- elsif form.errors -%}
+          <p class="pd-form__err">{{ form.errors | default_errors }}</p>
+        {%- endif -%}
+
+        {%- comment -%} Tells wholesale and affiliate enquiries apart in the inbox. {%- endcomment -%}
+        <input type="hidden" name="contact[program]" value="{{ section.settings.program_label | escape }}">
+
+        <label class="pd-field">
+          <span>Your name</span>
+          <input type="text" name="contact[name]" value="{{ form.name }}" autocomplete="name" required>
+        </label>
+        <label class="pd-field">
+          <span>Email</span>
+          <input type="email" name="contact[email]" value="{{ form.email }}" autocomplete="email" required>
+        </label>
+        <label class="pd-field">
+          <span>Phone</span>
+          <input type="tel" name="contact[phone]" value="{{ form.phone }}"
+                 autocomplete="tel" inputmode="tel" placeholder="+1 305 000 0000">
+        </label>
+        <label class="pd-field">
+          <span>{{ section.settings.org_label | default: 'Business name' }}</span>
+          <input type="text" name="contact[business]" autocomplete="organization" required>
+        </label>
+
+        {%- if section.settings.types != blank -%}
+          <label class="pd-field">
+            <span>{{ section.settings.types_label | default: 'What kind of business?' }}</span>
+            <select name="contact[business_type]">
+              {%- assign types = section.settings.types | split: ',' -%}
+              {%- for t in types -%}
+                <option value="{{ t | strip | escape }}">{{ t | strip }}</option>
+              {%- endfor -%}
+            </select>
+          </label>
+        {%- endif -%}
+
+        <label class="pd-field">
+          <span>City / area</span>
+          <input type="text" name="contact[location]" autocomplete="address-level2" placeholder="Miami, FL">
+        </label>
+
+        {%- if section.settings.volume != blank -%}
+          <label class="pd-field">
+            <span>{{ section.settings.volume_label | default: 'Rough monthly volume' }}</span>
+            <select name="contact[volume]">
+              {%- assign vols = section.settings.volume | split: ',' -%}
+              {%- for v in vols -%}
+                <option value="{{ v | strip | escape }}">{{ v | strip }}</option>
+              {%- endfor -%}
+            </select>
+          </label>
+        {%- endif -%}
+
+        <label class="pd-field pd-field--grow">
+          <span>{{ section.settings.message_label | default: 'Tell us about your business' }}</span>
+          <textarea name="contact[body]" rows="6" required>{{ form.body }}</textarea>
+        </label>
+
+        <button type="submit" class="pd-btn pd-btn--pink">{{ section.settings.button_label | escape }}</button>
+      {%- endform -%}
+    </div>
+
+  </div>
+</section>
+
+{% schema %}
+{
+  "name": "Partner program",
+  "tag": "section",
+  "class": "pd-section",
+  "settings": [
+    { "type": "text", "id": "eyebrow", "label": "Eyebrow", "default": "Wholesale" },
+    { "type": "text", "id": "heading", "label": "Heading", "default": "ProDani for cafés & gyms" },
+    {
+      "type": "select", "id": "heading_tag", "label": "Heading level",
+      "options": [{ "value": "h1", "label": "h1 (page)" }, { "value": "h2", "label": "h2 (section)" }],
+      "default": "h1"
+    },
+    { "type": "text", "id": "anchor", "label": "Anchor id" },
+    { "type": "richtext", "id": "lede", "label": "Intro copy" },
+    { "type": "header", "content": "How it works" },
+    { "type": "text", "id": "steps_heading", "label": "Steps heading", "default": "How it works" },
+    { "type": "header", "content": "Enquiry form" },
+    { "type": "text", "id": "form_anchor", "label": "Form anchor id", "default": "apply" },
+    { "type": "text", "id": "form_heading", "label": "Form heading", "default": "Get in touch" },
+    { "type": "text", "id": "form_note", "label": "Note under the form heading", "default": "Tell us a little about your business and we'll come back to you personally." },
+    {
+      "type": "text", "id": "program_label", "label": "Program name (hidden field)",
+      "info": "Sent with the enquiry so wholesale and affiliate submissions are tellable apart in the inbox.",
+      "default": "Wholesale"
+    },
+    { "type": "text", "id": "org_label", "label": "Organisation field label", "default": "Business name" },
+    { "type": "text", "id": "types_label", "label": "Type field label", "default": "What kind of business?" },
+    {
+      "type": "textarea", "id": "types", "label": "Type options",
+      "info": "Comma separated. Leave blank to hide.",
+      "default": "Café / coffee shop, Gym / studio, Health food store, Juice / smoothie bar, Office or corporate, Something else"
+    },
+    { "type": "text", "id": "volume_label", "label": "Volume field label", "default": "Rough monthly volume" },
+    {
+      "type": "textarea", "id": "volume", "label": "Volume options",
+      "info": "Comma separated. Leave blank to hide.",
+      "default": "Not sure yet, Under 50 cakes, 50-200 cakes, 200-500 cakes, 500+ cakes"
+    },
+    { "type": "text", "id": "message_label", "label": "Message field label", "default": "Tell us about your business" },
+    { "type": "text", "id": "button_label", "label": "Button label", "default": "Send enquiry" },
+    { "type": "text", "id": "success_text", "label": "Success message", "default": "Thanks — we'll be in touch shortly." }
+  ],
+  "blocks": [
+    {
+      "type": "pillar",
+      "name": "Selling point",
+      "limit": 4,
+      "settings": [
+        { "type": "text", "id": "figure", "label": "Figure (optional)" },
+        { "type": "text", "id": "title", "label": "Title", "default": "New selling point" },
+        { "type": "text", "id": "text", "label": "Text" }
+      ]
+    },
+    {
+      "type": "step",
+      "name": "Step",
+      "limit": 5,
+      "settings": [
+        { "type": "text", "id": "title", "label": "Title", "default": "New step" },
+        { "type": "text", "id": "text", "label": "Text" }
+      ]
+    }
+  ],
+  "presets": [{ "name": "Partner program" }]
+}
+{% endschema %}
