@@ -111,9 +111,158 @@
         "build_tab_label": "Build your own",
         "curated_tab_label": "Curated boxes"
       }
+    },
+    "badges": {
+      "type": "prodani-badges",
+      "blocks": {
+        "n1": {
+          "type": "badge",
+          "settings": {
+            "label": "High Protein",
+            "icon": "prodani-badge-high-protein"
+          }
+        },
+        "n2": {
+          "type": "badge",
+          "settings": {
+            "label": "Non GMO",
+            "icon": "prodani-badge-non-gmo"
+          }
+        },
+        "n3": {
+          "type": "badge",
+          "settings": {
+            "label": "No Sugar Added",
+            "icon": "prodani-badge-no-sugar-added"
+          }
+        },
+        "n4": {
+          "type": "badge",
+          "settings": {
+            "label": "Gluten Free",
+            "icon": "prodani-badge-gluten-free"
+          }
+        },
+        "n5": {
+          "type": "badge",
+          "settings": {
+            "label": "High Fiber",
+            "icon": "prodani-badge-high-fiber"
+          }
+        },
+        "n6": {
+          "type": "badge",
+          "settings": {
+            "label": "Low Calorie",
+            "icon": "prodani-badge-low-calorie"
+          }
+        }
+      },
+      "block_order": [
+        "n1",
+        "n2",
+        "n3",
+        "n4",
+        "n5",
+        "n6"
+      ],
+      "settings": {
+        "heading": "",
+        "background": "#FBF5E8",
+        "bottom_marquee": false
+      }
+    },
+    "reviews": {
+      "type": "prodani-reviews",
+      "blocks": {
+        "r1": {
+          "type": "review",
+          "settings": {
+            "author": "Itamar",
+            "rating": 5,
+            "title": "I felt the love in every bite",
+            "body": "Simply delicious, 100% clean, absolutely healthy. Real protein. This is what they serve in heaven when you want something good and tasty.",
+            "note": "Verified buyer"
+          }
+        },
+        "r2": {
+          "type": "review",
+          "settings": {
+            "author": "Shalom",
+            "rating": 5,
+            "title": "Can't stop eating this cake",
+            "body": "The cake is absolutely delicious, and the chocolate is incredibly rich and indulgent — every bite is pure perfection.",
+            "note": "Verified buyer"
+          }
+        },
+        "r3": {
+          "type": "review",
+          "settings": {
+            "author": "Shai",
+            "rating": 5,
+            "title": "The healthiest dessert ever",
+            "body": "10/10. The white chocolate one is a must.",
+            "note": "Verified buyer"
+          }
+        }
+      },
+      "block_order": [
+        "r1",
+        "r2",
+        "r3"
+      ],
+      "settings": {
+        "heading": "132 verified reviews",
+        "anchor": "reviews",
+        "eyebrow": "Verified · Judge.me",
+        "show_widget": true,
+        "cta_label": "Build your box",
+        "cta_link": "#box",
+        "more_label": "Read all reviews",
+        "less_label": "Show fewer"
+      }
+    },
+    "faq": {
+      "type": "collapsible-content",
+      "blocks": {
+        "q1": {
+          "type": "collapsible_row",
+          "settings": {
+            "heading": "How does Build Your Box work?",
+            "row_content": "<p>Pick a box size — 6, 12 or 18 cakes — then choose how many of each flavor you want. Mix and match however you like; the box just has to add up to the size you picked. Prefer not to choose? Start from a curated box like Best Sellers or Variety and adjust it from there.</p>"
+          }
+        },
+        "q2": {
+          "type": "collapsible_row",
+          "settings": {
+            "heading": "Can I mix different flavors in one box?",
+            "row_content": "<p>Yes — that's the point. Every box is mix and match across the full flavor lineup, in whatever combination you want.</p>"
+          }
+        },
+        "q3": {
+          "type": "collapsible_row",
+          "settings": {
+            "heading": "How do subscriptions work?",
+            "row_content": "<p>Choose Subscribe &amp; save at checkout and pick how often you'd like a box. You can skip a delivery, pause, change your flavors or cancel at any time from your account — no phone call, no email required.</p>"
+          }
+        }
+      },
+      "block_order": [
+        "q1",
+        "q2",
+        "q3"
+      ],
+      "settings": {
+        "heading": "Questions about building a box",
+        "heading_size": "h2",
+        "open_first_collapsible_row": true
+      }
     }
   },
   "order": [
-    "box"
+    "badges",
+    "box",
+    "faq",
+    "reviews"
   ]
 }
