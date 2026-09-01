@@ -173,7 +173,12 @@ its doors on the site, even though the programs behind them do not exist yet.
 
 Once `push:live` is approved, in admin:
 
-  - Set **Build a Box** (163911598390) Visible + template `build-a-box`.
+  - Set **Build a Box** (163911598390) Visible + template `build-a-box`, **and add
+    "Build Your Box" to the main menu** (admin → Content → Navigation → Main menu,
+    linked to `/pages/build-a-box`). These three go together in one pass: the top nav
+    is a Shopify menu, so it renders on **production** the moment it is saved — adding
+    the item before the page is Visible puts a live nav link on a 404. Moses asked for
+    this placement on 2026-08-31; it is built and waiting, not forgotten.
   - Set **Wholesale** (163914187062) Visible + template `wholesale`.
   - Set **Distributors** (163914219830) Visible + template `distributors`.
   - Publish the six flavor products once names (T17), pricing (T1) and inventory are real.
