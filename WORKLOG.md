@@ -132,9 +132,57 @@ horizontal overflow, panel geometry and every sub-44px tap target. Waits on
 Run: `node scripts/box-mobile-qa.mjs [url]`. Note it needs the Bash sandbox disabled,
 and kill stale debug-port processes first (`pkill -f "remote-debugging-port=9344"`).
 
-**Next:** phase 3 — wholesale ("Cafés & Gyms") and distributor/affiliate lead-capture
-pages, added to nav and footer. Lightweight inquiry forms only; no commission logic or
-B2B pricing tier. Est. half a session.
+### Phase 3 done — partner pages (`feat/v2-wholesale-affiliate`)
+
+Dani's roadmap (DTC + Build Your Box → Subscriptions → Cafés/Gyms → Retail) now has
+its doors on the site, even though the programs behind them do not exist yet.
+
+  - **One `prodani-partner` section drives both pages** — intro, selling points,
+    numbered "how it works", and an enquiry form. Two page templates configure it:
+    `page.wholesale.json` (cafés & gyms; business type + monthly volume) and
+    `page.distributors.json` (trainers, studios, resellers, creators; reach + how
+    they'd sell).
+  - **The form is Shopify's native `{% form 'contact' %}`** — no app, no backend.
+    A hidden `contact[program]` field carries "Wholesale" or "Distributor / affiliate"
+    so the two are tellable apart in the inbox.
+  - **Deliberately lead capture only.** No B2B pricing tier, no wholesale price list,
+    no commission rate, no affiliate tracking. Every one of those is a term nobody has
+    agreed to; the form asks the qualifying questions and Dani replies by hand. The
+    verification asserts the absence of invented pricing and commission percentages,
+    so a future edit that adds one will fail the check rather than quietly ship.
+  - **Footer** "Company" column now links Wholesale and Become a partner. No admin
+    navigation change was needed — the footer block takes manual `Label|/url` lines.
+  - **Pages created in admin**, both **Hidden**: `wholesale` (163914187062) and
+    `distributors` (163914219830).
+
+**Two constraints worth knowing for go-live:**
+
+  1. **The page-template dropdown only lists templates from the LIVE theme.** The new
+     `wholesale` / `distributors` suffixes exist only on staging, so they cannot be
+     assigned yet — both pages currently sit on "Default page". Same gap as T16.
+     Assigning them is a **post-`push:live` step**, added to the checklist below.
+  2. **A Hidden page 404s on the storefront, even under a theme preview.** So the
+     partner section could not be verified through its own URL without making the
+     pages publicly visible — a live-visible change I did not make unasked. Verified
+     instead by temporarily rendering the section on `page.about-us.json` on staging
+     (18/18 checks passed, mobile screenshot reviewed), then reverting and confirming
+     about-us was clean again. Note: **Shopify rejects section ids containing `__`**,
+     which is what the first push errored on.
+
+### Go-live checklist (grew this session)
+
+Once `push:live` is approved, in admin:
+
+  - Set **Build a Box** (163911598390) Visible + template `build-a-box`.
+  - Set **Wholesale** (163914187062) Visible + template `wholesale`.
+  - Set **Distributors** (163914219830) Visible + template `distributors`.
+  - Publish the six flavor products once names (T17), pricing (T1) and inventory are real.
+  - Attach subscription selling plans (T12) — the box builder's subscribe option stays
+    disabled until then.
+
+**Next:** phase 4 — visual reskin to the David Protein / Legendary Foods bar
+(product-forward hero, redesigned product cards, benefits stated up front) plus the
+copy pass. Gated in part on T1/T2/T6/T7. Est. one full session.
 
 ---
 
@@ -1365,7 +1413,7 @@ scripts saved. Paint is still 20% faster, which is the part a visitor feels.
 ## Where this stands
 
 **As of 2026-08-31 — Dani has pivoted the brand to one hero product (Personal
-Protein Cakes; see the 2026-08-31 "later" entry). Phases 1 and 2 of 4 are on
+Protein Cakes; see the 2026-08-31 "later" entry). Phases 1, 2 and 3 of 4 are on
 STAGING. Nothing has been deployed to production.**
 
 - **Live (untouched):** `Prodani - v.1.0.0` (theme 187797995830) on prodanimiami.com.
