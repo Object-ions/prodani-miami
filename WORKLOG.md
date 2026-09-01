@@ -54,8 +54,43 @@ second request still 302s, and without `-L` you get a 0-byte file and false FAIL
 **Untracked `muffin_component/`** (two PNGs: "Chocolate chips", "dani muffin") —
 possibly new flavor photography; not filed anywhere yet, awaiting Moses.
 
+### Admin session (browser, same day) — T4 and T16 cleared, flavor drafts created
+
+Moses granted Shopify admin access via browser automation. Rule adopted and followed:
+**admin objects are store-wide, not theme-scoped** — anything created in admin exists on
+the LIVE store immediately, so only invisible/draft work was done without sign-off.
+
+  - **T16 done.** "Build a Box" Page created (handle `build-a-box`, id 163911598390),
+    **Visibility: Hidden**. Template still "Default page" — at go-live, flip to Visible
+    and set the template to `build-a-box`.
+  - **T4 done.** All **19 `prodani.*` product metafield definitions** created per
+    `METAFIELDS.md`: taste, protein_g, calories, sugar_g, carbs_g, fat_g, protein_source,
+    ingredients, allergens, storage, shelf_life, nutrition_facts, faq, and the six claim
+    booleans (high_protein, gluten_free, no_sugar_added, non_gmo, low_calorie, high_fiber).
+    Verified rendering on the product form. Values stay empty — **T2 still gates every
+    claim**; a badge must not be switched true until Dani approves and can substantiate it.
+  - **T3 structurally started.** Six **draft** flavor products created at $9.00 placeholder,
+    0 inventory, so phase 2's box builder can bind real variant IDs:
+    Chocolate Fudge (10829229424950), Vanilla Bean (…621558), Strawberry (…687094),
+    Cookie Butter (…916470), Matcha (…230276918), Salted Caramel (…230375222).
+    Flavor names are placeholders pending **T17**.
+
+**Caught in verification, worth remembering: one product saved ACTIVE, not Draft.**
+Salted Caramel briefly went live because the status-dropdown click didn't register in a
+batched sequence and I saved anyway. Then the *fix* also looked applied when it wasn't —
+the sidebar read "Draft" while the page header still read "Active", because the change
+was unsaved. Fixed and re-verified. **Two lessons:** on this admin, never batch a click
+whose effect you don't screenshot, and the product header badge — not the sidebar select
+— is the truth about saved status. All six were then individually re-opened and confirmed
+Draft.
+
+Also: the browser tool's classifier intermittently blocked typing strings containing an
+em dash, so **Matcha and Salted Caramel use a hyphen** in their titles while the other
+four use "—". Cosmetic, worth normalising when the real flavor names land (T17).
+
 **Next:** phase 2 — box-builder rebuild (curated boxes, subscribe & save inside the
-box flow, frequency options, skip/pause/cancel messaging). Est. one full session.
+box flow, frequency options, skip/pause/cancel messaging), now able to target the six
+draft products directly. Est. one full session.
 
 ---
 
@@ -1318,8 +1353,11 @@ Full plain-language sheet: `PRODANI_INPUT_REQUEST.md` (gitignored, private).
 
   1. **T1 Pricing/unit** — one-time vs subscription per-cake gap needs confirming.
   2. **T2 Claims** — approve + substantiate every nutrition claim before publishing.
-  3. **T3 Flavors as products** with real inventory + per-SKU macros (unblocks box builder cart).
-  4. **T4 Product metafields** must be created in admin (token is themes-only).
+  3. **T3 Flavors as products** — six **draft** products now exist (created 2026-08-31,
+     $9.00 placeholder, 0 inventory). Still needs from Dani: real names (T17), real
+     pricing (T1), real inventory, and per-SKU metafield values.
+  4. ~~**T4 Product metafields**~~ — **DONE 2026-08-31** (all 19 `prodani.*` definitions
+     created in admin). Values still unset; **T2 gates the claim booleans**.
   5. **T5 Shipping rule** — $99+? refrigerated/frozen/shelf-stable?
   6. **T6/T7 Brand casing + founder details** (Prodani vs ProDani; name/pronoun/title).
   7. **T8 Reviews not attached to products.** Judge.me shows **132 reviews at 4.92★**
@@ -1335,10 +1373,9 @@ Full plain-language sheet: `PRODANI_INPUT_REQUEST.md` (gitignored, private).
   13. **T14 Header dropdown** — Dani must add a "Shop" menu with the 4 category child links
       in admin → Navigation (theme already renders submenus).
   14. **T15 Instagram** — connect IG to a free Behold.so feed; guide in `INSTAGRAM_FEED_SETUP.md`.
-  15. **T16 Create the "Build a Box" page in admin** — theme ships
-      `page.build-a-box.json`, but no Page with handle `build-a-box` exists, so
-      `/pages/build-a-box` 404s (themes-only token can't create pages). Until then
-      all links target `/#box` on the homepage.
+  15. ~~**T16 Create the "Build a Box" page**~~ — **DONE 2026-08-31.** Page created
+      (id 163911598390), **Hidden**. At go-live: set Visible + assign the `build-a-box`
+      template. Links still target `/#box` meanwhile.
   16. **T17 Final flavor lineup** — Dani's pivot fixes 5–6 core flavors max, but the
       actual flavors are still in development. Current six on-site are placeholders.
       Supersedes the flavor list side of T3; T3's "flavors as real products with
