@@ -42,3 +42,16 @@
     box-shadow: none; /* outline buttons keep their flat hover from reviews css */
   }
 }
+
+/* ---- Mobile touch-target sizing (audit 2026-09-01, 44px minimum) ----
+   Hit areas grow via padding + negative margin so the visual design does not
+   shift; only the tappable surface does. */
+@media (max-width: 749px) {
+  .pd-icon-btn { width: 44px; height: 44px; }
+  .pd-nav__cart { min-height: 44px; }
+  .pd-collection__rowlink,
+  .pd-stack__link {
+    padding-block: 10px;
+    margin-block: -10px;
+  }
+}

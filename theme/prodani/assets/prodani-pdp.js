@@ -7,6 +7,13 @@
   var bar = document.querySelector('[data-pd-sticky]');
   if (!bar) return;
 
+  /* The bar renders inside the product section, whose wrapper carries Dawn's
+     scroll-trigger animation classes. Those leave an identity transform on
+     the wrapper, and ANY transformed ancestor becomes the containing block
+     for position:fixed — so the "fixed" bar scrolled with the page. Reparent
+     to <body> so no section-level transform can ever capture it. */
+  document.body.appendChild(bar);
+
   var scope = document.querySelector('product-info') || document;
   var realBtn = scope.querySelector('.product-form__submit');
   var anchor = scope.querySelector('.product-form__buttons') || realBtn;
@@ -16,19 +23,27 @@
   var sPrice = bar.querySelector('[data-pd-sticky-price]');
   var priceEl = scope.querySelector('.price');
 
+  /* The bar lives INSIDE the observed <product-info> subtree (rendered via a
+     custom_liquid block in product.json), and setting textContent always
+     emits a mutation record even when the text is identical. Unconditional
+     writes here therefore re-trigger the observer forever and wedge the main
+     thread — the "PDP defeats capture" bug. Every write below is guarded so
+     the sync converges, and the observer also ignores records that originate
+     from the bar itself. */
   function syncPrice() {
     if (!priceEl || !sPrice) return;
     var pick = priceEl.querySelector('.price-item--sale, .price-item--last, .price-item--regular');
     var text = (pick ? pick.textContent : priceEl.textContent) || '';
     text = text.trim();
-    if (text) sPrice.textContent = text;
+    if (text && sPrice.textContent !== text) sPrice.textContent = text;
   }
 
   function syncDisabled() {
     var disabled = realBtn.hasAttribute('disabled');
-    sBtn.disabled = disabled;
-    var label = (realBtn.querySelector('span') || realBtn).textContent.trim();
-    sBtn.textContent = label || (disabled ? 'Sold out' : 'Add to cart');
+    if (sBtn.disabled !== disabled) sBtn.disabled = disabled;
+    var label = (realBtn.querySelector('span') || realBtn).textContent.trim() ||
+      (disabled ? 'Sold out' : 'Add to cart');
+    if (sBtn.textContent !== label) sBtn.textContent = label;
   }
 
   syncPrice();
@@ -49,7 +64,15 @@
     io.observe(anchor);
   }
 
-  var mo = new MutationObserver(function () { syncPrice(); syncDisabled(); });
+  var mo = new MutationObserver(function (records) {
+    var external = false;
+    for (var i = 0; i < records.length; i++) {
+      if (!bar.contains(records[i].target)) { external = true; break; }
+    }
+    if (!external) return;
+    syncPrice();
+    syncDisabled();
+  });
   mo.observe(scope, {
     subtree: true,
     childList: true,
