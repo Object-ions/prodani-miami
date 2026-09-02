@@ -86,7 +86,11 @@ service-account*.json
 *api_key*
 *private*
 *.private.*
-!*.tokens.css
+# The credential patterns above accidentally swallow the design-system foundation
+# (macOS git is case-insensitive, so *TOKEN* matches prodani-tokens.css). Without
+# this negation the theme's core stylesheet was never committed — a fresh clone
+# was silently broken, and local edits could go stale across branch switches.
+!theme/prodani/assets/prodani-tokens.css
 
 # ---- Logs & temp ----
 *.log
@@ -153,3 +157,4 @@ Prodani_Web_Design_Brief.md
 PRODANI_INPUT_REQUEST.md
 INSTAGRAM_FEED_SETUP.md
 theme/BOX-BUILDER-OPTIONS.md
+PRODANI_QUESTIONS_2026-08-31.md

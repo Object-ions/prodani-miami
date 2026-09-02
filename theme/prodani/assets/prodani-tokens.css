@@ -1,0 +1,156 @@
+/* ============================================================
+   ProDani Miami — brand foundation (v4 "atelier" direction)
+   Single source of truth for colour, type and motion in the theme.
+
+   Direction: editorial luxury — a dessert atelier, not a snack brand.
+   Near-monochrome: porcelain cream carries ~80% of every screen, deep
+   espresso carries all structure, and champagne is the single accent,
+   spent on hairlines and small marks — never on body text over cream.
+   Massive mixed-case Fraunces with italic emphasis; Instrument Sans
+   body; JetBrains Mono for macros and specs. Hairlines instead of
+   fills, film-grain instead of flat digital colour, one calm motion
+   curve everywhere.
+
+   The v2/v3 token names are KEPT and remapped, so every per-section
+   sheet re-skins from here without edits:
+     --pink  → champagne accent    --butter → ecru surface
+     --cocoa → espresso            --script → Fraunces italic alias
+
+   Fonts: Fraunces, Instrument Sans, JetBrains Mono — all OFL/Google,
+   self-hosted latin variable subsets. (Inter Tight remains in assets
+   for the v3 branch but is not declared here.)
+   ============================================================ */
+
+@font-face {
+  font-family: 'Fraunces';
+  font-style: normal;
+  font-weight: 300 400;
+  font-display: swap;
+  src: url('fraunces-var-latin.woff2') format('woff2');
+}
+@font-face {
+  font-family: 'Fraunces';
+  font-style: italic;
+  font-weight: 300 400;
+  font-display: swap;
+  src: url('fraunces-var-italic-latin.woff2') format('woff2');
+}
+/* Alias family so var(--script) swaps every script heading to Fraunces
+   italic without touching the sections that set font-family:var(--script).
+   Declared font-style:normal on purpose — the italic file IS the face. */
+@font-face {
+  font-family: 'Fraunces Italic';
+  font-style: normal;
+  font-weight: 300 400;
+  font-display: swap;
+  src: url('fraunces-var-italic-latin.woff2') format('woff2');
+}
+@font-face {
+  font-family: 'Instrument Sans';
+  font-style: normal;
+  font-weight: 400 700;
+  font-display: swap;
+  src: url('instrument-sans-var-latin.woff2') format('woff2');
+}
+@font-face {
+  font-family: 'JetBrains Mono';
+  font-style: normal;
+  font-weight: 400 500;
+  font-display: swap;
+  src: url('jetbrains-mono-var-latin.woff2') format('woff2');
+}
+
+:root {
+  /* ground — porcelain carries ~80% of every screen */
+  --cream:      #F8F5EF;   /* porcelain — page */
+  --butter:     #EFEAE0;   /* ecru — raised surfaces */
+  --cocoa:      #211913;   /* espresso — all structure and dark bands */
+  --cocoa-deep: #171009;
+  --cocoa-soft: #3A2E24;   /* walnut — panels one step up from espresso */
+
+  /* accent — hairlines, marks and small type on DARK only */
+  --pink:       #C0A472;   /* champagne (accent slot; name kept from v2) */
+  --pink-deep:  #A98D5D;
+  --berry:      #7E6537;   /* text-safe bronze for small text on porcelain (5.1:1) */
+  --leaf:       #67654A;   /* muted olive, text-safe on porcelain */
+  --sage:       #CFC8B8;   /* stone surface tint */
+
+  /* ink */
+  --ink:          #211913;
+  --ink-soft:     rgba(33, 25, 19, .64);
+  --ink-faint:    rgba(33, 25, 19, .44);
+  --on-dark:      #F8F5EF;
+  --on-dark-soft: rgba(248, 245, 239, .72);
+  --line:         rgba(33, 25, 19, .12);   /* the hairline — used instead of fills */
+  --line-dark:    rgba(248, 245, 239, .18);
+
+  /* type */
+  --display: 'Fraunces', 'Iowan Old Style', Georgia, serif;
+  --script:  'Fraunces Italic', Georgia, serif;
+  --sans:    'Instrument Sans', -apple-system, 'Segoe UI', sans-serif;
+  --mono:    'JetBrains Mono', 'SF Mono', ui-monospace, monospace;
+
+  /* motion — one heavy, calm curve everywhere; nothing snaps */
+  --bounce: cubic-bezier(.32, .72, 0, 1);   /* name kept from v2 */
+  --ease:   cubic-bezier(.32, .72, 0, 1);
+  --ease-in: cubic-bezier(.4, 0, 1, 1);
+
+  --pad: clamp(22px, 4.5vw, 64px);
+  --r:      18px;   /* house radius — soft squircle surfaces */
+  --r-soft: 26px;   /* media and large bezels */
+}
+
+/* ---- film grain ----
+   Fixed, pointer-events:none, above content: turns flat digital colour into
+   something closer to paper. 3.5% is at the threshold of perception — remove
+   it and the page suddenly looks cheaper, which is the point. */
+body::after{
+  content:''; position:fixed; inset:0; z-index:2000; pointer-events:none;
+  opacity:.035; mix-blend-mode:multiply;
+  background-image:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='180' height='180'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='.9' numOctaves='2' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='180' height='180' filter='url(%23n)'/%3E%3C/svg%3E");
+}
+
+/* ---- shared primitives ----
+   These must live here, not in a per-section sheet: the hero loaded only
+   prodani-hero.css, so .pd-wrap resolved to nothing and its content sat flush
+   against the viewport edge. */
+.pd-wrap{ width:100%; margin:0 auto; padding-inline:var(--pad); max-width:1580px; }
+.pd-section{ display:block; }
+.pd-rte p{ color:var(--ink-soft); font-size:16.5px; line-height:1.7; margin:0 0 18px; }
+.pd-rte p:last-child{ margin-bottom:0; }
+
+/* Shared section-heading primitives. MUST live here — see v2 note about the
+   stat deck loading only its own sheet. */
+.pd-sec-head{
+  display:flex; align-items:flex-end; justify-content:space-between; gap:24px;
+  flex-wrap:wrap; margin-bottom:clamp(34px,4.5vw,60px);
+}
+.pd-sec-title{ margin:0; color:var(--cocoa); font-family:var(--script); font-weight:300;
+  font-size:clamp(36px,4.8vw,64px); line-height:1.1; letter-spacing:-.02em; }
+.pd-squiggle{ display:none; }
+.pd-eyebrow{ font-family:var(--mono); font-size:10px; font-weight:500; letter-spacing:.22em;
+  text-transform:uppercase; color:var(--ink-faint); }
+.pd-lede{ color:var(--ink-soft); font-size:16.5px; line-height:1.7; margin:0 0 18px; }
+.pd-lede--intro{ color:var(--cocoa); font-family:var(--display); font-weight:340;
+  font-size:clamp(18px,1.6vw,21px); line-height:1.55; }
+
+/* Double-bezel: media and cards sit in a machined tray, never flat on the page.
+   Apply .pd-bezel to a wrapper that contains exactly the media/content box. */
+.pd-bezel{
+  background:rgba(33,25,19,.045);
+  box-shadow:inset 0 0 0 1px rgba(33,25,19,.07);
+  border-radius:calc(var(--r-soft) + 6px); padding:6px;
+}
+.pd-bezel > *{ border-radius:var(--r-soft); overflow:hidden; display:block; }
+
+/* Dawn paints <body> from its own colour scheme, which left every page white
+   outside the content column.
+
+   This rule alone does NOT fix that: Dawn renders <body class="gradient"> and
+   paints it with `.gradient{background:var(--gradient-background)}` — a class
+   selector outranks a bare `body` regardless of load order. The actual fix is
+   in config/settings_data.json, where scheme-1's background feeds
+   --gradient-background and every other Dawn surface.
+
+   This stays as the floor for any page that renders without the gradient class. */
+body{ background-color:var(--cream); }
