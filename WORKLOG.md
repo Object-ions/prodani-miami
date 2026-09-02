@@ -4,6 +4,43 @@ Newest entries first. One entry per working session — what was done, what was 
 
 ---
 
+## 2026-09-01 — PDP FREEZE ROOT-CAUSED AND FIXED; mobile QA unblocked
+
+**The "PDP defeats headless capture" blocker is solved, and it was never a
+testing problem — the page was genuinely wedging its main thread for every
+visitor.** Reproduced in a visible Chrome tab: navigation completes, then the
+renderer hard-freezes (CDP evaluate times out, screenshots fail).
+
+**Root cause (prodani-pdp.js):** the sticky-ATC script observes the whole
+`<product-info>` subtree (childList+characterData+attributes) and its callback
+unconditionally wrote `sPrice.textContent` / `sBtn.textContent`. The bar is
+rendered INSIDE that subtree (custom_liquid block in product.json), and
+setting textContent always emits a mutation record even for identical text →
+infinite observer loop. Fix: value-guard every write + ignore mutation records
+originating inside the bar. Verified: PDP now evaluates instantly, sticky bar
+present, price synced, macros render, no overflow.
+
+**Second bug found behind the first:** Dawn's `animations_reveal_on_scroll`
+leaves an identity transform on `product__info-wrapper`; a transformed
+ancestor becomes the containing block for `position:fixed`, so the "fixed"
+sticky bar scrolled away with the page. Fix: reparent the bar to `<body>` at
+script init. Verified: bar stays pinned (constant viewport position across
+scroll), parent BODY.
+
+**Mobile audit (Chrome window at 485px — macOS min width; 390 iframe attempt
+went cross-origin via Shopify redirect):** home + PDP: no horizontal overflow;
+collection filter "overflow" is the intended scrollable chip row; macros +
+subscribe widget present on PDP at mobile width. Fixed: 44px touch targets
+(icon buttons, nav cart, collection/stack links) in `prodani-hover.css`.
+The 480px-only media rules were inspected by hand (benign grid collapses).
+
+**Still needs one human check in a FOCUSED tab:** sticky-bar show/hide runs on
+IntersectionObserver, and hidden tabs pause rAF + IO delivery — unverifiable
+headlessly by design. Scroll a real PDP past the buy button.
+
+Draft-product note: the six flavor PDPs 404 on the storefront (drafts) — QA
+ran on `personal-carrot-cake-copy`.
+
 ## 2026-09-01 — contact form colors rebuilt for blend
 
 Moses flagged the contact form: near-black input wells with grey outlines on
