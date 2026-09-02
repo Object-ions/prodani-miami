@@ -4,6 +4,23 @@ Newest entries first. One entry per working session — what was done, what was 
 
 ---
 
+## 2026-09-02 — scope-of-work email to Dani drafted (NOT sent)
+
+Gmail draft created in the existing "5 looks" thread (draft r-1424108587713227908,
+reply to Dani's direction email). **Moses reviews and sends.** Contents:
+
+  - One preview link (188079931702) + the 4-circle skin switcher explained;
+    blend recommended as the #1+#3+#4 answer Dani asked for.
+  - 15-item delivered-scope list framed as the agreed **$800** (retroactive):
+    audit → redesign → Build Your Box flow → curated boxes → subscribe-in-flow
+    → wholesale/distributor pages → macro cards → six flavor slots → 5 design
+    directions + blend + switcher → motion → mobile → PDP freeze fix → 132
+    reviews → contact form → live store never touched.
+  - Four asks on Dani: product photos (#1), skin pick, the questionnaire
+    answers, Instagram access.
+  - Included follow-through once inputs arrive: GA4, subscriptions app,
+    newsletter/popup wiring, attach reviews to products, content load, go-live.
+
 ## 2026-09-02 — mobile polish batch: Moses's 10-point review, all shipped
 
 All on preview 188079931702, merged to main, branch deleted. Verified live at
