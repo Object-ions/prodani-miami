@@ -11,8 +11,8 @@
 }
 .pd-bleed__word{
   display:flex; width:max-content; white-space:nowrap;
-  font-family:var(--sans); font-weight:800; text-transform:uppercase;
-  font-size:clamp(72px, 17vw, 240px); line-height:.78; letter-spacing:-.03em;
+  font-family:var(--display); font-weight:340; text-transform:uppercase;
+  font-size:clamp(72px, 17vw, 240px); line-height:.82; letter-spacing:.01em;
 
   /* The word is ONE colour the whole way down. Splitting the letters as well as
      the ground drew a hard line straight through the glyphs, which read as a

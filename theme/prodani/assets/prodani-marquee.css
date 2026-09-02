@@ -3,3 +3,12 @@
 /* Rides the bottom of the hero, over the footage — no band of flat cocoa between
    the video and the lettering. */
 .pd-marquee--hero{ position:relative; z-index:3; flex:0 0 auto; margin-bottom:-1px; }
+
+/* v4: the hero ribbon is a silent hem — the wave IS the boundary, no ticker.
+   The stroke paints in page-cream so the chocolate above simply ends on the curve. */
+.pd-marquee--hero path[stroke]{ stroke:var(--cream); }
+.pd-marquee--hero text{ display:none; }
+
+/* v4: the shout ribbon whispers — ecru band, espresso mono, tone-on-tone. */
+.pd-marquee--shout path[stroke]{ stroke:var(--butter); }
+.pd-marquee--shout text{ fill:var(--cocoa); }
