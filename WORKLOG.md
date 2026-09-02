@@ -20,6 +20,10 @@ reply to Dani's direction email). **Moses reviews and sends.** Contents:
     answers, Instagram access.
   - Included follow-through once inputs arrive: GA4, subscriptions app,
     newsletter/popup wiring, attach reviews to products, content load, go-live.
+  - Terms added per Moses: the footer credit line ("Designed and developed by
+    Switch Case Studio" — already built into footer-group.json) stays; Dani
+    writes a Google Business review for Switch Case Studio; and a testimonial
+    + photo for the Switch Case Studio website.
 
 ## 2026-09-02 — mobile polish batch: Moses's 10-point review, all shipped
 
