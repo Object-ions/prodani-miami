@@ -1,3 +1,12 @@
+/*
+ * ------------------------------------------------------------
+ * IMPORTANT: The contents of this file are auto-generated.
+ *
+ * This file may be updated by the Shopify admin theme editor
+ * or related systems. Please exercise caution as any changes
+ * made to this file may be overwritten.
+ * ------------------------------------------------------------
+ */
 {
   "current": {
     "logo_width": 90,
@@ -5,46 +14,46 @@
     "color_schemes": {
       "scheme-1": {
         "settings": {
-          "background": "#FBF5E8",
+          "background": "#FAF4E9",
           "background_gradient": "",
-          "text": "#48312A",
-          "button": "#48312A",
-          "button_label": "#FBF5E8",
-          "secondary_button_label": "#48312A",
-          "shadow": "#48312A"
+          "text": "#362619",
+          "button": "#362619",
+          "button_label": "#FAF4E9",
+          "secondary_button_label": "#362619",
+          "shadow": "#362619"
         }
       },
       "scheme-2": {
         "settings": {
-          "background": "#FFFBE5",
+          "background": "#F3ECDD",
           "background_gradient": "",
-          "text": "#48312A",
-          "button": "#48312A",
-          "button_label": "#FFFBE5",
-          "secondary_button_label": "#48312A",
-          "shadow": "#48312A"
+          "text": "#362619",
+          "button": "#362619",
+          "button_label": "#F3ECDD",
+          "secondary_button_label": "#362619",
+          "shadow": "#362619"
         }
       },
       "scheme-3": {
         "settings": {
-          "background": "#48312A",
+          "background": "#362619",
           "background_gradient": "",
-          "text": "#FBF5E8",
-          "button": "#FDC3D4",
-          "button_label": "#48312A",
-          "secondary_button_label": "#FBF5E8",
-          "shadow": "#3A2721"
+          "text": "#FAF4E9",
+          "button": "#E0A458",
+          "button_label": "#362619",
+          "secondary_button_label": "#FAF4E9",
+          "shadow": "#241811"
         }
       },
       "scheme-4": {
         "settings": {
-          "background": "#3A2721",
+          "background": "#54402D",
           "background_gradient": "",
-          "text": "#FBF5E8",
-          "button": "#FDC3D4",
-          "button_label": "#48312A",
-          "secondary_button_label": "#FBF5E8",
-          "shadow": "#3A2721"
+          "text": "#FAF4E9",
+          "button": "#E0A458",
+          "button_label": "#362619",
+          "secondary_button_label": "#FAF4E9",
+          "shadow": "#241811"
         }
       },
       "scheme-5": {

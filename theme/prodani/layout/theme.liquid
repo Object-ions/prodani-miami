@@ -287,8 +287,8 @@
 
     {{ 'base.css' | asset_url | stylesheet_tag }}
     {%- comment -%} Brand foundation — must win over base.css, so it loads after. {%- endcomment -%}
-    {{ 'fugaz-one-latin.woff2' | asset_url | preload_tag: as: 'font', type: 'font/woff2', crossorigin: true }}
-    {{ 'damion-latin.woff2' | asset_url | preload_tag: as: 'font', type: 'font/woff2', crossorigin: true }}
+    {{ 'fraunces-var-latin.woff2' | asset_url | preload_tag: as: 'font', type: 'font/woff2', crossorigin: true }}
+    {{ 'inter-tight-var-latin.woff2' | asset_url | preload_tag: as: 'font', type: 'font/woff2', crossorigin: true }}
     {{ 'prodani-tokens.css' | asset_url | stylesheet_tag }}
     <link rel="stylesheet" href="{{ 'component-cart-items.css' | asset_url }}" media="print" onload="this.media='all'">
 
@@ -412,5 +412,11 @@
     {%- if settings.cart_type == 'drawer' -%}
       <script src="{{ 'cart-drawer.js' | asset_url }}" defer="defer"></script>
     {%- endif -%}
+
+    {%- comment -%} DEMO ONLY — palette skin switcher for the client review.
+        Remove these two lines (and both prodani-skins.* assets) before this
+        theme is ever promoted to staging or live. {%- endcomment -%}
+    {{ 'prodani-skins.css' | asset_url | stylesheet_tag }}
+    <script src="{{ 'prodani-skins.js' | asset_url }}" defer="defer"></script>
   </body>
 </html>

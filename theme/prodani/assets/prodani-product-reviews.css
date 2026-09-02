@@ -5,11 +5,11 @@
    controls — and leaves the widget's internal structure alone. Anything that
    depends on a particular nesting order is avoided on purpose.
 
-   Contrast, on the cream page (#FBF5E8):
-     body copy   ink #48312A            -> 9.83:1
+   Contrast, on the cream page (#FAF4E9):
+     body copy   ink #362619            -> 9.83:1
      meta / date ink-soft 68%           -> 5.29:1
-     stars       berry #C4587E          -> 4.55:1  (non-text, needs 3:1; clears as text too)
-     button      cream on cocoa #48312A -> 9.83:1
+     stars       berry #8A5A24          -> 4.55:1  (non-text, needs 3:1; clears as text too)
+     button      cream on cocoa #362619 -> 9.83:1
      hairline    line 14%               -> decorative only, never the sole cue */
 
 .pd-prevs{

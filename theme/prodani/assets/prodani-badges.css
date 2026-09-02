@@ -19,12 +19,13 @@
 .pd-badge-item{
   display:flex; flex-direction:column; align-items:center; gap:12px; text-align:center;
 }
-/* Cocoa disc completes the clipped circle and sets a perfectly round silhouette.
-   Its colour is the exact circle colour in the slices (#48312A = --cocoa), so the
-   slice's own cut edge disappears into it. */
+/* Disc completes the clipped circle and sets a perfectly round silhouette.
+   Pinned to the literal slice colour #362619 — the PNGs bake that brown in, and
+   the v3 --cocoa token (#2C1F18) no longer matches it; a token here would show a
+   two-tone circle. Follows the artwork, not the palette. */
 .pd-badge-item__disc{
   width:clamp(72px,7.5vw,108px); aspect-ratio:1; border-radius:50%;
-  background:var(--cocoa); overflow:hidden; display:grid; place-items:center;
+  background:#362619; overflow:hidden; display:grid; place-items:center;
   transition:transform .45s var(--bounce);
 }
 .pd-badge-item__icon{
@@ -59,3 +60,17 @@
 
 /* Bottom marquee closing the pink band into cream. -1px kills the hairline seam. */
 .pd-marquee--badges{ display:block; margin-top:clamp(6px,1.5vw,18px); margin-bottom:-1px; }
+
+/* v4: the value strip goes text-only — mono caps in a hairline-ruled row.
+   The cocoa-disc PNGs belong to the playful direction and stay hidden here. */
+.pd-badge-item__disc{ display:none; }
+.pd-badges__row{ gap:0; border-top:1px solid var(--line); border-bottom:1px solid var(--line); }
+.pd-badges__row .pd-badge-item{ padding:clamp(18px,2.2vw,30px) 8px; transform:none !important; }
+.pd-badges__row .pd-badge-item + .pd-badge-item{ border-left:1px solid var(--line); }
+@media (max-width:900px){
+  .pd-badges__row .pd-badge-item:nth-child(3n+1){ border-left:0; }
+  .pd-badges__row .pd-badge-item{ border-top:0; }
+}
+.pd-badge-item__label{ font-family:var(--mono); font-weight:500; font-size:clamp(10px,.9vw,12px);
+  letter-spacing:.18em; text-transform:uppercase; color:var(--ink-soft); }
+.pd-badges__row--wave{ padding-bottom:0; }

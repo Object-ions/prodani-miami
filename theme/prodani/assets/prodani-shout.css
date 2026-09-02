@@ -15,7 +15,7 @@
 .pd-shout__media{ position:relative; min-width:0; }
 .pd-shout__frame{
   border-radius:calc(var(--r) + 6px); overflow:hidden;
-  background:rgba(251,245,232,.06); aspect-ratio:3/4;
+  background:rgba(250, 244, 233,.06); aspect-ratio:3/4;
 }
 .pd-shout__frame img{ width:100%; height:100%; object-fit:cover; display:block; }
 @media (max-width:980px){
@@ -28,6 +28,7 @@
 /* Hangs in the gap between the copy and the photo — filling the dead space that
    used to sit there, rather than covering the subject of the picture. */
 .pd-badge{
+  display:none;
   position:absolute; width:168px; height:168px; z-index:4; display:grid; place-items:center;
   left:clamp(-164px,-10vw,-112px); top:50%; margin-top:-84px;
 }

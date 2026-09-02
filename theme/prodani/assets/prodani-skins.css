@@ -1,0 +1,114 @@
+/* ============================================================
+   ProDani — demo skin switcher (client review only, never ships live).
+   Four floating circles, bottom-left. Each skin re-points the token
+   variables from prodani-tokens.css; prodani-skins.js additionally
+   rewrites the handful of literal hexes that sections render inline
+   from their settings. Remove the render in layout/theme.liquid (and
+   these two assets) before this theme is ever promoted.
+   ============================================================ */
+
+/* Fonts the non-default skins need. Fugaz/Damion already ship in assets;
+   Konnect comes from the store's own Files CDN (same URLs as v2 tokens). */
+@font-face {
+  font-family: 'Space Grotesk';
+  font-style: normal;
+  font-weight: 300 700;
+  font-display: swap;
+  src: url('space-grotesk-var-latin.woff2') format('woff2');
+}
+@font-face {
+  font-family: 'Konnect';
+  font-style: normal;
+  font-weight: 500;
+  font-display: swap;
+  src: url('https://cdn.shopify.com/s/files/1/0792/9475/9222/files/KonnectMedium.otf?v=1689183432') format('opentype');
+}
+@font-face {
+  font-family: 'Konnect';
+  font-style: normal;
+  font-weight: 600;
+  font-display: swap;
+  src: url('https://cdn.shopify.com/s/files/1/0792/9475/9222/files/KonnectSemiBold.otf?v=1689183432') format('opentype');
+}
+@font-face {
+  font-family: 'Konnect';
+  font-style: normal;
+  font-weight: 700;
+  font-display: swap;
+  src: url('https://cdn.shopify.com/s/files/1/0792/9475/9222/files/KonnectBold.otf?v=1689183432') format('opentype');
+}
+
+/* ---- skin: calm (v4 atelier as pushed to 188025209142) ---- */
+html[data-pd-skin="calm"] {
+  --cream: #F8F5EF; --butter: #EFEAE0;
+  --cocoa: #211913; --cocoa-deep: #171009; --cocoa-soft: #3A2E24;
+  --pink: #C0A472; --pink-deep: #A98D5D; --berry: #7E6537;
+  --leaf: #67654A; --sage: #CFC8B8;
+  --ink: #211913; --ink-soft: rgba(33, 25, 19, .64); --ink-faint: rgba(33, 25, 19, .44);
+  --on-dark: #F8F5EF; --on-dark-soft: rgba(248, 245, 239, .72);
+  --line: rgba(33, 25, 19, .12); --line-dark: rgba(248, 245, 239, .18);
+}
+
+/* ---- skin: bold (v5 noir as pushed to 188026552630) ---- */
+html[data-pd-skin="bold"] {
+  --cream: #0E0E10; --butter: #17161B;
+  --cocoa: #232229; --cocoa-deep: #08080A; --cocoa-soft: #22212A;
+  --pink: #CDEB4B; --pink-deep: #A9C43A; --berry: #B6D93F;
+  --leaf: #9FBF8A; --sage: #9FBF8A;
+  --ink: #F3F1EC; --ink-soft: rgba(243, 241, 236, .66); --ink-faint: rgba(243, 241, 236, .6);
+  --on-dark: #F3F1EC; --on-dark-soft: rgba(243, 241, 236, .66);
+  --line: rgba(243, 241, 236, .14); --line-dark: rgba(243, 241, 236, .14);
+  --display: 'Space Grotesk', 'Helvetica Neue', sans-serif;
+  --script: 'Space Grotesk', -apple-system, sans-serif;
+  --sans: 'Space Grotesk', -apple-system, 'Segoe UI', sans-serif;
+  --r: 2px; --r-soft: 3px;
+}
+html[data-pd-skin="bold"] body::after { display: none; }   /* no film grain on noir */
+html[data-pd-skin="bold"] .pd-sec-title { letter-spacing: -.035em; font-weight: 300; }
+
+/* ---- skin: current (v2 bakery, what staging shows today) ---- */
+html[data-pd-skin="current"] {
+  --cream: #FBF5E8; --butter: #FFFBE5;
+  --cocoa: #48312A; --cocoa-deep: #3A2721; --cocoa-soft: #5C4239;
+  --pink: #FDC3D4; --pink-deep: #F79CBB; --berry: #C4587E;
+  --leaf: #7FA86B; --sage: #EFE5D2;
+  --ink: #48312A; --ink-soft: rgba(72, 49, 42, .68); --ink-faint: rgba(72, 49, 42, .42);
+  --on-dark: #FBF5E8; --on-dark-soft: rgba(251, 245, 232, .72);
+  --line: rgba(72, 49, 42, .14); --line-dark: rgba(251, 245, 232, .18);
+  --display: 'Fugaz One', 'Trebuchet MS', sans-serif;
+  --script: 'Damion', 'Brush Script MT', cursive;
+  --sans: 'Konnect', -apple-system, 'Segoe UI', sans-serif;
+  --bounce: cubic-bezier(.34, 1.56, .64, 1);
+  --r: 22px; --r-soft: 30px;
+}
+html[data-pd-skin="current"] body::after { display: none; } /* v2 had no grain */
+
+/* ---- the widget ---- */
+.pd-skins {
+  position: fixed; left: 18px; bottom: 18px; z-index: 4000;
+  display: flex; gap: 10px; align-items: center;
+  padding: 8px 10px; border-radius: 999px;
+  background: rgba(20, 16, 12, .78); backdrop-filter: blur(6px);
+  box-shadow: 0 6px 24px rgba(0, 0, 0, .25);
+}
+.pd-skins__dot {
+  width: 30px; height: 30px; border-radius: 50%;
+  border: 2px solid rgba(255, 255, 255, .35);
+  cursor: pointer; padding: 0; flex: none;
+  transition: transform .15s ease, border-color .15s ease;
+}
+.pd-skins__dot:hover { transform: scale(1.15); }
+.pd-skins__dot[aria-pressed="true"] { border-color: #fff; transform: scale(1.15); }
+/* each dot: ground / structure / accent, as a 3-band gradient */
+.pd-skins__dot--blend   { background: linear-gradient(135deg, #FAF4E9 45%, #E0A458 45% 62%, #362619 62%); }
+.pd-skins__dot--calm    { background: linear-gradient(135deg, #F8F5EF 45%, #C0A472 45% 62%, #211913 62%); }
+.pd-skins__dot--bold    { background: linear-gradient(135deg, #0E0E10 45%, #CDEB4B 45% 62%, #232229 62%); }
+.pd-skins__dot--current { background: linear-gradient(135deg, #FBF5E8 45%, #F79CBB 45% 62%, #48312A 62%); }
+.pd-skins__label {
+  color: rgba(255, 255, 255, .85); font: 500 10px/1 'JetBrains Mono', monospace;
+  letter-spacing: .14em; text-transform: uppercase; padding-right: 4px;
+}
+@media (max-width: 749px) {
+  .pd-skins { left: 12px; bottom: 12px; padding: 6px 8px; }
+  .pd-skins__dot { width: 26px; height: 26px; }
+}
