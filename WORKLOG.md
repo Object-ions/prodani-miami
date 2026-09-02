@@ -4,6 +4,29 @@ Newest entries first. One entry per working session — what was done, what was 
 
 ---
 
+## 2026-09-01 — single-version consolidation: blend merged to main, all other branches deleted
+
+Per explicit request: **`main` is now the only branch, local and remote.** The
+blend (v8: current content + ivory/chocolate/caramel palette + demo skin
+switcher) is merged into `main`; preview theme 188079931702 unchanged.
+
+Deleted from origin and locally: `design/refined-v3`, `design/luxe-v4`,
+`design/noir-v5`, `design/cabana-v6`, `design/blend-v7`, `design/blend-v8`,
+`feat/v2-box-builder`, `feat/v2-hero-product-model`, `feat/v2-visual-direction`,
+`feat/v2-wholesale-affiliate`. All were fully contained in `main`'s history
+except two, checked before deletion:
+
+  - `noir-v5` (bold/dark variant) — palette survives in the skin switcher, the
+    live preview theme 188026552630, and the worklog.
+  - `cabana-v6` — its unique WORKLOG entry (client decision pack, 2026-08-30)
+    was salvaged into this file below before deletion; the v6 cabana styling
+    itself is gone from git (theme 188026552630-era library entry only).
+
+**Note:** `main` now carries the demo skin switcher (DEMO ONLY block in
+`layout/theme.liquid`) — strip it before any `push:staging` / `push:live`.
+The Shopify theme library was NOT touched: the variant preview themes and the
+before-theme 154419691830 (case-study anchor — do not delete) still exist.
+
 ## 2026-09-01 — blend rebuilt on current content (blend-v8); v7 was stale
 
 **Moses caught a regression:** the blend preview served "70+ five-star reviews" —
@@ -813,6 +836,33 @@ Corrected the review count everywhere it matters: **Judge.me shows 132 reviews a
 
 **Status:** still NOT in production. Live store = Prodani - v.1.0.0 (untouched). All work on
 the staging theme (187797799222) + GitHub main.
+
+## 2026-08-30 (cont. 4) — Client decision pack: direction URLs, email, questionnaire docx
+
+*(Salvaged 2026-09-01 from the `design/cabana-v6` branch before its deletion — this entry
+was only ever committed there.)*
+
+Prepared the pack the user sends Dani to choose a direction and fill the missing data.
+All files are client-facing and **gitignored** (they carry her prices, phone numbers,
+addresses) — they live in this worktree only, at:
+
+  - `PRODANI_DESIGN_DIRECTIONS.md` — the five preview-theme URLs with plain-language
+    descriptions (current v2 / refined v3 / luxe v4 / noir v5 / cabana v6). v3+v4 were
+    screenshotted first so the descriptions are accurate, not guessed.
+  - `email-to-dani.md` — very-simple-language email: the 5 links described as "outfits",
+    pick-a-favorite + mix-and-match invitation, plus the questionnaire attachment.
+  - `docx-build/Prodani-Website-Questions.docx` — the input questionnaire converted to a
+    typeable Word form (built with the `docx` npm lib; no pandoc on this machine). Final
+    revision per the user: no emojis, 8 questions (dropped the claims question, the
+    DESERTS-logo item — user fixes it himself — and the admin-access question — user has
+    full access), reviews question rewritten plainly, closer points at Q1/Q2/Q5.
+
+**Flag on record:** dropping the claims question means no explicit yes/no from Dani on
+gluten-free / no-added-sugar / non-GMO — the badges the site displays. Must be confirmed
+verbally before any launch.
+
+**Cross-session note:** replied to a peer session hunting for a lost GHL-bot session —
+not this one; pointed it at the `ghl-system-build-44` peer seen in an earlier listing.
 
 ---
 
