@@ -31,7 +31,7 @@
 .pd-box__flavors{ display:grid; grid-template-columns:repeat(auto-fill,minmax(150px,1fr)); gap:14px; }
 .pd-box__flavor{ background:var(--butter); border:1px solid var(--line); border-radius:var(--r); padding:10px;
   display:flex; flex-direction:column; gap:10px; transition:border-color .25s, box-shadow .25s; }
-.pd-box__flavor.is-active{ border-color:var(--cocoa); box-shadow:0 8px 22px rgba(72,49,42,.10); }
+.pd-box__flavor.is-active{ border-color:var(--cocoa); box-shadow:0 8px 22px rgba(54, 38, 25,.10); }
 .pd-box__flavor.is-soldout{ opacity:.55; }
 .pd-box__flavor-media{ position:relative; width:100%; aspect-ratio:1; border-radius:calc(var(--r) - 6px); overflow:hidden;
   background:var(--butter); margin-bottom:2px; }
@@ -73,7 +73,7 @@
   font-family:var(--sans); font-weight:700; font-size:16px; min-height:56px; cursor:pointer;
   transition:transform .4s var(--bounce), background .3s; }
 .pd-box__add:hover:not([disabled]){ transform:translateY(-2px); background:var(--cocoa-deep); }
-.pd-box__add[disabled]{ background:var(--cocoa-soft); color:rgba(251,245,232,.7); cursor:default; }
+.pd-box__add[disabled]{ background:var(--cocoa-soft); color:rgba(250, 244, 233,.7); cursor:default; }
 .pd-box__note{ margin:12px 0 0; font-size:13px; color:var(--ink-faint); }
 
 /* The UA stylesheet's [hidden]{display:none} loses to any author `display`, and both
@@ -96,7 +96,7 @@
   padding:14px; background:var(--butter); border:1px solid var(--line); border-radius:var(--r);
   cursor:pointer; transition:transform .18s ease, border-color .18s ease, box-shadow .18s ease; }
 .pd-box__curated-card:hover{ transform:translateY(-2px); border-color:var(--pink-deep); }
-.pd-box__curated-card.is-active{ border-color:var(--cocoa); box-shadow:0 8px 22px rgba(72,49,42,.10); }
+.pd-box__curated-card.is-active{ border-color:var(--cocoa); box-shadow:0 8px 22px rgba(54, 38, 25,.10); }
 .pd-box__curated-card:focus-visible{ outline:3px solid var(--pink-deep); outline-offset:2px; }
 .pd-box__curated-media{ display:block; width:100%; aspect-ratio:16/10; border-radius:calc(var(--r) - 6px);
   overflow:hidden; background:var(--cream); }

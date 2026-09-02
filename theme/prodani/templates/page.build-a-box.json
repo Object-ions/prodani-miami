@@ -8,7 +8,7 @@
           "settings": {
             "name": "Chocolate Fudge",
             "macro": "21g protein · 180 cal",
-            "color": "#48312A",
+            "color": "#362619",
             "sold_out": false,
             "product": "personal-protein-cake-chocolate-fudge"
           }
@@ -18,7 +18,7 @@
           "settings": {
             "name": "Vanilla Bean",
             "macro": "20g protein · 170 cal",
-            "color": "#FFFBE5",
+            "color": "#F3ECDD",
             "sold_out": false,
             "product": "personal-protein-cake-vanilla-bean"
           }
@@ -28,7 +28,7 @@
           "settings": {
             "name": "Strawberry",
             "macro": "19g protein · 175 cal",
-            "color": "#FDC3D4",
+            "color": "#E0A458",
             "sold_out": false,
             "product": "personal-protein-cake-strawberry"
           }
@@ -38,7 +38,7 @@
           "settings": {
             "name": "Cookie Butter",
             "macro": "20g protein · 190 cal",
-            "color": "#C4587E",
+            "color": "#8A5A24",
             "sold_out": false,
             "product": "personal-protein-cake-cookie-butter"
           }
@@ -48,7 +48,7 @@
           "settings": {
             "name": "Matcha",
             "macro": "20g protein · 165 cal",
-            "color": "#7FA86B",
+            "color": "#6D6B48",
             "sold_out": false,
             "product": "personal-protein-cake-matcha"
           }
@@ -58,7 +58,7 @@
           "settings": {
             "name": "Salted Caramel",
             "macro": "21g protein · 185 cal",
-            "color": "#5C4239",
+            "color": "#54402D",
             "sold_out": false,
             "product": "personal-protein-cake-salted-caramel"
           }
@@ -168,7 +168,7 @@
       ],
       "settings": {
         "heading": "",
-        "background": "#FBF5E8",
+        "background": "#FAF4E9",
         "bottom_marquee": false
       }
     },

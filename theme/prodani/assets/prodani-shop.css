@@ -47,11 +47,11 @@ a.pd-filter{ text-decoration:none; display:inline-flex; align-items:center; }
 .pd-card{
   background:var(--butter); border-radius:var(--r); padding:13px 13px 18px;
   display:flex; flex-direction:column; position:relative; text-decoration:none; color:inherit;
-  box-shadow:0 2px 0 rgba(72,49,42,.07);
+  box-shadow:0 2px 0 rgba(54, 38, 25,.07);
   transition:transform .5s var(--bounce), box-shadow .4s ease;
 }
 .pd-card[hidden]{ display:none; }
-.pd-card:hover{ transform:translateY(-7px) rotate(-.7deg); box-shadow:0 20px 38px rgba(72,49,42,.16); }
+.pd-card:hover{ transform:translateY(-7px) rotate(-.7deg); box-shadow:0 20px 38px rgba(54, 38, 25,.16); }
 .pd-card__media{
   position:relative; aspect-ratio:1/1; overflow:hidden;
   border-radius:calc(var(--r) - 8px); margin-bottom:15px;
