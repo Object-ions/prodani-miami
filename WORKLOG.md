@@ -4,6 +4,22 @@ Newest entries first. One entry per working session — what was done, what was 
 
 ---
 
+## 2026-09-01 — contact form colors rebuilt for blend
+
+Moses flagged the contact form: near-black input wells with grey outlines on
+the walnut panel. Root cause was archaeological — `prodani-contact.css` was
+written for v3's mocha palette (its header even documented the old contrast
+math, "the 55% cream outline is load-bearing"), and two palette swaps later
+the panel darkened while the field kept a v3 hex.
+
+Rebuilt: input wells are now cream with chocolate ink (13.2:1), labels cream
+(caramel stays off panel text — 4.5:1 borderline, per v4's own note), focus
+ring toffee, select chevron ink, transparent borders (fields self-delineate at
+8.9:1). `--pd-panel`/`--pd-field` now route through tokens, so the demo skins
+re-derive correct schemes (noir gets dark fields + light ink automatically).
+Partner/wholesale forms inherit. Verified live: computed styles + screenshot.
+On preview 188079931702; merged to main, branch deleted.
+
 ## 2026-09-01 — Build a Box emphasis + hover layer (Moses feedback round)
 
 Feedback: motion is right ("gentle... I like it") but hovers felt missing and
