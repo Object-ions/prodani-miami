@@ -4,6 +4,22 @@ Newest entries first. One entry per working session — what was done, what was 
 
 ---
 
+## 2026-09-01 — demo skin switcher on the blend preview
+
+Moses asked for in-page palette comparison instead of juggling preview links.
+The blend preview (188079931702) now has four floating circles bottom-left:
+**Blend (caramel, default) / Calm (#3 champagne) / Bold (#4 noir) / Current (#1
+bakery pink)**. Click to reskin, choice persists across pages (localStorage).
+
+How: per-skin CSS-variable overrides on `html[data-pd-skin]`
+(`prodani-skins.css`) carry ~95%; `prodani-skins.js` rewrites the literal hexes
+that sections render inline from settings (originals cached, switches lossless).
+Space Grotesk pulled from the noir theme's CDN into assets; Konnect loads from
+the store's Files CDN. **Marked DEMO ONLY in `layout/theme.liquid` — strip the
+two render lines + both `prodani-skins.*` assets before this theme is ever
+promoted.** Verified in a live browser: all four flip and restore exactly
+(bg + accent var checked per skin). Branch `design/blend-v7`, commit `fec73bc`.
+
 ## 2026-09-01 — blend-v7: the final-palette recommendation, built and live as preview
 
 Dani's email asked for a final palette combining #1 (current), #3 (calm/expensive,
