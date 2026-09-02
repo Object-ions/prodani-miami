@@ -1,11 +1,13 @@
 /* ============================================================
-   ProDani Miami — brand foundation (v4 "atelier" direction)
+   ProDani Miami — brand foundation (v7 "blend" direction)
    Single source of truth for colour, type and motion in the theme.
 
-   Direction: editorial luxury — a dessert atelier, not a snack brand.
-   Near-monochrome: porcelain cream carries ~80% of every screen, deep
-   espresso carries all structure, and champagne is the single accent,
-   spent on hairlines and small marks — never on body text over cream.
+   Direction: v4's editorial restraint, re-pitched warm and edible —
+   premium bakery, not spa/luxury. Warm ivory carries ~80% of every
+   screen, dark-chocolate brown carries all structure, and caramel is
+   the single accent, spent on hairlines and small marks — never on
+   body text over cream. Product photography stays the only saturated
+   thing on the page.
    Massive mixed-case Fraunces with italic emphasis; Instrument Sans
    body; JetBrains Mono for macros and specs. Hairlines instead of
    fills, film-grain instead of flat digital colour, one calm motion
@@ -13,8 +15,8 @@
 
    The v2/v3 token names are KEPT and remapped, so every per-section
    sheet re-skins from here without edits:
-     --pink  → champagne accent    --butter → ecru surface
-     --cocoa → espresso            --script → Fraunces italic alias
+     --pink  → caramel accent      --butter → warm ecru surface
+     --cocoa → dark chocolate      --script → Fraunces italic alias
 
    Fonts: Fraunces, Instrument Sans, JetBrains Mono — all OFL/Google,
    self-hosted latin variable subsets. (Inter Tight remains in assets
@@ -61,28 +63,28 @@
 }
 
 :root {
-  /* ground — porcelain carries ~80% of every screen */
-  --cream:      #F8F5EF;   /* porcelain — page */
-  --butter:     #EFEAE0;   /* ecru — raised surfaces */
-  --cocoa:      #211913;   /* espresso — all structure and dark bands */
-  --cocoa-deep: #171009;
-  --cocoa-soft: #3A2E24;   /* walnut — panels one step up from espresso */
+  /* ground — warm ivory carries ~80% of every screen */
+  --cream:      #FAF4E9;   /* warm ivory — page */
+  --butter:     #F3ECDD;   /* warm ecru — raised surfaces */
+  --cocoa:      #362619;   /* dark chocolate — all structure and dark bands (13.2:1 on ivory) */
+  --cocoa-deep: #241811;
+  --cocoa-soft: #54402D;   /* walnut — panels one step up from chocolate */
 
   /* accent — hairlines, marks and small type on DARK only */
-  --pink:       #C0A472;   /* champagne (accent slot; name kept from v2) */
-  --pink-deep:  #A98D5D;
-  --berry:      #7E6537;   /* text-safe bronze for small text on porcelain (5.1:1) */
-  --leaf:       #67654A;   /* muted olive, text-safe on porcelain */
-  --sage:       #CFC8B8;   /* stone surface tint */
+  --pink:       #E0A458;   /* caramel (accent slot; name kept from v2) */
+  --pink-deep:  #C68A42;
+  --berry:      #8A5A24;   /* text-safe toffee for small text on ivory (5.4:1) */
+  --leaf:       #6D6B48;   /* muted olive, text-safe on ivory */
+  --sage:       #D6CCB9;   /* warm stone surface tint */
 
   /* ink */
-  --ink:          #211913;
-  --ink-soft:     rgba(33, 25, 19, .64);
-  --ink-faint:    rgba(33, 25, 19, .44);
-  --on-dark:      #F8F5EF;
-  --on-dark-soft: rgba(248, 245, 239, .72);
-  --line:         rgba(33, 25, 19, .12);   /* the hairline — used instead of fills */
-  --line-dark:    rgba(248, 245, 239, .18);
+  --ink:          #362619;
+  --ink-soft:     rgba(54, 38, 25, .64);
+  --ink-faint:    rgba(54, 38, 25, .44);
+  --on-dark:      #FAF4E9;
+  --on-dark-soft: rgba(250, 244, 233, .72);
+  --line:         rgba(54, 38, 25, .12);   /* the hairline — used instead of fills */
+  --line-dark:    rgba(250, 244, 233, .18);
 
   /* type */
   --display: 'Fraunces', 'Iowan Old Style', Georgia, serif;
@@ -137,8 +139,8 @@ body::after{
 /* Double-bezel: media and cards sit in a machined tray, never flat on the page.
    Apply .pd-bezel to a wrapper that contains exactly the media/content box. */
 .pd-bezel{
-  background:rgba(33,25,19,.045);
-  box-shadow:inset 0 0 0 1px rgba(33,25,19,.07);
+  background:rgba(54, 38, 25,.045);
+  box-shadow:inset 0 0 0 1px rgba(54, 38, 25,.07);
   border-radius:calc(var(--r-soft) + 6px); padding:6px;
 }
 .pd-bezel > *{ border-radius:var(--r-soft); overflow:hidden; display:block; }

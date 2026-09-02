@@ -26,11 +26,11 @@ a.pd-filter{ text-decoration:none; display:inline-flex; align-items:center; }
 .pd-card{
   background:var(--butter); border-radius:var(--r); padding:13px 13px 18px;
   display:flex; flex-direction:column; position:relative; text-decoration:none; color:inherit;
-  box-shadow:0 2px 0 rgba(33,25,19,.07);
+  box-shadow:0 2px 0 rgba(54, 38, 25,.07);
   transition:transform .5s var(--bounce), box-shadow .4s ease;
 }
 .pd-card[hidden]{ display:none; }
-.pd-card:hover{ transform:translateY(-4px); box-shadow:0 34px 60px -34px rgba(33,25,19,.35); }
+.pd-card:hover{ transform:translateY(-4px); box-shadow:0 34px 60px -34px rgba(54, 38, 25,.35); }
 .pd-card__media{
   position:relative; aspect-ratio:1/1; overflow:hidden;
   border-radius:calc(var(--r) - 8px); margin-bottom:15px;
@@ -93,8 +93,8 @@ a.pd-filter{ text-decoration:none; display:inline-flex; align-items:center; }
 
 /* v4 double-bezel: the photo sits in a machined tray, never flat on the page */
 .pd-card__media{
-  background:rgba(33,25,19,.045);
-  box-shadow:inset 0 0 0 1px rgba(33,25,19,.07);
+  background:rgba(54, 38, 25,.045);
+  box-shadow:inset 0 0 0 1px rgba(54, 38, 25,.07);
   border-radius:calc(var(--r-soft) + 6px); padding:6px;
 }
 .pd-card__media img{ border-radius:var(--r-soft); }

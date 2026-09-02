@@ -70,7 +70,7 @@
   transition:transform .4s var(--bounce), background .3s;
 }
 .product-form__submit:hover:not([disabled]){ transform:translateY(-2px); background:var(--cocoa-deep); }
-.product-form__submit[disabled]{ background:var(--cocoa-soft); color:rgba(248,245,239,.7); }
+.product-form__submit[disabled]{ background:var(--cocoa-soft); color:rgba(250, 244, 233,.7); }
 /* Shop Pay's own brand colour is left alone; only its shape is matched. */
 .shopify-payment-button__button--unbranded,
 .shopify-payment-button__button{ border-radius:999px !important; }

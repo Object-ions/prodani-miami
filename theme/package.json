@@ -6,6 +6,7 @@
     "dev": "dotenv -- sh -c 'SHOPIFY_CLI_THEME_TOKEN=$PRODANI_PASSWORD shopify theme dev --path prodani --store dani-pro-miami'",
     "pull:reference": "dotenv -- sh -c 'SHOPIFY_CLI_THEME_TOKEN=$PRODANI_PASSWORD shopify theme pull --store dani-pro-miami --theme 154419691830 --path reference-minimog'",
     "push:staging": "dotenv -- sh -c 'SHOPIFY_CLI_THEME_TOKEN=$PRODANI_PASSWORD shopify theme push --path prodani --store dani-pro-miami --theme 187797799222'",
+    "push:blend": "dotenv -- sh -c 'SHOPIFY_CLI_THEME_TOKEN=$PRODANI_PASSWORD shopify theme push --path prodani --store dani-pro-miami --theme 188079931702'",
     "push:live": "dotenv -- sh -c 'SHOPIFY_CLI_THEME_TOKEN=$PRODANI_PASSWORD shopify theme push --path prodani --store dani-pro-miami --theme 187797995830 --allow-live'",
     "list": "dotenv -- sh -c 'SHOPIFY_CLI_THEME_TOKEN=$PRODANI_PASSWORD shopify theme list --store dani-pro-miami'",
     "check": "shopify theme check --path prodani",

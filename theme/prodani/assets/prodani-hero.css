@@ -60,7 +60,7 @@
 }
 .pd-hero__note{
   margin:0; font-weight:600; font-size:13.5px; letter-spacing:.02em;
-  color:rgba(248,245,239,.66);
+  color:rgba(250, 244, 233,.66);
 }
 
 .pd-btn{
@@ -78,7 +78,7 @@
 
 /* button-in-button: the arrow rides in its own disc, flush right */
 .pd-btn svg{ width:28px; height:28px; padding:7px; box-sizing:border-box; border-radius:50%;
-  background:rgba(248,245,239,.16); transition:transform .6s var(--ease); }
-.pd-btn--pink svg{ background:rgba(33,25,19,.14); }
+  background:rgba(250, 244, 233,.16); transition:transform .6s var(--ease); }
+.pd-btn--pink svg{ background:rgba(54, 38, 25,.14); }
 .pd-btn:hover svg{ transform:translate(2px,-1px); }
 .pd-btn:active{ transform:scale(.98); }

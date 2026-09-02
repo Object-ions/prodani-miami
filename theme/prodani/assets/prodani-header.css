@@ -10,10 +10,10 @@
 
 .pd-nav{
   position:sticky; top:0; z-index:90; height:60px; display:flex; align-items:center;
-  background:rgba(248,245,239,.86); backdrop-filter:blur(14px) saturate(160%);
+  background:rgba(250, 244, 233,.86); backdrop-filter:blur(14px) saturate(160%);
   border-bottom:2px solid transparent; transition:border-color .35s, background .35s;
 }
-.pd-nav[data-stuck="true"]{ border-bottom-color:var(--line); background:rgba(248,245,239,.96); }
+.pd-nav[data-stuck="true"]{ border-bottom-color:var(--line); background:rgba(250, 244, 233,.96); }
 .pd-nav__in{ display:flex; align-items:center; gap:34px; width:100%; }
 .pd-nav__logo{
   font-family:var(--sans); font-weight:700; font-size:25px; line-height:1;
@@ -45,7 +45,7 @@
 .pd-nav__right{ margin-left:auto; display:flex; align-items:center; gap:10px; }
 .pd-icon-btn{
   width:38px; height:38px; border-radius:999px; display:grid; place-items:center;
-  background:rgba(33,25,19,.08); color:var(--cocoa);
+  background:rgba(54, 38, 25,.08); color:var(--cocoa);
   transition:background .3s, transform .4s var(--bounce);
 }
 .pd-icon-btn:hover{ background:var(--pink); }
@@ -75,7 +75,7 @@
 .pd-nav__sub{
   position:absolute; top:calc(100% + 10px); left:0; min-width:200px;
   background:var(--cream); border:1px solid var(--line); border-radius:var(--r);
-  box-shadow:0 18px 44px rgba(33,25,19,.16); padding:8px;
+  box-shadow:0 18px 44px rgba(54, 38, 25,.16); padding:8px;
   display:flex; flex-direction:column; gap:2px;
   opacity:0; transform:translateY(6px); pointer-events:none;
   transition:opacity .25s var(--ease), transform .25s var(--ease); z-index:40;
