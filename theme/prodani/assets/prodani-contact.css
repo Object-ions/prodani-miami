@@ -1,21 +1,21 @@
-/* Contact block (v3 refined palette).
-   Panels are mocha (#7C5A3C), one step warmer than the chocolate structure colour,
-   so they read as a surface rather than a hole in the cream page. Field is a
-   darker #66452B so inputs read as inset.
+/* Contact block (blend palette, rebuilt 2026-09-01).
+   The v3-era scheme (mocha panel, near-black inset fields, 55% cream outline)
+   broke when the palette swaps darkened the panel and left the field at a
+   v3 hex — grey outlines around black holes. New scheme: walnut panel, and
+   the input wells are CREAM with chocolate text, so fields delineate
+   themselves against the panel (~8.9:1 — no outline needed for 1.4.11).
 
-     label       cream #F4EFE6 on panel  -> 5.42:1
-     value       cream on panel          -> 5.42:1
-     input text  cream on field          -> 7.48:1
-     panel vs cream page                 -> 5.42:1
+     label   cream on walnut panel   -> 8.9:1
+     input   ink on cream field      -> 13.2:1
+     focus   toffee ring on cream    -> 5.4:1 vs field
 
-   The border opacity is load-bearing: the field fill only reaches ~1.4:1 against
-   the panel, so the 55% cream outline is what makes the input a distinct target
-   (WCAG 1.4.11 needs 3:1). Gold (#C9A66B) only reaches 2.7:1 on mocha — it is
-   never used for text inside the panels, only on the chocolate CTA row. */
+   Caramel is never used for text inside the panel (4.5:1 borderline on
+   walnut); it stays on the CTA. Everything routes through tokens so the demo
+   skins re-derive sane values (on noir: dark fields, light ink — correct). */
 :root{
-  --pd-panel:#54402D;
-  --pd-field:#2A2019;
-  --pd-panel-line:rgba(250, 244, 233,.55);
+  --pd-panel:var(--cocoa-soft);
+  --pd-field:var(--cream);
+  --pd-panel-line:transparent;
 }
 
 .pd-contact{ background:var(--cream); color:var(--ink); padding-block:clamp(56px,7vw,110px); }
@@ -76,22 +76,23 @@
 .pd-field--grow textarea{ height:100%; }
 .pd-field span{
   font-size:11.5px; font-weight:700; letter-spacing:.1em; text-transform:uppercase;
-  color:var(--pink);
+  color:var(--on-dark);
 }
 .pd-field input,
 .pd-field select,
 .pd-field textarea{
   font:inherit; font-size:15px; width:100%;
-  color:var(--cream); background:var(--pd-field);
+  color:var(--ink); background:var(--pd-field);
   border:2px solid var(--pd-panel-line); border-radius:14px; padding:12px 15px;
+  transition:border-color .18s ease;
 }
 .pd-field textarea{ resize:vertical; min-height:120px; }
-.pd-field input::placeholder{ color:rgba(250, 244, 233,.72); }
+.pd-field input::placeholder{ color:var(--ink-faint); }
 .pd-field select{
   appearance:none;
-  /* Chevron drawn in the border colour so it reads on the dark field. */
-  background-image:linear-gradient(45deg,transparent 50%,rgba(250, 244, 233,.7) 50%),
-                   linear-gradient(135deg,rgba(250, 244, 233,.7) 50%,transparent 50%);
+  /* Chevron drawn in ink so it reads on the cream field. */
+  background-image:linear-gradient(45deg,transparent 50%,var(--ink-soft) 50%),
+                   linear-gradient(135deg,var(--ink-soft) 50%,transparent 50%);
   background-position:calc(100% - 20px) center, calc(100% - 14px) center;
   background-size:6px 6px, 6px 6px;
   background-repeat:no-repeat;
@@ -100,7 +101,7 @@
 .pd-field select option{ color:var(--ink); background:var(--cream); }
 .pd-field input:focus-visible,
 .pd-field select:focus-visible,
-.pd-field textarea:focus-visible{ outline:none; border-color:var(--pink); }
+.pd-field textarea:focus-visible{ outline:none; border-color:var(--berry); }
 
 .pd-btn{
   display:inline-flex; align-items:center; gap:10px; height:50px; padding:0 26px;
