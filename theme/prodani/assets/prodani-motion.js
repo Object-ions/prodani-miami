@@ -85,6 +85,72 @@
       });
     }
 
+    /* ---- Build a Box: the main event gets the richest moment ---- */
+    var box = document.querySelector('[data-pd-box]');
+    if (box) {
+      // Entrance: size chips pop in like choices being dealt
+      var sizes = gsap.utils.toArray(box.querySelectorAll('.pd-box__size'));
+      if (sizes.length) {
+        gsap.set(sizes, { scale: 0.85, autoAlpha: 0 });
+        ScrollTrigger.create({
+          trigger: sizes[0], start: 'top 88%', once: true,
+          onEnter: function () {
+            gsap.to(sizes, {
+              scale: 1, autoAlpha: 1, duration: 0.55,
+              ease: 'back.out(1.6)', stagger: 0.09, overwrite: true
+            });
+          }
+        });
+      }
+
+      // Flavor tiles cascade in tighter than the generic grids
+      var flavors = gsap.utils.toArray(box.querySelectorAll('.pd-box__flavor'));
+      if (flavors.length) {
+        gsap.set(flavors, { y: 24, autoAlpha: 0 });
+        ScrollTrigger.batch(flavors, {
+          start: 'top 90%', once: true,
+          onEnter: function (batch) {
+            gsap.to(batch, {
+              y: 0, autoAlpha: 1, duration: 0.6, ease: EASE,
+              stagger: 0.06, overwrite: true
+            });
+          }
+        });
+      }
+
+      // Every add/remove bumps the "n of m selected" counter
+      var elSel = box.querySelector('[data-pd-selected]');
+      var countWrap = box.querySelector('.pd-box__count');
+      if (elSel && countWrap) {
+        // refresh() rewrites the text on every interaction — only bump when
+        // the number actually changed
+        var lastCount = elSel.textContent;
+        new MutationObserver(function () {
+          if (elSel.textContent === lastCount) return;
+          lastCount = elSel.textContent;
+          gsap.fromTo(countWrap,
+            { scale: 1.16, transformOrigin: 'left center' },
+            { scale: 1, duration: 0.45, ease: 'back.out(2.2)', overwrite: true });
+        }).observe(elSel, { childList: true, characterData: true, subtree: true });
+      }
+
+      // One celebratory pulse when the box completes and the CTA unlocks
+      var elAdd = box.querySelector('.pd-box__add');
+      if (elAdd) {
+        var wasReady = !elAdd.disabled;
+        new MutationObserver(function () {
+          var ready = !elAdd.disabled;
+          if (ready && !wasReady) {
+            gsap.fromTo(elAdd, { scale: 1 }, {
+              scale: 1.045, duration: 0.16, yoyo: true, repeat: 1,
+              ease: 'power2.inOut', overwrite: true
+            });
+          }
+          wasReady = ready;
+        }).observe(elAdd, { attributes: true, attributeFilter: ['disabled'] });
+      }
+    }
+
     /* Trigger positions drift as images and fonts land */
     window.addEventListener('load', function () { ScrollTrigger.refresh(); });
   });

@@ -416,6 +416,7 @@
     {%- comment -%} DEMO ONLY — palette skin switcher for the client review.
         Remove these two lines (and both prodani-skins.* assets) before this
         theme is ever promoted to staging or live. {%- endcomment -%}
+    {{ 'prodani-hover.css' | asset_url | stylesheet_tag }}
     {{ 'prodani-skins.css' | asset_url | stylesheet_tag }}
     <script src="{{ 'prodani-skins.js' | asset_url }}" defer="defer"></script>
 

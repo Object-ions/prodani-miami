@@ -1,0 +1,44 @@
+/* ProDani hover + micro-interaction layer. Loaded at the end of <body> so it
+   wins equal-specificity fights with per-section sheets. Pointer-only styles
+   sit behind (hover:hover) so touch devices never get sticky hover states;
+   everything motion-y also respects prefers-reduced-motion. */
+
+/* The box progress bar springs instead of easing — filling the box should
+   feel like progress, not paperwork. Applies to the JS-driven width. */
+@media (prefers-reduced-motion: no-preference) {
+  .pd-box__bar span { transition: width .5s cubic-bezier(.34, 1.56, .64, 1); }
+}
+
+@media (hover: hover) and (prefers-reduced-motion: no-preference) {
+  /* Build a Box: flavor tiles get a real lift (base sheet only transitions
+     border/shadow, so transform is added here) */
+  .pd-box__flavor {
+    transition: transform .3s var(--ease), border-color .25s, box-shadow .25s;
+  }
+  .pd-box__flavor:hover {
+    transform: translateY(-4px);
+    border-color: var(--pink-deep);
+    box-shadow: 0 12px 26px rgba(54, 38, 25, .12);
+  }
+
+  /* Size chips: slightly bolder than the stock -2px */
+  .pd-box__size:hover {
+    transform: translateY(-3px) scale(1.03);
+    border-color: var(--pink-deep);
+  }
+
+  /* Curated boxes: same family as product cards, one step calmer */
+  .pd-box__curated-card:hover {
+    transform: translateY(-6px);
+    border-color: var(--pink-deep);
+    box-shadow: 0 16px 32px rgba(54, 38, 25, .14);
+  }
+
+  /* Buttons across the site: keep the -2px lift, add ground contact */
+  .pd-btn:hover {
+    box-shadow: 0 10px 22px rgba(54, 38, 25, .16);
+  }
+  .pd-btn--outline:hover {
+    box-shadow: none; /* outline buttons keep their flat hover from reviews css */
+  }
+}
