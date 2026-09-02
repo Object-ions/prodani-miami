@@ -4,6 +4,34 @@ Newest entries first. One entry per working session — what was done, what was 
 
 ---
 
+## 2026-09-01 — motion layer on the blend preview
+
+GSAP 3.15 + ScrollTrigger self-hosted in assets (deferred, ~45KB gz combined),
+choreography in `prodani-motion.js`, wired at the end of `layout/theme.liquid`.
+Live on preview theme 188079931702; merged to `main` (branch `feat/motion`
+merged + deleted, single-branch rule kept).
+
+**What moves:** hero entrance (video settles 1.12→1.06 over 2.6s; kicker →
+title lines staggered 0.14s → CTA row, power3.out); once-only 28px rise
+reveals on section heads / story / shout / box bar at 86% viewport;
+batch-staggered reveals (0.08s) for product cards, reviews and curated boxes;
+claim badges pop with back.out(1.4) — the one playful moment. Marquee, bleed
+word and stack deck keep their own existing motion; Dawn's
+`animations_reveal_on_scroll` only touches Dawn-native sections, no overlap.
+
+**Safety rails:** everything inside `gsap.matchMedia('(prefers-reduced-motion:
+no-preference)')`; skipped entirely in `Shopify.designMode`; initial hidden
+states are applied from JS only, so no-JS/blocked-GSAP renders the full page;
+`ScrollTrigger.refresh()` on window load for post-image layout drift.
+
+**Verification caveat:** the Chrome tab stayed `visibilityState: hidden`
+during checks, and GSAP runs on rAF, which Chrome pauses for hidden tabs — so
+playback couldn't be watched live. Verified instead by forcing synchronous
+`ScrollTrigger.update()` + `progress(1)`: all 33 triggers exist, hero timeline
+and all three batch groups end at opacity 1 / identity transform, zero console
+errors. Needs one human scroll-through in a focused tab to sign off feel
+(timing/stagger tuning is expected, not correctness).
+
 ## 2026-09-01 — single-version consolidation: blend merged to main, all other branches deleted
 
 Per explicit request: **`main` is now the only branch, local and remote.** The
