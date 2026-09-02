@@ -18,6 +18,9 @@ ring toffee, select chevron ink, transparent borders (fields self-delineate at
 8.9:1). `--pd-panel`/`--pd-field` now route through tokens, so the demo skins
 re-derive correct schemes (noir gets dark fields + light ink automatically).
 Partner/wholesale forms inherit. Verified live: computed styles + screenshot.
+Follow-up per Moses: example placeholders on name ("Alex Rivera") and email
+("alex@email.com") to match the phone's, and phone made required — all four
+fields (name/email/phone/message) now required, verified in-browser.
 On preview 188079931702; merged to main, branch deleted.
 
 ## 2026-09-01 — Build a Box emphasis + hover layer (Moses feedback round)
