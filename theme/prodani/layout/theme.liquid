@@ -418,5 +418,13 @@
         theme is ever promoted to staging or live. {%- endcomment -%}
     {{ 'prodani-skins.css' | asset_url | stylesheet_tag }}
     <script src="{{ 'prodani-skins.js' | asset_url }}" defer="defer"></script>
+
+    {%- comment -%} Motion layer: self-hosted GSAP + ScrollTrigger, then the
+        ProDani choreography. Defer keeps order and stays off the critical
+        path; prodani-motion.js no-ops under prefers-reduced-motion, in the
+        theme editor, and when GSAP fails to load. {%- endcomment -%}
+    <script src="{{ 'gsap.min.js' | asset_url }}" defer="defer"></script>
+    <script src="{{ 'ScrollTrigger.min.js' | asset_url }}" defer="defer"></script>
+    <script src="{{ 'prodani-motion.js' | asset_url }}" defer="defer"></script>
   </body>
 </html>
