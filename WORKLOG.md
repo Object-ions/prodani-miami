@@ -4,6 +4,24 @@ Newest entries first. One entry per working session — what was done, what was 
 
 ---
 
+## 2026-09-01 — blend rebuilt on current content (blend-v8); v7 was stale
+
+**Moses caught a regression:** the blend preview served "70+ five-star reviews" —
+Aug-30 content. Root cause: the calm/bold variant themes forked **before** the
+big Aug-31 session (132-review copy, box builder rebuild, product card v2,
+wholesale pages), and blend-v7 was built by pulling the calm theme, inheriting
+its stale content. **Rule going forward: variant/preview themes are content
+forks frozen at their push date — build skins by applying palette diffs onto
+current `main`, never by pulling a variant theme as the base.**
+
+Fix: branch `design/blend-v8` from main, merged blend-v7 over it (8 conflicts —
+content resolved to main, tokens to blend), re-ran the v2→blend hex pass on
+main-side files (50 lines / 8 files), restored the footer `wordmark` setting the
+calm theme's editor had dropped. Pushed to the same theme **188079931702** so
+the preview link is unchanged. Verified live: "132 verified reviews" ×4, zero
+"70+", blend palette only, skin switcher flips/restores, Build a Box intact.
+`design/blend-v7` deleted locally (superseded; kept on origin).
+
 ## 2026-09-01 — demo skin switcher on the blend preview
 
 Moses asked for in-page palette comparison instead of juggling preview links.
