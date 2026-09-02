@@ -4,6 +4,47 @@ Newest entries first. One entry per working session — what was done, what was 
 
 ---
 
+## 2026-09-01 — blend-v7: the final-palette recommendation, built and live as preview
+
+Dani's email asked for a final palette combining #1 (current), #3 (calm/expensive,
+theme 188025209142, branch `design/luxe-v4`) and #4 (bold/dark, 188026552630,
+`design/noir-v5`). Moses's pick: #3. Against the brief, straight #3 fails on two
+counts — champagne gold reads spa/luxury (excluded) and near-black cocoa loses
+"warm and delicious" — so the blend keeps #3's structure and #4's single-accent
+discipline, warmed with #1's temperament.
+
+**Built on branch `design/blend-v7`** (from `origin/design/luxe-v4`; staging and
+live never targeted). Pushed as **new unpublished theme 188079931702**
+("blend-v7 warm-calm-caramel", `npm run push:blend`). Preview:
+`https://prodanimiami.com/?preview_theme_id=188079931702`
+
+**Palette:** warm ivory `#FAF4E9` ground / warm ecru `#F3ECDD` surfaces / dark
+chocolate `#362619` structure (13.2:1) / caramel `#E0A458` single accent, deep
+`#C68A42` / toffee `#8A5A24` text-accent (5.4:1) / olive `#6D6B48` + stone
+`#D6CCB9` markers. Fraunces / Instrument Sans / JetBrains Mono kept from v4.
+
+**Gotchas hit and fixed on the way:**
+  - The v4/v5 branches' `.gitignore` still swallowed `prodani-tokens.css`
+    (`*token*`, and the `!*.tokens.css` negation doesn't match the filename) — the
+    calm palette's tokens existed **only on the live theme**. Recovered by
+    `shopify theme pull` of 188025209142; branch carries main's fixed negation.
+  - Drift between `design/luxe-v4` and the live calm theme was 6 JSON files
+    (admin-side template/settings tweaks); kept the live versions.
+  - The palette is NOT only in tokens: ~121 hardcoded hex lines across 22 files
+    (section schema defaults, `settings_data.json`, template JSON) needed the
+    same swap.
+  - Curl preview trick note: the cookied re-fetch of `/` can 302 once more —
+    add `-L`.
+
+**Verified** via preview-cookie curl: rendered homepage + served tokens contain
+only new hexes, zero old ones. Full screenshot pass still to do.
+
+**Next:** screenshot pass on 188079931702 → palette-recommendation section into
+the Dani email (one combined send with the questions doc, as Gmail draft for
+Moses to review) → preflight re-run on staging → PDP mobile QA via `theme dev`.
+
+---
+
 ## 2026-09-01 — repo cleanup: stale prototype and duplicate assets removed
 
 Pruned everything superseded by the real theme. **`theme/` was not touched in any
