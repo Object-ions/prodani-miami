@@ -82,3 +82,12 @@
 .pd-btn--pink svg{ background:rgba(54, 38, 25,.14); }
 .pd-btn:hover svg{ transform:translate(2px,-1px); }
 .pd-btn:active{ transform:scale(.98); }
+
+/* ---- Mobile: the hero goes big (2026-09-01, per Moses) ---- */
+@media (max-width:749px){
+  .pd-hero{ min-height:96vh; min-height:96svh; }
+  .pd-giant__line:nth-child(1),
+  .pd-giant__line:nth-child(2){ font-size:clamp(56px, 16.5vw, 96px); }
+  .pd-hero__kicker{ font-size:19px; }
+  .pd-hero__note{ font-size:14px; }
+}

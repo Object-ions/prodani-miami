@@ -35,7 +35,7 @@
     /* ---- Once-only reveals for section furniture ---- */
     gsap.utils.toArray([
       '.pd-sec-head',
-      '.pd-story__media', '.pd-story__text', '.pd-story__stamp',
+      '.pd-story__media', '.pd-story__text',
       '.pd-shout__frame', '.pd-shout__text',
       '.pd-badges__heading',
       '.pd-box__bar',
@@ -68,6 +68,37 @@
         }
       });
     });
+
+    /* ---- Muffin stamp: pops in like a sticker being slapped on ---- */
+    var stamp = document.querySelector('.pd-story__stamp');
+    if (stamp) {
+      gsap.set(stamp, { scale: 0.5, autoAlpha: 0, rotation: -30 });
+      ScrollTrigger.create({
+        trigger: stamp, start: 'top 92%', once: true,
+        onEnter: function () {
+          gsap.to(stamp, { scale: 1, autoAlpha: 1, rotation: -8, duration: 0.6, ease: 'back.out(2)', overwrite: true });
+        }
+      });
+    }
+
+    /* ---- PDP: media + info entrance, macros pop ---- */
+    var productInfo = document.querySelector('.product__media-wrapper');
+    if (productInfo) {
+      var infoCol = document.querySelector('.product__info-wrapper');
+      var ptl = gsap.timeline({ defaults: { ease: EASE } });
+      ptl.from(productInfo, { y: RISE, autoAlpha: 0, duration: 0.8 }, 0.1);
+      if (infoCol) ptl.from(infoCol, { y: RISE, autoAlpha: 0, duration: 0.8 }, 0.25);
+      var macros = gsap.utils.toArray('.pd-macro');
+      if (macros.length) {
+        gsap.set(macros, { y: 16, autoAlpha: 0 });
+        ScrollTrigger.batch(macros, {
+          start: 'top 92%', once: true,
+          onEnter: function (batch) {
+            gsap.to(batch, { y: 0, autoAlpha: 1, duration: 0.5, ease: EASE, stagger: 0.07, overwrite: true });
+          }
+        });
+      }
+    }
 
     /* ---- Claim badges: the one playful moment ---- */
     var badges = gsap.utils.toArray('.pd-badge-item');

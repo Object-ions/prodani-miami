@@ -90,3 +90,14 @@
 .pd-reviews__widget .jdgm-rev__pic-img{
   aspect-ratio:1; width:100%; height:auto; object-fit:cover; display:block;
 }
+
+/* ---- Mobile: one swipeable row of review cards (2026-09-01, per Moses) ---- */
+@media (max-width:749px){
+  .pd-reviews__grid{
+    display:flex; overflow-x:auto; scroll-snap-type:x mandatory;
+    scrollbar-width:none; gap:14px;
+    margin-inline:calc(-1 * var(--pad)); padding-inline:var(--pad); padding-bottom:4px;
+  }
+  .pd-reviews__grid::-webkit-scrollbar{ display:none; }
+  .pd-reviews__grid .pd-review{ flex:0 0 84%; scroll-snap-align:center; }
+}

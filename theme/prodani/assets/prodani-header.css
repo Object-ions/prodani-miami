@@ -64,6 +64,14 @@
 }
 @media (max-width:960px){ .pd-nav__links{ display:none; } }
 
+/* Mobile-only Shop entry beside the logo (the link row above is hidden <960). */
+.pd-nav__shop-mobile{
+  display:none; min-height:44px; align-items:center; padding:0 4px; margin-left:14px;
+  font-weight:700; font-size:15px; color:var(--cocoa); text-decoration:none;
+  border-bottom:2px solid var(--pink);
+}
+@media (max-width:960px){ .pd-nav__shop-mobile{ display:inline-flex; } }
+
 /* ---- dropdown submenu (e.g. Shop → categories) ---- */
 .pd-nav__item{ position:relative; display:inline-flex; }
 .pd-nav__item--has-sub > .pd-nav__link{ display:inline-flex; align-items:center; gap:5px; }

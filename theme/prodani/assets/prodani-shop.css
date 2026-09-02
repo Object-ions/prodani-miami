@@ -135,3 +135,20 @@ a.pd-filter{ text-decoration:none; display:inline-flex; align-items:center; }
   transition:gap .35s var(--bounce), color .25s;
 }
 .pd-collection__rowlink:hover{ gap:16px; color:var(--cocoa); }
+
+/* ---- Mobile: collection = two carousel rows + View everything CTA
+   (2026-09-01, per Moses). Filters and count go; the first two category rows
+   (Personal, Family) become swipeable card rows; deeper rows wait behind the
+   CTA. Desktop layout unchanged. ---- */
+@media (max-width:749px){
+  .pd-collection .pd-filters,
+  .pd-collection .pd-count{ display:none; }
+  .pd-collection__row:nth-child(n+3 of .pd-collection__row:not([data-pd-only])){ display:none; }
+  .pd-collection__row:not([data-pd-only]) .pd-grid{
+    display:flex; overflow-x:auto; scroll-snap-type:x mandatory;
+    scrollbar-width:none; gap:12px;
+    margin-inline:calc(-1 * var(--pad)); padding-inline:var(--pad); padding-bottom:4px;
+  }
+  .pd-collection__row:not([data-pd-only]) .pd-grid::-webkit-scrollbar{ display:none; }
+  .pd-collection__row:not([data-pd-only]) .pd-grid .pd-card{ flex:0 0 68%; scroll-snap-align:start; }
+}

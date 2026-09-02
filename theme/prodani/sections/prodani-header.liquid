@@ -36,6 +36,10 @@
       {%- endif -%}
     </a>
 
+    {%- comment -%} Mobile-only Shop entry (the full link row is display:none
+        under 960px). Sits right after the logo: prodani · Shop · icons/cart. {%- endcomment -%}
+    <a class="pd-nav__shop-mobile" href="{{ routes.all_products_collection_url }}">Shop</a>
+
     <nav class="pd-nav__links" aria-label="Primary">
       {%- for link in section.settings.menu.links -%}
         {%- if link.links.size > 0 -%}

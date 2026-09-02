@@ -67,10 +67,21 @@
 .pd-badges__row{ gap:0; border-top:1px solid var(--line); border-bottom:1px solid var(--line); }
 .pd-badges__row .pd-badge-item{ padding:clamp(18px,2.2vw,30px) 8px; transform:none !important; }
 .pd-badges__row .pd-badge-item + .pd-badge-item{ border-left:1px solid var(--line); }
+/* Wrapped grids need the FULL ruled lattice: every cell gets top+left rules,
+   then the first row and first column zero theirs. The old version only
+   handled 3 columns and dropped all row rules, so at 2-col (≤480px) the
+   lattice fell apart into disconnected dashes. */
 @media (max-width:900px){
+  .pd-badges__row .pd-badge-item{ border-left:1px solid var(--line); border-top:1px solid var(--line); }
   .pd-badges__row .pd-badge-item:nth-child(3n+1){ border-left:0; }
-  .pd-badges__row .pd-badge-item{ border-top:0; }
+  .pd-badges__row .pd-badge-item:nth-child(-n+3){ border-top:0; }
 }
-.pd-badge-item__label{ font-family:var(--mono); font-weight:500; font-size:clamp(10px,.9vw,12px);
+@media (max-width:480px){
+  .pd-badges__row .pd-badge-item:nth-child(3n+1){ border-left:1px solid var(--line); }
+  .pd-badges__row .pd-badge-item:nth-child(2n+1){ border-left:0; }
+  .pd-badges__row .pd-badge-item:nth-child(-n+3){ border-top:1px solid var(--line); }
+  .pd-badges__row .pd-badge-item:nth-child(-n+2){ border-top:0; }
+}
+.pd-badge-item__label{ font-family:var(--mono); font-weight:500; font-size:clamp(11px,.9vw,12px);
   letter-spacing:.18em; text-transform:uppercase; color:var(--ink-soft); }
 .pd-badges__row--wave{ padding-bottom:0; }

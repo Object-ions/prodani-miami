@@ -31,3 +31,8 @@
   .pd-ig__img, .pd-ig__glyph, .pd-ig__follow{ transition:none; }
   .pd-ig__item:hover .pd-ig__img{ transform:none; }
 }
+
+/* Mobile: four tiles, not six (2026-09-01, per Moses). */
+@media (max-width:749px){
+  .pd-ig__item:nth-child(n+5){ display:none; }
+}

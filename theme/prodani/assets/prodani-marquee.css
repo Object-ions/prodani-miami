@@ -12,3 +12,9 @@
 /* v4: the shout ribbon whispers — ecru band, espresso mono, tone-on-tone. */
 .pd-marquee--shout path[stroke]{ stroke:var(--butter); }
 .pd-marquee--shout text{ fill:var(--cocoa); }
+
+/* Mobile: the SVG scales with viewport width, shrinking the ribbon text to
+   near-invisible. Bumping the SVG-unit font size restores legibility. */
+@media (max-width:749px){
+  .pd-marquee text{ font-size:52px; }
+}

@@ -93,3 +93,15 @@
   .pd-stack__media{ width:100%; aspect-ratio:16/10; flex:none; }
   .pd-stack__desc{ display:block; }
 }
+
+/* ---- Mobile: compact stat cards (2026-09-01, per Moses) ----
+   Four full-height photo cards read as an endless wall on a phone. The photos
+   go; each card collapses to number + claim + link, so all four reasons fit
+   in about one screen. */
+@media (max-width:749px){
+  .pd-stack__media{ display:none; }
+  .pd-stack__card{ padding:22px 20px 20px; min-height:0; }
+  .pd-stack__figure{ font-size:clamp(44px,12vw,60px); line-height:1; }
+  .pd-stack__desc{ margin-top:8px; }
+  .pd-stack__link{ margin-top:12px; }
+}

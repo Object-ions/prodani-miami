@@ -224,7 +224,7 @@
         "body": "<p>High-protein, low-sugar treats made to satisfy cravings while staying mindful of how your body feels. Indulgence should feel satisfying, not heavy.</p>",
         "bundled_photo": "prodani-trays",
         "image_alt": "A tray spread of ProDani protein cakes",
-        "stamp": "<p>Baked<br>in<br>Miami</p>",
+        "stamp": "<p>Baked in Miami</p>",
         "heading_tag": "h2",
         "photo_focus": "50% 8%"
       }
@@ -273,8 +273,6 @@
         "anchor": "reviews",
         "eyebrow": "Verified · Judge.me",
         "show_widget": true,
-        "cta_label": "Shop the collection",
-        "cta_link": "/collections/all-products",
         "more_label": "Read all reviews",
         "less_label": "Show fewer"
       }
