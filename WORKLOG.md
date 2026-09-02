@@ -4,6 +4,40 @@ Newest entries first. One entry per working session — what was done, what was 
 
 ---
 
+## 2026-09-02 — mobile polish batch: Moses's 10-point review, all shipped
+
+All on preview 188079931702, merged to main, branch deleted. Verified live at
+430px (computed styles + screenshots): no overflow, every item below confirmed.
+
+  1. **Hero bigger on mobile** — title lines ~17vw (was ~50px, now ~71px at
+     430), hero 96svh, kicker/note up.
+  2. **Mobile Shop link** — `.pd-nav__shop-mobile` beside the logo, <960px
+     only (the desktop link row is hidden there). prodani · Shop · icons.
+  3. **Badges lattice fixed** — v4's text-only value strip only handled 3
+     columns; full top+left rules with per-breakpoint first-row/column resets
+     now connect the grid at 3-col AND 2-col. Label floor 11px.
+  4. **Collection on mobile** — Personal + Family rows become swipe carousels
+     (cards 68%, snap, edge-bleed), filters + count hidden, existing "View
+     everything" CTA closes the section. Desktop unchanged.
+  5. **Muffin stamp restored** — `dani muffin.png` recovered from macOS Trash
+     (the discarded muffin-scene component), resized to
+     `assets/prodani-muffin-stamp.png`, styled as a rotated circular photo
+     badge (50% radius hides the ragged cutout) with a "Baked in Miami" cream
+     pill; index.json stamp text single-lined; sticker-slap pop entrance.
+  6. **Marquee ribbon** text 34→52 SVG units on mobile.
+  7. **"What makes prodani different"** — mobile cards compact: photos hidden,
+     number + claim + link; four reasons fit ~one screen.
+  8. **Reviews** — one swipeable row of cards on mobile (84% snap-center);
+     **"Shop the collection" CTA removed on ALL viewports** (render, schema
+     and index.json setting — per explicit request).
+  9. **Instagram** — 4 tiles on mobile (items 5-6 hidden).
+  10. **PDP animation** — media + info column entrance, `.pd-macro` chips
+     stagger in; muffin stamp moved from generic rise to pop.
+
+Note: `resize_window` bottomed at 430px this round (Chrome min width varies
+with window chrome); audits at 430-485 sit in the same ≤749 media regime as
+390 except the ≤480 rules, which were hand-verified.
+
 ## 2026-09-01 — PDP FREEZE ROOT-CAUSED AND FIXED; mobile QA unblocked
 
 **The "PDP defeats headless capture" blocker is solved, and it was never a
