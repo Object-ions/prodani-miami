@@ -4,6 +4,30 @@ Newest entries first. One entry per working session — what was done, what was 
 
 ---
 
+## 2026-09-01 — Build a Box emphasis + hover layer (Moses feedback round)
+
+Feedback: motion is right ("gentle... I like it") but hovers felt missing and
+Build a Box — the product now — deserved more life. Findings: product cards
+already had rich hovers; the genuinely weak spots were inside the builder
+(flavor tiles transitioned border only, size chips moved 2px).
+
+Shipped on preview 188079931702 (merged to `main`, `feat/motion-2` deleted):
+
+  - **`prodani-hover.css`** (end of body, wins specificity ties): flavor tiles
+    get transform lift + shadow, size chips -3px + scale, curated cards -6px +
+    shadow, all `.pd-btn`s gain a ground-contact hover shadow. Gated behind
+    `(hover:hover)` and `prefers-reduced-motion`.
+  - **BYB choreography** in `prodani-motion.js`: size chips pop in
+    (back.out 1.6, staggered), flavor tiles cascade (0.06s), the "n of m
+    selected" counter bumps only on real count changes (MutationObserver with
+    last-value guard — refresh() rewrites text on every interaction), progress
+    bar springs via bounce cubic-bezier, CTA pulses once when the box
+    completes (observes `disabled`). The builder's own JS is untouched.
+
+Verified live via forced ScrollTrigger.update (tab hidden again): 40 triggers,
+size click → total 6, bump tween created and lands at identity, hover CSS
+served. Playback feel still needs a human scroll-through.
+
 ## 2026-09-01 — motion layer on the blend preview
 
 GSAP 3.15 + ScrollTrigger self-hosted in assets (deferred, ~45KB gz combined),
