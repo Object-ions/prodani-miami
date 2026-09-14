@@ -89,7 +89,9 @@
     buildWidget();
     var saved = 'blend';
     try { saved = localStorage.getItem('pd-skin') || 'blend'; } catch (e) { /* ignore */ }
-    apply(saved);
+    /* ?skin=current in a shared preview link opens straight into that palette */
+    var linked = new URLSearchParams(location.search).get('skin');
+    apply(linked || saved);
   }
 
   if (document.readyState === 'loading') document.addEventListener('DOMContentLoaded', init);

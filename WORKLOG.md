@@ -22,8 +22,17 @@ section is the real theme, untouched. Not pushed to staging or live.
     on `main`, hidden by the short video hero). The section now pins
     `.pd-header-group` (top:-32px, so the announcement strip leaves) — homepage only.
   - Moses reviewed locally and approved the look.
+  - Recorded scroll-through videos (desktop 1440×900 + phone 390×844, blend and
+    pink skins) to `~/Desktop/ProDani 3D hero videos/` — not in the repo. The
+    `*-pink-*-SEND.mp4` pair (3.7 MB / 1.7 MB) is the one for Dani.
+  - Pushed the branch as a NEW unpublished theme **188434121014 "prodani - 3d hero
+    preview"** for Dani to review. Staging (187797799222) and live untouched.
+    Share link: `https://prodanimiami.com/?preview_theme_id=188434121014&skin=current`
+  - `prodani-skins.js` (demo-only) now honours `?skin=` so a link can open in a
+    given palette; `current` = the pink skin.
 
-**Next:** decide whether to push to staging; optionally pin the header site-wide.
+**Next:** Dani's feedback on the preview → decide on staging; optionally pin the
+header site-wide.
 
 ---
 
