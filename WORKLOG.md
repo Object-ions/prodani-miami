@@ -31,6 +31,11 @@ section is the real theme, untouched. Not pushed to staging or live.
   - `prodani-skins.js` (demo-only) now honours `?skin=` so a link can open in a
     given palette; `current` = the pink skin.
 
+  - Cleanup: deleted local branches `experiment/2d-hero` (duplicate of webgl-hero)
+    and `experiment/homepage-3d` (superseded GPT rebuild); deleted dev theme
+    188432515382. Remaining branches: `main`, `experiment/3d-hero-theme`,
+    `experiment/webgl-hero` (Astra reference — its code lives in 3d-hero-theme).
+
 **Next:** Dani's feedback on the preview → decide on staging; optionally pin the
 header site-wide.
 
