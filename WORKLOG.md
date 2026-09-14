@@ -17,8 +17,13 @@ section is the real theme, untouched. Not pushed to staging or live.
   - Verified in `shopify theme dev` (dev theme 188432515382): WebGL renders, all four
     acts scrub, desktop 1440×900 + mobile 390×844, real sections follow below.
   - Supersedes `experiment/homepage-3d` (hand-rebuilt React copy of the homepage).
+  - Fixed: the nav scrolled away during the tall hero. `.pd-nav` is sticky only
+    inside its own header-height section wrapper, so it never actually stuck (same
+    on `main`, hidden by the short video hero). The section now pins
+    `.pd-header-group` (top:-32px, so the announcement strip leaves) — homepage only.
+  - Moses reviewed locally and approved the look.
 
-**Next:** Moses reviews locally → decide whether to push to staging.
+**Next:** decide whether to push to staging; optionally pin the header site-wide.
 
 ---
 
