@@ -1,17 +1,10 @@
 {
   "sections": {
     "hero": {
-      "type": "prodani-hero",
+      "type": "prodani-3d-hero",
       "settings": {
-        "use_bundled_video": true,
-        "kicker": "The power of protein. The joy of cake.",
-        "line_one": "Bite into",
-        "line_two": "Balance",
-        "cta_label": "Shop the collection",
-        "cta_link": "/collections/all",
-        "note": "0g added sugar · 20g protein · gluten-free",
-        "ribbon_items": "high protein, no sugar added, gluten free, small batch, miami made",
-        "ribbon_speed": 26
+        "product_link": "/products/moist-chocolate-fudge-cake-copy",
+        "shop_link": "/collections/all"
       }
     },
     "shout": {

@@ -1,0 +1,17 @@
+{
+  "results": [
+    {
+      "name": "desktop",
+      "width": 1440,
+      "height": 900,
+      "renderer": "webgl"
+    },
+    {
+      "name": "mobile",
+      "width": 390,
+      "height": 844,
+      "renderer": "webgl"
+    }
+  ],
+  "errors": []
+}

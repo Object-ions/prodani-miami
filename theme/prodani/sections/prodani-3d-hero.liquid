@@ -1,0 +1,50 @@
+{%- comment -%}
+  3D cake story hero. Replaces the video hero on the homepage only.
+  Source: prototypes/webgl-hero (build with `npm run build:theme` there).
+  The React bundle mounts into [data-pd3d]; the placeholder below holds the
+  space and the headline until it does, and stays if JavaScript is off.
+{%- endcomment -%}
+
+{{ 'prodani-3d-hero.css' | asset_url | stylesheet_tag }}
+
+<style>
+  @font-face{font-family:Fugaz;src:url({{ 'fugaz-one-latin.woff2' | asset_url }}) format('woff2');font-weight:400;font-display:swap}
+  @font-face{font-family:Instrument;src:url({{ 'instrument-sans-var-latin.woff2' | asset_url }}) format('woff2');font-weight:400 700;font-display:swap}
+  @font-face{font-family:Damion;src:url({{ 'damion-latin.woff2' | asset_url }}) format('woff2');font-weight:400;font-display:swap}
+  .pd3d-placeholder{min-height:calc(100svh - 60px);display:flex;flex-direction:column;justify-content:center;padding:0 clamp(24px,4.5vw,88px);background:#fbf5e8;color:#48312a}
+  .pd3d-placeholder h1{font-family:Fugaz,Impact,sans-serif;font-weight:400;font-size:clamp(51px,7.4vw,126px);line-height:1.035;letter-spacing:-.055em;margin:0}
+  .pd3d-placeholder h1 span{display:block}
+  .pd3d-placeholder h1 span:last-child{color:#a54969;font-size:.82em}
+</style>
+
+<section class="pd3d-section" id="pd3d-{{ section.id }}">
+  {%- assign product_url = section.settings.product_link | default: '/products/moist-chocolate-fudge-cake-copy' -%}
+  {%- assign shop_url = section.settings.shop_link | default: routes.all_products_collection_url -%}
+  <div class="pd3d" data-pd3d
+       data-cocoa="{{ 'prodani-3d-cocoa-crumb.jpg' | asset_url }}"
+       data-detail="{{ 'prodani-3d-chocolate-detail.jpg' | asset_url }}"
+       data-product="{{ product_url }}"
+       data-shop="{{ shop_url }}"
+       data-next="#pd3d-after-{{ section.id }}">
+    <div class="pd3d-placeholder">
+      <h1><span>CAKE,</span><span>WITH A</span><span>PLOT TWIST.</span></h1>
+    </div>
+  </div>
+
+  <span id="pd3d-after-{{ section.id }}" tabindex="-1"></span>
+</section>
+
+<script src="{{ 'prodani-3d-hero.js' | asset_url }}" defer="defer"></script>
+
+{% schema %}
+{
+  "name": "3D cake hero",
+  "tag": "section",
+  "class": "pd-section",
+  "settings": [
+    { "type": "url", "id": "product_link", "label": "\"Taste the plot twist\" link", "info": "Defaults to the Personal Chocolate Fudge Cake." },
+    { "type": "url", "id": "shop_link", "label": "Shop link" }
+  ],
+  "presets": [{ "name": "3D cake hero" }]
+}
+{% endschema %}

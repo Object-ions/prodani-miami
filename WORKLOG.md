@@ -4,6 +4,24 @@ Newest entries first. One entry per working session — what was done, what was 
 
 ---
 
+## 2026-09-13 — 3D cake hero swapped into the real homepage (branch `experiment/3d-hero-theme`)
+
+Replaces only the homepage video hero with the Astra 3D scroll story; every other
+section is the real theme, untouched. Not pushed to staging or live.
+
+  - New section `sections/prodani-3d-hero.liquid`; `templates/index.json` hero slot
+    now points at it. The old `prodani-hero` section file is kept for rollback.
+  - Bundle built from `prototypes/webgl-hero` via `npm run build:theme` →
+    `assets/prodani-3d-hero.{js,css}` (CSS scoped under `.pd3d`, no global leaks).
+    Uses the theme's own sticky nav; the stage pins 60px below it.
+  - Verified in `shopify theme dev` (dev theme 188432515382): WebGL renders, all four
+    acts scrub, desktop 1440×900 + mobile 390×844, real sections follow below.
+  - Supersedes `experiment/homepage-3d` (hand-rebuilt React copy of the homepage).
+
+**Next:** Moses reviews locally → decide whether to push to staging.
+
+---
+
 ## 2026-09-02 — scope-of-work email to Dani drafted (NOT sent)
 
 Gmail draft created in the existing "5 looks" thread (draft r-1424108587713227908,

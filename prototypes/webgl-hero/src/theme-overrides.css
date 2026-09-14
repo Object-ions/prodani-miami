@@ -1,0 +1,13 @@
+/* Storefront-only adjustments. The theme's own sticky nav (60px) replaces the
+   prototype header, so the pinned stage starts below it. */
+.pd3d{--nav:60px;display:block;line-height:normal;letter-spacing:normal}
+.pd3d .stage{top:var(--nav);height:calc(100svh - var(--nav))}
+.pd3d h1,.pd3d h2{color:inherit}
+.pd3d .copy-track{top:calc(50% + 8px)}
+@media(max-width:899px){
+  .pd3d .copy-track{top:34px}
+  .pd3d .intro-copy .actions,.pd3d .final-copy .actions{top:calc(100svh - var(--nav) - 190px)}
+  .pd3d .ingredient-notes{top:calc(100svh - var(--nav) - 196px)}
+  .pd3d .script-note{top:calc(100svh - var(--nav) - 210px)}
+  .pd3d .is-static .final-copy .actions{top:calc(100svh - var(--nav) - 160px)}
+}
