@@ -11,6 +11,9 @@
   @font-face{font-family:Fugaz;src:url({{ 'fugaz-one-latin.woff2' | asset_url }}) format('woff2');font-weight:400;font-display:swap}
   @font-face{font-family:Instrument;src:url({{ 'instrument-sans-var-latin.woff2' | asset_url }}) format('woff2');font-weight:400 700;font-display:swap}
   @font-face{font-family:Damion;src:url({{ 'damion-latin.woff2' | asset_url }}) format('woff2');font-weight:400;font-display:swap}
+  /* .pd-nav is sticky, but only inside its own header-height section wrapper, so it
+     scrolled away. Stick the wrapper instead; -32px lets the announcement strip leave. */
+  .pd-header-group{position:sticky;top:-32px;z-index:90}
   .pd3d-placeholder{min-height:calc(100svh - 60px);display:flex;flex-direction:column;justify-content:center;padding:0 clamp(24px,4.5vw,88px);background:#fbf5e8;color:#48312a}
   .pd3d-placeholder h1{font-family:Fugaz,Impact,sans-serif;font-weight:400;font-size:clamp(51px,7.4vw,126px);line-height:1.035;letter-spacing:-.055em;margin:0}
   .pd3d-placeholder h1 span{display:block}
